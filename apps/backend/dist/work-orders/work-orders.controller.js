@@ -22,8 +22,19 @@ let WorkOrdersController = class WorkOrdersController {
     constructor(workOrdersService) {
         this.workOrdersService = workOrdersService;
     }
-    async findAll(status, assignedTo, priority) {
-        return this.workOrdersService.findAll({ status, assignedTo, priority });
+    async findAll(status, assignedTo, priority, type, search, dateFrom, dateTo, overdueOnly, limit, offset) {
+        return this.workOrdersService.findAll({
+            status,
+            assignedTo,
+            priority,
+            type,
+            search,
+            dateFrom,
+            dateTo,
+            overdueOnly,
+            limit: limit || 100,
+            offset: offset || 0
+        });
     }
     async findOne(id) {
         const workOrder = await this.workOrdersService.findById(id);
@@ -60,16 +71,30 @@ let WorkOrdersController = class WorkOrdersController {
 exports.WorkOrdersController = WorkOrdersController;
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Get all work orders' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all work orders with advanced filtering' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work orders retrieved successfully' }),
-    (0, swagger_1.ApiQuery)({ name: 'status', required: false, enum: work_order_entity_1.WorkOrderStatus }),
-    (0, swagger_1.ApiQuery)({ name: 'assignedTo', required: false, type: String }),
-    (0, swagger_1.ApiQuery)({ name: 'priority', required: false, type: String }),
+    (0, swagger_1.ApiQuery)({ name: 'status', required: false, enum: work_order_entity_1.WorkOrderStatus, description: 'Filter by status' }),
+    (0, swagger_1.ApiQuery)({ name: 'assignedTo', required: false, type: String, description: 'Filter by assigned user ID' }),
+    (0, swagger_1.ApiQuery)({ name: 'priority', required: false, type: String, description: 'Filter by priority' }),
+    (0, swagger_1.ApiQuery)({ name: 'type', required: false, type: String, description: 'Filter by work order type' }),
+    (0, swagger_1.ApiQuery)({ name: 'search', required: false, type: String, description: 'Text search across title, description, and WO number' }),
+    (0, swagger_1.ApiQuery)({ name: 'dateFrom', required: false, type: String, description: 'Filter by created date from (ISO string)' }),
+    (0, swagger_1.ApiQuery)({ name: 'dateTo', required: false, type: String, description: 'Filter by created date to (ISO string)' }),
+    (0, swagger_1.ApiQuery)({ name: 'overdueOnly', required: false, type: Boolean, description: 'Show only overdue work orders' }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, description: 'Limit number of results (default: 100)' }),
+    (0, swagger_1.ApiQuery)({ name: 'offset', required: false, type: Number, description: 'Offset for pagination (default: 0)' }),
     __param(0, (0, common_1.Query)('status')),
     __param(1, (0, common_1.Query)('assignedTo')),
     __param(2, (0, common_1.Query)('priority')),
+    __param(3, (0, common_1.Query)('type')),
+    __param(4, (0, common_1.Query)('search')),
+    __param(5, (0, common_1.Query)('dateFrom')),
+    __param(6, (0, common_1.Query)('dateTo')),
+    __param(7, (0, common_1.Query)('overdueOnly')),
+    __param(8, (0, common_1.Query)('limit')),
+    __param(9, (0, common_1.Query)('offset')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String, String, String, Boolean, Number, Number]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "findAll", null);
 __decorate([

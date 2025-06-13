@@ -6,6 +6,14 @@ import { WorkOrderComment } from './entities/work-order-comment.entity';
 import { WorkOrderAttachment } from './entities/work-order-attachment.entity';
 import { CacheService } from '../cache/cache.service';
 
+export interface DashboardStats {
+  open: number;
+  inProgress: number;
+  completed: number;
+  overdue: number;
+  completedToday: number;
+}
+
 @Injectable()
 export class WorkOrdersService {
   constructor(
@@ -198,11 +206,11 @@ export class WorkOrdersService {
       .getMany();
   }
 
-  async getDashboardStats() {
+  async getDashboardStats(): Promise<DashboardStats> {
     const cacheKey = this.cacheService.getDashboardStatsKey();
     
     // Try to get from cache first
-    const cached = await this.cacheService.get(cacheKey);
+    const cached = await this.cacheService.get<DashboardStats>(cacheKey);
     if (cached) {
       return cached;
     }
@@ -225,7 +233,7 @@ export class WorkOrdersService {
       .andWhere('DATE(workOrder.actualEndDate) = DATE(:today)', { today: new Date() })
       .getCount();
 
-    const stats = {
+    const stats: DashboardStats = {
       open: totalOpen,
       inProgress: totalInProgress,
       completed: totalCompleted,

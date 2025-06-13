@@ -3,7 +3,7 @@ import { WorkOrder, WorkOrderStatus } from './entities/work-order.entity';
 export declare class WorkOrdersController {
     private readonly workOrdersService;
     constructor(workOrdersService: WorkOrdersService);
-    findAll(status?: WorkOrderStatus, assignedTo?: string, priority?: string): Promise<WorkOrder[]>;
+    findAll(status?: WorkOrderStatus, assignedTo?: string, priority?: string, type?: string, search?: string, dateFrom?: string, dateTo?: string, overdueOnly?: boolean, limit?: number, offset?: number): Promise<WorkOrder[]>;
     findOne(id: string): Promise<WorkOrder>;
     create(createWorkOrderData: Partial<WorkOrder>): Promise<WorkOrder>;
     update(id: string, updateData: Partial<WorkOrder>): Promise<WorkOrder>;
@@ -12,13 +12,7 @@ export declare class WorkOrdersController {
         completionNotes?: string;
     }): Promise<WorkOrder>;
     remove(id: string): Promise<void>;
-    getDashboardStats(): Promise<{
-        open: number;
-        inProgress: number;
-        completed: number;
-        overdue: number;
-        completedToday: number;
-    }>;
+    getDashboardStats(): Promise<import("./work-orders.service").DashboardStats>;
     getOverdueWorkOrders(): Promise<WorkOrder[]>;
     addComment(id: string, commentData: {
         content: string;

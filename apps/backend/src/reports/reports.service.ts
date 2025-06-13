@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import { WorkOrdersService } from '../work-orders/work-orders.service';
+import { WorkOrdersService, DashboardStats } from '../work-orders/work-orders.service';
 import { AssetsService } from '../assets/assets.service';
 import { UsersService } from '../users/users.service';
 
@@ -354,7 +354,7 @@ export class ReportsService {
   }
 
   async generateDashboardSummaryReport(): Promise<Buffer> {
-    const stats = await this.workOrdersService.getDashboardStats();
+    const stats: DashboardStats = await this.workOrdersService.getDashboardStats();
 
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create();

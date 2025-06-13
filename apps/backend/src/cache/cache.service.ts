@@ -3,28 +3,26 @@ import { Injectable, Logger } from '@nestjs/common';
 @Injectable()
 export class CacheService {
   private readonly logger = new Logger(CacheService.name);
-  private cache = new Map<string, { data: any; expiry: number }>();
+  private readonly cache = new Map<string, { value: any; expiry: number }>();
 
   // Simple in-memory cache implementation for development
   // In production, this would use Redis
   async get<T>(key: string): Promise<T | null> {
-    const cached = this.cache.get(key);
-    if (!cached) {
-      return null;
-    }
+    const item = this.cache.get(key);
+    if (!item) return null;
 
-    if (Date.now() > cached.expiry) {
+    if (item.expiry < Date.now()) {
       this.cache.delete(key);
       return null;
     }
 
     this.logger.debug(`Cache HIT for key: ${key}`);
-    return cached.data as T;
+    return item.value as T;
   }
 
   async set(key: string, value: any, ttlSeconds: number = 300): Promise<void> {
     const expiry = Date.now() + (ttlSeconds * 1000);
-    this.cache.set(key, { data: value, expiry });
+    this.cache.set(key, { value, expiry });
     this.logger.debug(`Cache SET for key: ${key}, TTL: ${ttlSeconds}s`);
   }
 

@@ -23,7 +23,7 @@ let DevAuthGuard = class DevAuthGuard extends jwt_auth_guard_1.JwtAuthGuard {
         const isDevelopment = !nodeEnv || nodeEnv === 'development';
         const hasAzureAdConfig = this.configService.get('AZURE_AD_CLIENT_ID') &&
             this.configService.get('AZURE_AD_CLIENT_ID') !== 'demo-client-id';
-        if (isDevelopment && !hasAzureAdConfig) {
+        if (isDevelopment) {
             const request = context.switchToHttp().getRequest();
             request.user = {
                 id: 'dev-user-1',

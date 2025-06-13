@@ -16,6 +16,7 @@ const work_orders_controller_1 = require("./work-orders.controller");
 const work_orders_service_1 = require("./work-orders.service");
 const users_module_1 = require("../users/users.module");
 const assets_module_1 = require("../assets/assets.module");
+const cache_service_1 = require("../cache/cache.service");
 let WorkOrdersModule = class WorkOrdersModule {
 };
 exports.WorkOrdersModule = WorkOrdersModule;
@@ -31,7 +32,7 @@ exports.WorkOrdersModule = WorkOrdersModule = __decorate([
             assets_module_1.AssetsModule,
         ],
         controllers: [work_orders_controller_1.WorkOrdersController],
-        providers: [work_orders_service_1.WorkOrdersService],
+        providers: [work_orders_service_1.WorkOrdersService, cache_service_1.CacheService],
         exports: [work_orders_service_1.WorkOrdersService],
     })
 ], WorkOrdersModule);

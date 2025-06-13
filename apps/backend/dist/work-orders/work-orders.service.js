@@ -19,11 +19,13 @@ const typeorm_2 = require("typeorm");
 const work_order_entity_1 = require("./entities/work-order.entity");
 const work_order_comment_entity_1 = require("./entities/work-order-comment.entity");
 const work_order_attachment_entity_1 = require("./entities/work-order-attachment.entity");
+const cache_service_1 = require("../cache/cache.service");
 let WorkOrdersService = class WorkOrdersService {
-    constructor(workOrderRepository, commentRepository, attachmentRepository) {
+    constructor(workOrderRepository, commentRepository, attachmentRepository, cacheService) {
         this.workOrderRepository = workOrderRepository;
         this.commentRepository = commentRepository;
         this.attachmentRepository = attachmentRepository;
+        this.cacheService = cacheService;
     }
     async findAll(filters) {
         const query = this.workOrderRepository
@@ -42,7 +44,40 @@ let WorkOrdersService = class WorkOrdersService {
         if (filters?.priority) {
             query.andWhere('workOrder.priority = :priority', { priority: filters.priority });
         }
-        return query.orderBy('workOrder.createdAt', 'DESC').getMany();
+        if (filters?.type) {
+            query.andWhere('workOrder.type = :type', { type: filters.type });
+        }
+        if (filters?.search) {
+            const searchTerm = `%${filters.search.toLowerCase()}%`;
+            query.andWhere(`(LOWER(workOrder.title) LIKE :search 
+         OR LOWER(workOrder.description) LIKE :search 
+         OR LOWER(workOrder.workOrderNumber) LIKE :search
+         OR LOWER(CONCAT(assignedTo.firstName, ' ', assignedTo.lastName)) LIKE :search
+         OR LOWER(CONCAT(requestedBy.firstName, ' ', requestedBy.lastName)) LIKE :search)`, { search: searchTerm });
+        }
+        if (filters?.dateFrom) {
+            query.andWhere('workOrder.createdAt >= :dateFrom', { dateFrom: new Date(filters.dateFrom) });
+        }
+        if (filters?.dateTo) {
+            const endDate = new Date(filters.dateTo);
+            endDate.setHours(23, 59, 59, 999);
+            query.andWhere('workOrder.createdAt <= :dateTo', { dateTo: endDate });
+        }
+        if (filters?.overdueOnly) {
+            const today = new Date();
+            query.andWhere('workOrder.scheduledEndDate < :today', { today })
+                .andWhere('workOrder.status NOT IN (:...completedStatuses)', {
+                completedStatuses: [work_order_entity_1.WorkOrderStatus.COMPLETED, work_order_entity_1.WorkOrderStatus.CANCELLED, work_order_entity_1.WorkOrderStatus.CLOSED],
+            });
+        }
+        if (filters?.limit) {
+            query.limit(filters.limit);
+        }
+        if (filters?.offset) {
+            query.offset(filters.offset);
+        }
+        query.orderBy('workOrder.createdAt', 'DESC');
+        return query.getMany();
     }
     async findById(id) {
         return this.workOrderRepository.findOne({
@@ -63,7 +98,9 @@ let WorkOrdersService = class WorkOrdersService {
             workOrderData.workOrderNumber = await this.generateWorkOrderNumber();
         }
         const workOrder = this.workOrderRepository.create(workOrderData);
-        return this.workOrderRepository.save(workOrder);
+        const savedWorkOrder = await this.workOrderRepository.save(workOrder);
+        await this.cacheService.invalidateWorkOrderCaches();
+        return savedWorkOrder;
     }
     async update(id, updateData) {
         await this.workOrderRepository.update(id, updateData);
@@ -71,6 +108,7 @@ let WorkOrdersService = class WorkOrdersService {
         if (!updatedWorkOrder) {
             throw new Error('Work order not found');
         }
+        await this.cacheService.invalidateWorkOrderCaches();
         return updatedWorkOrder;
     }
     async updateStatus(id, status, completionNotes) {
@@ -91,6 +129,7 @@ let WorkOrdersService = class WorkOrdersService {
         if (result.affected === 0) {
             throw new Error('Work order not found');
         }
+        await this.cacheService.invalidateWorkOrderCaches();
     }
     async findOverdue() {
         const today = new Date();
@@ -107,6 +146,11 @@ let WorkOrdersService = class WorkOrdersService {
             .getMany();
     }
     async getDashboardStats() {
+        const cacheKey = this.cacheService.getDashboardStatsKey();
+        const cached = await this.cacheService.get(cacheKey);
+        if (cached) {
+            return cached;
+        }
         const [totalOpen, totalInProgress, totalCompleted, totalOverdue,] = await Promise.all([
             this.workOrderRepository.count({ where: { status: work_order_entity_1.WorkOrderStatus.OPEN } }),
             this.workOrderRepository.count({ where: { status: work_order_entity_1.WorkOrderStatus.IN_PROGRESS } }),
@@ -118,13 +162,15 @@ let WorkOrdersService = class WorkOrdersService {
             .where('workOrder.status = :status', { status: work_order_entity_1.WorkOrderStatus.COMPLETED })
             .andWhere('DATE(workOrder.actualEndDate) = DATE(:today)', { today: new Date() })
             .getCount();
-        return {
+        const stats = {
             open: totalOpen,
             inProgress: totalInProgress,
             completed: totalCompleted,
             overdue: totalOverdue,
             completedToday,
         };
+        await this.cacheService.set(cacheKey, stats, 120);
+        return stats;
     }
     async addComment(workOrderId, content, authorId, isInternal = false) {
         const comment = this.commentRepository.create({
@@ -250,6 +296,7 @@ exports.WorkOrdersService = WorkOrdersService = __decorate([
     __param(2, (0, typeorm_1.InjectRepository)(work_order_attachment_entity_1.WorkOrderAttachment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        cache_service_1.CacheService])
 ], WorkOrdersService);
 //# sourceMappingURL=work-orders.service.js.map
