@@ -30,6 +30,13 @@ let UsersService = class UsersService {
     async findByAzureAdObjectId(azureAdObjectId) {
         return this.userRepository.findOne({ where: { azureAdObjectId } });
     }
+    async findByRole(role) {
+        return this.userRepository.find({ where: { role } });
+    }
+    async create(userData) {
+        const user = this.userRepository.create(userData);
+        return this.userRepository.save(user);
+    }
     async createFromAzureAd(data) {
         const user = this.userRepository.create({
             azureAdObjectId: data.azureAdObjectId,

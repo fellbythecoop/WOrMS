@@ -30,11 +30,12 @@ let WorkOrdersService = class WorkOrdersService {
     async findAll(filters) {
         const query = this.workOrderRepository
             .createQueryBuilder('workOrder')
-            .leftJoinAndSelect('workOrder.requestedBy', 'requestedBy')
             .leftJoinAndSelect('workOrder.assignedTo', 'assignedTo')
             .leftJoinAndSelect('workOrder.asset', 'asset')
+            .leftJoinAndSelect('workOrder.customer', 'customer')
             .leftJoinAndSelect('workOrder.comments', 'comments')
-            .leftJoinAndSelect('workOrder.attachments', 'attachments');
+            .leftJoinAndSelect('workOrder.attachments', 'attachments')
+            .leftJoinAndSelect('workOrder.timeEntries', 'timeEntries');
         if (filters?.status) {
             query.andWhere('workOrder.status = :status', { status: filters.status });
         }
@@ -52,8 +53,7 @@ let WorkOrdersService = class WorkOrdersService {
             query.andWhere(`(LOWER(workOrder.title) LIKE :search 
          OR LOWER(workOrder.description) LIKE :search 
          OR LOWER(workOrder.workOrderNumber) LIKE :search
-         OR LOWER(CONCAT(assignedTo.firstName, ' ', assignedTo.lastName)) LIKE :search
-         OR LOWER(CONCAT(requestedBy.firstName, ' ', requestedBy.lastName)) LIKE :search)`, { search: searchTerm });
+         OR LOWER(CONCAT(assignedTo.firstName, ' ', assignedTo.lastName)) LIKE :search)`, { search: searchTerm });
         }
         if (filters?.dateFrom) {
             query.andWhere('workOrder.createdAt >= :dateFrom', { dateFrom: new Date(filters.dateFrom) });
@@ -82,15 +82,7 @@ let WorkOrdersService = class WorkOrdersService {
     async findById(id) {
         return this.workOrderRepository.findOne({
             where: { id },
-            relations: [
-                'requestedBy',
-                'assignedTo',
-                'asset',
-                'comments',
-                'comments.author',
-                'attachments',
-                'attachments.uploadedBy',
-            ],
+            relations: ['assignedTo', 'asset', 'customer', 'comments', 'comments.author', 'attachments', 'timeEntries', 'timeEntries.technician'],
         });
     }
     async create(workOrderData) {
@@ -103,7 +95,8 @@ let WorkOrdersService = class WorkOrdersService {
         return savedWorkOrder;
     }
     async update(id, updateData) {
-        await this.workOrderRepository.update(id, updateData);
+        const { comments, attachments, timeEntries, assignedTo, asset, customer, ...updateFields } = updateData;
+        await this.workOrderRepository.update(id, updateFields);
         const updatedWorkOrder = await this.findById(id);
         if (!updatedWorkOrder) {
             throw new Error('Work order not found');
@@ -135,7 +128,6 @@ let WorkOrdersService = class WorkOrdersService {
         const today = new Date();
         return this.workOrderRepository
             .createQueryBuilder('workOrder')
-            .leftJoinAndSelect('workOrder.requestedBy', 'requestedBy')
             .leftJoinAndSelect('workOrder.assignedTo', 'assignedTo')
             .leftJoinAndSelect('workOrder.asset', 'asset')
             .where('workOrder.scheduledEndDate < :today', { today })
@@ -146,31 +138,101 @@ let WorkOrdersService = class WorkOrdersService {
             .getMany();
     }
     async getDashboardStats() {
-        const cacheKey = this.cacheService.getDashboardStatsKey();
+        const cacheKey = 'dashboard_stats';
         const cached = await this.cacheService.get(cacheKey);
         if (cached) {
             return cached;
         }
-        const [totalOpen, totalInProgress, totalCompleted, totalOverdue,] = await Promise.all([
+        const [open, inProgress, completed, overdue, completedToday,] = await Promise.all([
             this.workOrderRepository.count({ where: { status: work_order_entity_1.WorkOrderStatus.OPEN } }),
             this.workOrderRepository.count({ where: { status: work_order_entity_1.WorkOrderStatus.IN_PROGRESS } }),
             this.workOrderRepository.count({ where: { status: work_order_entity_1.WorkOrderStatus.COMPLETED } }),
-            this.findOverdue().then(orders => orders.length),
+            this.workOrderRepository.count({
+                where: {
+                    scheduledEndDate: new Date(),
+                    status: work_order_entity_1.WorkOrderStatus.OPEN,
+                },
+            }),
+            this.workOrderRepository.count({
+                where: {
+                    status: work_order_entity_1.WorkOrderStatus.COMPLETED,
+                    actualEndDate: new Date(),
+                },
+            }),
         ]);
-        const completedToday = await this.workOrderRepository
-            .createQueryBuilder('workOrder')
-            .where('workOrder.status = :status', { status: work_order_entity_1.WorkOrderStatus.COMPLETED })
-            .andWhere('DATE(workOrder.actualEndDate) = DATE(:today)', { today: new Date() })
-            .getCount();
         const stats = {
-            open: totalOpen,
-            inProgress: totalInProgress,
-            completed: totalCompleted,
-            overdue: totalOverdue,
+            open,
+            inProgress,
+            completed,
+            overdue,
             completedToday,
         };
         await this.cacheService.set(cacheKey, stats, 120);
         return stats;
+    }
+    async getDashboardStatsForUser(userId) {
+        const cacheKey = `dashboard_stats_user_${userId}`;
+        const cached = await this.cacheService.get(cacheKey);
+        if (cached) {
+            return cached;
+        }
+        const [open, inProgress, completed, overdue, completedToday,] = await Promise.all([
+            this.workOrderRepository.count({
+                where: {
+                    status: work_order_entity_1.WorkOrderStatus.OPEN,
+                    assignedToId: userId
+                }
+            }),
+            this.workOrderRepository.count({
+                where: {
+                    status: work_order_entity_1.WorkOrderStatus.IN_PROGRESS,
+                    assignedToId: userId
+                }
+            }),
+            this.workOrderRepository.count({
+                where: {
+                    status: work_order_entity_1.WorkOrderStatus.COMPLETED,
+                    assignedToId: userId
+                }
+            }),
+            this.workOrderRepository.count({
+                where: {
+                    scheduledEndDate: new Date(),
+                    status: work_order_entity_1.WorkOrderStatus.OPEN,
+                    assignedToId: userId,
+                },
+            }),
+            this.workOrderRepository.count({
+                where: {
+                    status: work_order_entity_1.WorkOrderStatus.COMPLETED,
+                    actualEndDate: new Date(),
+                    assignedToId: userId,
+                },
+            }),
+        ]);
+        const stats = {
+            open,
+            inProgress,
+            completed,
+            overdue,
+            completedToday,
+        };
+        await this.cacheService.set(cacheKey, stats, 120);
+        return stats;
+    }
+    async findOverdueByUser(userId) {
+        const today = new Date();
+        return this.workOrderRepository
+            .createQueryBuilder('workOrder')
+            .leftJoinAndSelect('workOrder.assignedTo', 'assignedTo')
+            .leftJoinAndSelect('workOrder.asset', 'asset')
+            .where('workOrder.scheduledEndDate < :today', { today })
+            .andWhere('workOrder.status NOT IN (:...completedStatuses)', {
+            completedStatuses: [work_order_entity_1.WorkOrderStatus.COMPLETED, work_order_entity_1.WorkOrderStatus.CANCELLED, work_order_entity_1.WorkOrderStatus.CLOSED],
+        })
+            .andWhere('workOrder.assignedToId = :userId', { userId })
+            .orderBy('workOrder.scheduledEndDate', 'ASC')
+            .getMany();
     }
     async addComment(workOrderId, content, authorId, isInternal = false) {
         const comment = this.commentRepository.create({
@@ -193,6 +255,23 @@ let WorkOrdersService = class WorkOrdersService {
             description,
         });
         return this.attachmentRepository.save(attachment);
+    }
+    async getAttachmentById(attachmentId) {
+        return this.attachmentRepository.findOne({
+            where: { id: attachmentId },
+            relations: ['uploadedBy'],
+        });
+    }
+    async deleteAttachment(attachmentId) {
+        const attachment = await this.getAttachmentById(attachmentId);
+        if (!attachment) {
+            throw new Error('Attachment not found');
+        }
+        const fs = require('fs');
+        if (fs.existsSync(attachment.filePath)) {
+            fs.unlinkSync(attachment.filePath);
+        }
+        await this.attachmentRepository.delete(attachmentId);
     }
     async seedSampleWorkOrders() {
         const existingWorkOrders = await this.workOrderRepository.count();

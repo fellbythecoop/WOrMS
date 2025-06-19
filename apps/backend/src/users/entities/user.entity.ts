@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { WorkOrder } from '../../work-orders/entities/work-order.entity';
+import { WorkOrderTimeEntry } from '../../work-orders/entities/work-order-time-entry.entity';
 
 export enum UserRole {
   TECHNICIAN = 'technician',
@@ -75,8 +76,8 @@ export class User {
   @OneToMany(() => WorkOrder, workOrder => workOrder.assignedTo)
   assignedWorkOrders: WorkOrder[];
 
-  @OneToMany(() => WorkOrder, workOrder => workOrder.requestedBy)
-  requestedWorkOrders: WorkOrder[];
+  @OneToMany(() => WorkOrderTimeEntry, timeEntry => timeEntry.technician)
+  timeEntries: WorkOrderTimeEntry[];
 
   // Virtual fields
   get fullName(): string {

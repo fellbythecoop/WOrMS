@@ -7,6 +7,8 @@ const work_order_entity_1 = require("../work-orders/entities/work-order.entity")
 const asset_entity_1 = require("../assets/entities/asset.entity");
 const work_order_comment_entity_1 = require("../work-orders/entities/work-order-comment.entity");
 const work_order_attachment_entity_1 = require("../work-orders/entities/work-order-attachment.entity");
+const work_order_time_entry_entity_1 = require("../work-orders/entities/work-order-time-entry.entity");
+const customer_entity_1 = require("../customers/entities/customer.entity");
 const databaseConfig = (configService) => {
     const nodeEnv = configService.get('NODE_ENV') || 'development';
     const dbHost = configService.get('DB_HOST');
@@ -20,6 +22,8 @@ const databaseConfig = (configService) => {
                 asset_entity_1.Asset,
                 work_order_comment_entity_1.WorkOrderComment,
                 work_order_attachment_entity_1.WorkOrderAttachment,
+                work_order_time_entry_entity_1.WorkOrderTimeEntry,
+                customer_entity_1.Customer,
             ],
             synchronize: true,
             logging: configService.get('DB_LOGGING', false),
@@ -38,6 +42,8 @@ const databaseConfig = (configService) => {
             asset_entity_1.Asset,
             work_order_comment_entity_1.WorkOrderComment,
             work_order_attachment_entity_1.WorkOrderAttachment,
+            work_order_time_entry_entity_1.WorkOrderTimeEntry,
+            customer_entity_1.Customer,
         ],
         migrations: ['dist/migrations/*.js'],
         synchronize: configService.get('DB_SYNCHRONIZE', false),

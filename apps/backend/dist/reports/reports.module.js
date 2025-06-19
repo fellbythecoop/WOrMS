@@ -10,6 +10,7 @@ exports.ReportsModule = void 0;
 const common_1 = require("@nestjs/common");
 const reports_controller_1 = require("./reports.controller");
 const reports_service_1 = require("./reports.service");
+const pdf_report_service_1 = require("./pdf-report.service");
 const work_orders_module_1 = require("../work-orders/work-orders.module");
 const assets_module_1 = require("../assets/assets.module");
 const users_module_1 = require("../users/users.module");
@@ -24,8 +25,8 @@ exports.ReportsModule = ReportsModule = __decorate([
             users_module_1.UsersModule,
         ],
         controllers: [reports_controller_1.ReportsController],
-        providers: [reports_service_1.ReportsService],
-        exports: [reports_service_1.ReportsService],
+        providers: [reports_service_1.ReportsService, pdf_report_service_1.PdfReportService],
+        exports: [reports_service_1.ReportsService, pdf_report_service_1.PdfReportService],
     })
 ], ReportsModule);
 //# sourceMappingURL=reports.module.js.map

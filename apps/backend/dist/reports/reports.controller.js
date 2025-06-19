@@ -16,7 +16,7 @@ exports.ReportsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const reports_service_1 = require("./reports.service");
-const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const dev_auth_guard_1 = require("../auth/guards/dev-auth.guard");
 let ReportsController = class ReportsController {
     constructor(reportsService) {
         this.reportsService = reportsService;
@@ -102,7 +102,7 @@ __decorate([
 exports.ReportsController = ReportsController = __decorate([
     (0, swagger_1.ApiTags)('Reports'),
     (0, common_1.Controller)('reports'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(dev_auth_guard_1.DevAuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [reports_service_1.ReportsService])
 ], ReportsController);

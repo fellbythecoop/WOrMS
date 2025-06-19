@@ -1,27 +1,50 @@
 'use client';
 
-import { Box, Container, Typography } from '@mui/material';
-import { Dashboard } from '@/components/dashboard/Dashboard';
+import { useState } from 'react';
+import { Box } from '@mui/material';
+import { Navigation, NavigationPage } from '@/components/common/Navigation';
+import { DashboardPage } from '@/components/pages/DashboardPage';
+import { WorkOrdersPage } from '@/components/pages/WorkOrdersPage';
+import { AssetsPage } from '@/components/pages/AssetsPage';
+import { UsersPage } from '@/components/pages/UsersPage';
+import { ReportsPage } from '@/components/pages/ReportsPage';
+import { CustomersPage } from '@/components/pages/CustomersPage';
 import { NotificationProvider } from '@/components/notifications/NotificationProvider';
 
 export default function HomePage() {
+  const [currentPage, setCurrentPage] = useState<NavigationPage>('dashboard');
+
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <DashboardPage />;
+      case 'work-orders':
+        return <WorkOrdersPage />;
+      case 'assets':
+        return <AssetsPage />;
+      case 'reports':
+        return <ReportsPage />;
+      case 'users':
+        return <UsersPage />;
+      case 'customers':
+        return <CustomersPage />;
+      default:
+        return <DashboardPage />;
+    }
+  };
+
   return (
     <NotificationProvider>
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        <Box mb={4}>
-          <Typography variant="h3" component="h1" gutterBottom>
-            Work Order Management System
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            Welcome to your work order dashboard
-            <Typography variant="caption" display="block" color="warning.main">
-              (Development mode - Authentication disabled)
-            </Typography>
-          </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navigation
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          isAdmin={true} // For development, always show admin features
+        />
+        <Box sx={{ flexGrow: 1, pt: 8 }}> {/* pt: 8 accounts for the AppBar height */}
+          {renderCurrentPage()}
         </Box>
-        
-        <Dashboard />
-      </Container>
+      </Box>
     </NotificationProvider>
   );
 } 

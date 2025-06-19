@@ -35,8 +35,12 @@ export declare class WorkOrdersService {
     delete(id: string): Promise<void>;
     findOverdue(): Promise<WorkOrder[]>;
     getDashboardStats(): Promise<DashboardStats>;
+    getDashboardStatsForUser(userId: string): Promise<DashboardStats>;
+    findOverdueByUser(userId: string): Promise<WorkOrder[]>;
     addComment(workOrderId: string, content: string, authorId: string, isInternal?: boolean): Promise<WorkOrderComment>;
     addAttachment(workOrderId: string, fileName: string, originalName: string, mimeType: string, fileSize: number, filePath: string, uploadedById: string, description?: string): Promise<WorkOrderAttachment>;
+    getAttachmentById(attachmentId: string): Promise<WorkOrderAttachment | null>;
+    deleteAttachment(attachmentId: string): Promise<void>;
     seedSampleWorkOrders(): Promise<WorkOrder[]>;
     private generateWorkOrderNumber;
 }

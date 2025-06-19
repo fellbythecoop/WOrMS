@@ -1,7 +1,9 @@
 import { User } from '../../users/entities/user.entity';
 import { Asset } from '../../assets/entities/asset.entity';
+import { Customer } from '../../customers/entities/customer.entity';
 import { WorkOrderComment } from './work-order-comment.entity';
 import { WorkOrderAttachment } from './work-order-attachment.entity';
+import { WorkOrderTimeEntry } from './work-order-time-entry.entity';
 export declare enum WorkOrderStatus {
     OPEN = "open",
     IN_PROGRESS = "in_progress",
@@ -44,15 +46,18 @@ export declare class WorkOrder {
     metadata?: string;
     createdAt: Date;
     updatedAt: Date;
-    requestedBy: User;
-    requestedById: string;
     assignedTo?: User;
     assignedToId?: string;
     asset?: Asset;
     assetId?: string;
+    customer?: Customer;
+    customerId?: string;
     comments: WorkOrderComment[];
     attachments: WorkOrderAttachment[];
+    timeEntries: WorkOrderTimeEntry[];
     get isOverdue(): boolean;
     get daysOverdue(): number;
     get duration(): number | null;
+    get totalTimeEntries(): number;
+    get totalTimeCost(): number;
 }

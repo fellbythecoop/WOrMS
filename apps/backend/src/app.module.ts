@@ -11,6 +11,7 @@ import { WorkOrdersModule } from './work-orders/work-orders.module';
 import { AssetsModule } from './assets/assets.module';
 import { ReportsModule } from './reports/reports.module';
 import { WebSocketModule } from './websocket/websocket.module';
+import { CustomersModule } from './customers/customers.module';
 
 // Configuration
 import { databaseConfig } from './config/database.config';
@@ -60,6 +61,7 @@ import { HealthController } from './health/health.controller';
     AssetsModule,
     ReportsModule,
     WebSocketModule,
+    CustomersModule,
   ],
   controllers: [HealthController],
   providers: [],

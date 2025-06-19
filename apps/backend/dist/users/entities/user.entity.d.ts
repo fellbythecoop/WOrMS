@@ -1,4 +1,5 @@
 import { WorkOrder } from '../../work-orders/entities/work-order.entity';
+import { WorkOrderTimeEntry } from '../../work-orders/entities/work-order-time-entry.entity';
 export declare enum UserRole {
     TECHNICIAN = "technician",
     ADMINISTRATOR = "administrator",
@@ -26,7 +27,7 @@ export declare class User {
     updatedAt: Date;
     lastLoginAt?: Date;
     assignedWorkOrders: WorkOrder[];
-    requestedWorkOrders: WorkOrder[];
+    timeEntries: WorkOrderTimeEntry[];
     get fullName(): string;
     get isActive(): boolean;
 }

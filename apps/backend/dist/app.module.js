@@ -18,6 +18,7 @@ const work_orders_module_1 = require("./work-orders/work-orders.module");
 const assets_module_1 = require("./assets/assets.module");
 const reports_module_1 = require("./reports/reports.module");
 const websocket_module_1 = require("./websocket/websocket.module");
+const customers_module_1 = require("./customers/customers.module");
 const database_config_1 = require("./config/database.config");
 const health_controller_1 = require("./health/health.controller");
 let AppModule = class AppModule {
@@ -57,6 +58,7 @@ exports.AppModule = AppModule = __decorate([
             assets_module_1.AssetsModule,
             reports_module_1.ReportsModule,
             websocket_module_1.WebSocketModule,
+            customers_module_1.CustomersModule,
         ],
         controllers: [health_controller_1.HealthController],
         providers: [],

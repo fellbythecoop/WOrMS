@@ -72,3 +72,5 @@ Provide Dockerfiles and Kubernetes manifests for specified services.
 Suggest best practices for refactoring existing code to improve performance, readability, or security.
 Debug errors by suggesting potential fixes and explanations.
 Generate unit and integration test stubs.
+
+The command cd apps/backend && npm run start:dev does not work. It should be cd apps/backend; npm run start:dev instead.

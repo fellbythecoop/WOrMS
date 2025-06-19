@@ -8,6 +8,8 @@ import { WorkOrder } from '../work-orders/entities/work-order.entity';
 import { Asset } from '../assets/entities/asset.entity';
 import { WorkOrderComment } from '../work-orders/entities/work-order-comment.entity';
 import { WorkOrderAttachment } from '../work-orders/entities/work-order-attachment.entity';
+import { WorkOrderTimeEntry } from '../work-orders/entities/work-order-time-entry.entity';
+import { Customer } from '../customers/entities/customer.entity';
 
 export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptions => {
   const nodeEnv = configService.get<string>('NODE_ENV') || 'development';
@@ -25,6 +27,8 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
         Asset,
         WorkOrderComment,
         WorkOrderAttachment,
+        WorkOrderTimeEntry,
+        Customer,
       ],
       synchronize: true, // Auto-create tables in development
       logging: configService.get<boolean>('DB_LOGGING', false),
@@ -45,6 +49,8 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
       Asset,
       WorkOrderComment,
       WorkOrderAttachment,
+      WorkOrderTimeEntry,
+      Customer,
     ],
     migrations: ['dist/migrations/*.js'],
     synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),

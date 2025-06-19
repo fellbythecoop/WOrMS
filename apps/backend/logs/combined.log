@@ -974,3 +974,1697 @@
 {"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
 {"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
 {"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"leaveWorkOrderRoom\" message"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"WebSocketsController","level":"info","message":"WorkOrdersGateway subscribed to the \"joinWorkOrderRoom\" message"}
+{"context":"PackageLoader","level":"error","message":"The \"class-validator\" package is missing. Please, make sure to install it to take advantage of ValidationPipe.","stack":[null]}
+{"context":"PackageLoader","level":"error","message":"The \"class-validator\" package is missing. Please, make sure to install it to take advantage of ValidationPipe.","stack":[null]}
+{"context":"PackageLoader","level":"error","message":"The \"class-validator\" package is missing. Please, make sure to install it to take advantage of ValidationPipe.","stack":[null]}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"ExceptionsHandler","level":"error","message":"Cannot query across one-to-many for property comments","stack":["Error: Cannot query across one-to-many for property comments\n    at UpdateQueryBuilder.createPropertyPath (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\QueryBuilder.ts:1418:27)\n    at UpdateQueryBuilder.createUpdateExpression (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:493:18)\n    at UpdateQueryBuilder.getQuery (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:53:21)\n    at UpdateQueryBuilder.getQueryAndParameters (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\QueryBuilder.ts:495:28)\n    at UpdateQueryBuilder.execute (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:142:50)\n    at async WorkOrdersService.update (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\src\\work-orders\\work-orders.service.ts:149:5)\n    at async C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28\n    at async C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\node_modules\\@nestjs\\core\\router\\router-proxy.js:9:17"]}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"ExceptionsHandler","level":"error","message":"Property \"customerName\" was not found in \"WorkOrder\". Make sure your query is correct.","stack":["EntityPropertyNotFoundError: Property \"customerName\" was not found in \"WorkOrder\". Make sure your query is correct.\n    at <anonymous> (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:500:31)\n    at Array.forEach (<anonymous>)\n    at UpdateQueryBuilder.createUpdateExpression (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:493:68)\n    at UpdateQueryBuilder.getQuery (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:53:21)\n    at UpdateQueryBuilder.getQueryAndParameters (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\QueryBuilder.ts:495:28)\n    at UpdateQueryBuilder.execute (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\query-builder\\src\\query-builder\\UpdateQueryBuilder.ts:142:50)\n    at async WorkOrdersService.update (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\src\\work-orders\\work-orders.service.ts:144:5)\n    at async C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\node_modules\\@nestjs\\core\\router\\router-execution-context.js:46:28\n    at async C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\node_modules\\@nestjs\\core\\router\\router-proxy.js:9:17"]}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"ExceptionsHandler","level":"error","message":"SQLITE_CONSTRAINT: NOT NULL constraint failed: work_orders.title","stack":["QueryFailedError: SQLITE_CONSTRAINT: NOT NULL constraint failed: work_orders.title\n    at Statement.handler (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\driver\\src\\driver\\sqlite\\SqliteQueryRunner.ts:133:29)"]}
+{"context":"ExceptionsHandler","level":"error","message":"SQLITE_CONSTRAINT: NOT NULL constraint failed: work_orders.title","stack":["QueryFailedError: SQLITE_CONSTRAINT: NOT NULL constraint failed: work_orders.title\n    at Statement.handler (C:\\Users\\Engineering\\Documents\\Cursor\\WOrMS\\WOrMS\\apps\\backend\\node_modules\\typeorm\\driver\\src\\driver\\sqlite\\SqliteQueryRunner.ts:133:29)"]}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/azure-login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/profile, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/verify, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/role, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/seed, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/technicians, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/roles/managers, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"WorkOrdersController {/api/work-orders}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/time-entries, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/status, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/time-entries/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/stats/dashboard, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/overdue/list, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/comments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/:id/attachments, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id/download, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/attachments/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/work-orders/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AssetsController {/api/assets}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/assets/seed/sample-data, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"CustomersController {/api/customers}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/customers/seed, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"ReportsController {/api/reports}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/pdf, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/work-order/:id/complete, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/assets/maintenance-schedule, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/reports/dashboard/summary, GET} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}

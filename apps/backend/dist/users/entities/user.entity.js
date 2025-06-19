@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = exports.UserStatus = exports.UserRole = void 0;
 const typeorm_1 = require("typeorm");
 const work_order_entity_1 = require("../../work-orders/entities/work-order.entity");
+const work_order_time_entry_entity_1 = require("../../work-orders/entities/work-order-time-entry.entity");
 var UserRole;
 (function (UserRole) {
     UserRole["TECHNICIAN"] = "technician";
@@ -101,9 +102,9 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "assignedWorkOrders", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => work_order_entity_1.WorkOrder, workOrder => workOrder.requestedBy),
+    (0, typeorm_1.OneToMany)(() => work_order_time_entry_entity_1.WorkOrderTimeEntry, timeEntry => timeEntry.technician),
     __metadata("design:type", Array)
-], User.prototype, "requestedWorkOrders", void 0);
+], User.prototype, "timeEntries", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

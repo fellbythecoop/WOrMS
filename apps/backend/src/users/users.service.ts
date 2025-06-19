@@ -22,6 +22,15 @@ export class UsersService {
     return this.userRepository.findOne({ where: { azureAdObjectId } });
   }
 
+  async findByRole(role: UserRole): Promise<User[]> {
+    return this.userRepository.find({ where: { role } });
+  }
+
+  async create(userData: Partial<User>): Promise<User> {
+    const user = this.userRepository.create(userData);
+    return this.userRepository.save(user);
+  }
+
   async createFromAzureAd(data: {
     azureAdObjectId: string;
     email: string;

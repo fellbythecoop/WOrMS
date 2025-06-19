@@ -13,8 +13,10 @@ exports.WorkOrder = exports.WorkOrderType = exports.WorkOrderPriority = exports.
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../../users/entities/user.entity");
 const asset_entity_1 = require("../../assets/entities/asset.entity");
+const customer_entity_1 = require("../../customers/entities/customer.entity");
 const work_order_comment_entity_1 = require("./work-order-comment.entity");
 const work_order_attachment_entity_1 = require("./work-order-attachment.entity");
+const work_order_time_entry_entity_1 = require("./work-order-time-entry.entity");
 var WorkOrderStatus;
 (function (WorkOrderStatus) {
     WorkOrderStatus["OPEN"] = "open";
@@ -57,6 +59,12 @@ let WorkOrder = class WorkOrder {
         if (!this.actualStartDate || !this.actualEndDate)
             return null;
         return Math.floor((this.actualEndDate.getTime() - this.actualStartDate.getTime()) / (1000 * 3600 * 24));
+    }
+    get totalTimeEntries() {
+        return this.timeEntries?.reduce((total, entry) => total + Number(entry.hours), 0) || 0;
+    }
+    get totalTimeCost() {
+        return this.timeEntries?.reduce((total, entry) => total + Number(entry.totalAmount), 0) || 0;
     }
 };
 exports.WorkOrder = WorkOrder;
@@ -150,15 +158,6 @@ __decorate([
     __metadata("design:type", Date)
 ], WorkOrder.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.requestedWorkOrders),
-    (0, typeorm_1.JoinColumn)({ name: 'requested_by_id' }),
-    __metadata("design:type", user_entity_1.User)
-], WorkOrder.prototype, "requestedBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'requested_by_id' }),
-    __metadata("design:type", String)
-], WorkOrder.prototype, "requestedById", void 0);
-__decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.assignedWorkOrders, { nullable: true }),
     (0, typeorm_1.JoinColumn)({ name: 'assigned_to_id' }),
     __metadata("design:type", user_entity_1.User)
@@ -177,6 +176,15 @@ __decorate([
     __metadata("design:type", String)
 ], WorkOrder.prototype, "assetId", void 0);
 __decorate([
+    (0, typeorm_1.ManyToOne)(() => customer_entity_1.Customer, customer => customer.workOrders, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'customer_id' }),
+    __metadata("design:type", customer_entity_1.Customer)
+], WorkOrder.prototype, "customer", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'customer_id', nullable: true }),
+    __metadata("design:type", String)
+], WorkOrder.prototype, "customerId", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => work_order_comment_entity_1.WorkOrderComment, comment => comment.workOrder),
     __metadata("design:type", Array)
 ], WorkOrder.prototype, "comments", void 0);
@@ -184,6 +192,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => work_order_attachment_entity_1.WorkOrderAttachment, attachment => attachment.workOrder),
     __metadata("design:type", Array)
 ], WorkOrder.prototype, "attachments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => work_order_time_entry_entity_1.WorkOrderTimeEntry, timeEntry => timeEntry.workOrder),
+    __metadata("design:type", Array)
+], WorkOrder.prototype, "timeEntries", void 0);
 exports.WorkOrder = WorkOrder = __decorate([
     (0, typeorm_1.Entity)('work_orders')
 ], WorkOrder);

@@ -20,9 +20,9 @@ import {
   Collapse,
   Badge,
   Divider,
+  Container,
 } from '@mui/material';
 import {
-  Edit as EditIcon,
   Visibility as ViewIcon,
   Delete as DeleteIcon,
   Add as AddIcon,
@@ -35,6 +35,7 @@ import {
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
+import { WorkOrderDetail } from './WorkOrderDetail';
 
 // Enhanced interface for work orders
 interface AdvancedWorkOrder {
@@ -55,11 +56,6 @@ interface AdvancedWorkOrder {
     firstName: string;
     lastName: string;
     email: string;
-  };
-  requestedBy?: {
-    id: string;
-    firstName: string;
-    lastName: string;
   };
   asset?: {
     id: string;
@@ -84,7 +80,6 @@ interface AdvancedWorkOrderListProps {
   users: Array<{ id: string; firstName: string; lastName: string; email: string; }>;
   loading?: boolean;
   onCreateNew: () => void;
-  onEdit: (workOrder: AdvancedWorkOrder) => void;
   onView: (workOrder: AdvancedWorkOrder) => void;
   onDelete: (workOrderId: string) => void;
   onRefresh?: () => void;
@@ -119,7 +114,6 @@ export function AdvancedWorkOrderList({
   users,
   loading = false,
   onCreateNew,
-  onEdit,
   onView,
   onDelete,
   onRefresh,
@@ -136,6 +130,8 @@ export function AdvancedWorkOrderList({
   });
   
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedWorkOrder, setSelectedWorkOrder] = useState<AdvancedWorkOrder | null>(null);
+  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 
   // Filter work orders based on current filter state
   const filteredWorkOrders = useMemo(() => {
@@ -349,13 +345,6 @@ export function AdvancedWorkOrderList({
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => onEdit(params.row)}
-            title="Edit Work Order"
-          >
-            <EditIcon fontSize="small" />
-          </IconButton>
-          <IconButton
-            size="small"
             onClick={() => onDelete(params.row.id)}
             color="error"
             title="Delete Work Order"
@@ -367,267 +356,288 @@ export function AdvancedWorkOrderList({
     },
   ];
 
+  const handleViewWorkOrder = (workOrder: AdvancedWorkOrder) => {
+    setSelectedWorkOrder(workOrder);
+    setDetailDialogOpen(true);
+  };
+
+  const handleCloseDetailDialog = () => {
+    setDetailDialogOpen(false);
+    setSelectedWorkOrder(null);
+  };
+
   return (
-    <Paper sx={{ p: 3 }}>
-      {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" component="h2">
-          Work Orders
-          {filteredWorkOrders.length !== workOrders.length && (
-            <Typography variant="body2" color="text.secondary" component="span" sx={{ ml: 1 }}>
-              ({filteredWorkOrders.length} of {workOrders.length})
-            </Typography>
-          )}
-        </Typography>
-        <Stack direction="row" spacing={2}>
-          {onRefresh && (
-            <Button variant="outlined" onClick={onRefresh}>
-              Refresh
+    <Box>
+      <Container>
+        {/* Header */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Typography variant="h5" component="h2">
+            Work Orders
+            {filteredWorkOrders.length !== workOrders.length && (
+              <Typography variant="body2" color="text.secondary" component="span" sx={{ ml: 1 }}>
+                ({filteredWorkOrders.length} of {workOrders.length})
+              </Typography>
+            )}
+          </Typography>
+          <Stack direction="row" spacing={2}>
+            {onRefresh && (
+              <Button variant="outlined" onClick={onRefresh}>
+                Refresh
+              </Button>
+            )}
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={onCreateNew}
+            >
+              Create New Work Order
             </Button>
-          )}
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={onCreateNew}
-          >
-            Create New Work Order
-          </Button>
-        </Stack>
-      </Box>
+          </Stack>
+        </Box>
 
-      {/* Search and Filter Controls */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent sx={{ pb: 2 }}>
-          <Grid container spacing={2} alignItems="center">
-            {/* Search */}
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                placeholder="Search work orders..."
-                value={filters.search}
-                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                InputProps={{
-                  startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                }}
-              />
-            </Grid>
-
-            {/* Filter Toggle */}
-            <Grid item xs={12} md={8}>
-              <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2}>
-                {activeFilterCount > 0 && (
-                  <Button
-                    size="small"
-                    startIcon={<ClearIcon />}
-                    onClick={clearFilters}
-                  >
-                    Clear Filters
-                  </Button>
-                )}
-                <Badge badgeContent={activeFilterCount} color="primary">
-                  <Button
-                    variant={showFilters ? "contained" : "outlined"}
-                    startIcon={<FilterIcon />}
-                    endIcon={showFilters ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    onClick={() => setShowFilters(!showFilters)}
-                  >
-                    Filters
-                  </Button>
-                </Badge>
-              </Box>
-            </Grid>
-          </Grid>
-
-          {/* Advanced Filters */}
-          <Collapse in={showFilters}>
-            <Divider sx={{ my: 2 }} />
-            <Grid container spacing={2}>
-              {/* Status Filter */}
-              <Grid item xs={12} sm={6} md={3}>
-                <FormControl fullWidth size="small">
-                  <InputLabel>Status</InputLabel>
-                  <Select
-                    multiple
-                    value={filters.status}
-                    onChange={(e) => setFilters(prev => ({ 
-                      ...prev, 
-                      status: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
-                    }))}
-                    label="Status"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => {
-                          const option = STATUS_OPTIONS.find(s => s.value === value);
-                          return (
-                            <Chip key={value} label={option?.label} size="small" />
-                          );
-                        })}
-                      </Box>
-                    )}
-                  >
-                    {STATUS_OPTIONS.map((status) => (
-                      <MenuItem key={status.value} value={status.value}>
-                        {status.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Priority Filter */}
-              <Grid item xs={12} sm={6} md={3}>
-                <FormControl fullWidth size="small">
-                  <InputLabel>Priority</InputLabel>
-                  <Select
-                    multiple
-                    value={filters.priority}
-                    onChange={(e) => setFilters(prev => ({ 
-                      ...prev, 
-                      priority: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
-                    }))}
-                    label="Priority"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => {
-                          const option = PRIORITY_OPTIONS.find(p => p.value === value);
-                          return (
-                            <Chip key={value} label={option?.label} size="small" />
-                          );
-                        })}
-                      </Box>
-                    )}
-                  >
-                    {PRIORITY_OPTIONS.map((priority) => (
-                      <MenuItem key={priority.value} value={priority.value}>
-                        {priority.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Type Filter */}
-              <Grid item xs={12} sm={6} md={3}>
-                <FormControl fullWidth size="small">
-                  <InputLabel>Type</InputLabel>
-                  <Select
-                    multiple
-                    value={filters.type}
-                    onChange={(e) => setFilters(prev => ({ 
-                      ...prev, 
-                      type: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
-                    }))}
-                    label="Type"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => {
-                          const option = TYPE_OPTIONS.find(t => t.value === value);
-                          return (
-                            <Chip key={value} label={option?.label} size="small" />
-                          );
-                        })}
-                      </Box>
-                    )}
-                  >
-                    {TYPE_OPTIONS.map((type) => (
-                      <MenuItem key={type.value} value={type.value}>
-                        {type.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Assigned To Filter */}
-              <Grid item xs={12} sm={6} md={3}>
-                <FormControl fullWidth size="small">
-                  <InputLabel>Assigned To</InputLabel>
-                  <Select
-                    multiple
-                    value={filters.assignedTo}
-                    onChange={(e) => setFilters(prev => ({ 
-                      ...prev, 
-                      assignedTo: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
-                    }))}
-                    label="Assigned To"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => {
-                          const user = users.find(u => u.id === value);
-                          return (
-                            <Chip 
-                              key={value} 
-                              label={user ? `${user.firstName} ${user.lastName}` : 'Unknown'} 
-                              size="small" 
-                            />
-                          );
-                        })}
-                      </Box>
-                    )}
-                  >
-                    {users.map((user) => (
-                      <MenuItem key={user.id} value={user.id}>
-                        {user.firstName} {user.lastName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Date Range */}
-              <Grid item xs={12} sm={6} md={3}>
-                <DatePicker
-                  label="From Date"
-                  value={filters.dateFrom}
-                  onChange={(newValue) => setFilters(prev => ({ ...prev, dateFrom: newValue }))}
-                  slotProps={{ textField: { size: 'small', fullWidth: true } }}
+        {/* Search and Filter Controls */}
+        <Card sx={{ mb: 3 }}>
+          <CardContent sx={{ pb: 2 }}>
+            <Grid container spacing={2} alignItems="center">
+              {/* Search */}
+              <Grid item xs={12} md={4}>
+                <TextField
+                  fullWidth
+                  placeholder="Search work orders..."
+                  value={filters.search}
+                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                  InputProps={{
+                    startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />,
+                  }}
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
-                <DatePicker
-                  label="To Date"
-                  value={filters.dateTo}
-                  onChange={(newValue) => setFilters(prev => ({ ...prev, dateTo: newValue }))}
-                  slotProps={{ textField: { size: 'small', fullWidth: true } }}
-                />
+              {/* Filter Toggle */}
+              <Grid item xs={12} md={8}>
+                <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2}>
+                  {activeFilterCount > 0 && (
+                    <Button
+                      size="small"
+                      startIcon={<ClearIcon />}
+                      onClick={clearFilters}
+                    >
+                      Clear Filters
+                    </Button>
+                  )}
+                  <Badge badgeContent={activeFilterCount} color="primary">
+                    <Button
+                      variant={showFilters ? "contained" : "outlined"}
+                      startIcon={<FilterIcon />}
+                      endIcon={showFilters ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                      onClick={() => setShowFilters(!showFilters)}
+                    >
+                      Filters
+                    </Button>
+                  </Badge>
+                </Box>
               </Grid>
             </Grid>
-          </Collapse>
-        </CardContent>
-      </Card>
 
-      {/* Data Grid */}
-      <Box sx={{ height: 600 }}>
-        <DataGrid
-          rows={filteredWorkOrders}
-          columns={columns}
-          loading={loading}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 25 },
-            },
-            sorting: {
-              sortModel: [{ field: 'createdAt', sort: 'desc' }],
-            },
-          }}
-          pageSizeOptions={[10, 25, 50, 100]}
-          checkboxSelection
-          disableRowSelectionOnClick
-          sx={{
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: 'action.hover',
-            },
-          }}
+            {/* Advanced Filters */}
+            <Collapse in={showFilters}>
+              <Divider sx={{ my: 2 }} />
+              <Grid container spacing={2}>
+                {/* Status Filter */}
+                <Grid item xs={12} sm={6} md={3}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                      multiple
+                      value={filters.status}
+                      onChange={(e) => setFilters(prev => ({ 
+                        ...prev, 
+                        status: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
+                      }))}
+                      label="Status"
+                      renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => {
+                            const option = STATUS_OPTIONS.find(s => s.value === value);
+                            return (
+                              <Chip key={value} label={option?.label} size="small" />
+                            );
+                          })}
+                        </Box>
+                      )}
+                    >
+                      {STATUS_OPTIONS.map((status) => (
+                        <MenuItem key={status.value} value={status.value}>
+                          {status.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Priority Filter */}
+                <Grid item xs={12} sm={6} md={3}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Priority</InputLabel>
+                    <Select
+                      multiple
+                      value={filters.priority}
+                      onChange={(e) => setFilters(prev => ({ 
+                        ...prev, 
+                        priority: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
+                      }))}
+                      label="Priority"
+                      renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => {
+                            const option = PRIORITY_OPTIONS.find(p => p.value === value);
+                            return (
+                              <Chip key={value} label={option?.label} size="small" />
+                            );
+                          })}
+                        </Box>
+                      )}
+                    >
+                      {PRIORITY_OPTIONS.map((priority) => (
+                        <MenuItem key={priority.value} value={priority.value}>
+                          {priority.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Type Filter */}
+                <Grid item xs={12} sm={6} md={3}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Type</InputLabel>
+                    <Select
+                      multiple
+                      value={filters.type}
+                      onChange={(e) => setFilters(prev => ({ 
+                        ...prev, 
+                        type: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
+                      }))}
+                      label="Type"
+                      renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => {
+                            const option = TYPE_OPTIONS.find(t => t.value === value);
+                            return (
+                              <Chip key={value} label={option?.label} size="small" />
+                            );
+                          })}
+                        </Box>
+                      )}
+                    >
+                      {TYPE_OPTIONS.map((type) => (
+                        <MenuItem key={type.value} value={type.value}>
+                          {type.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Assigned To Filter */}
+                <Grid item xs={12} sm={6} md={3}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Assigned To</InputLabel>
+                    <Select
+                      multiple
+                      value={filters.assignedTo}
+                      onChange={(e) => setFilters(prev => ({ 
+                        ...prev, 
+                        assignedTo: typeof e.target.value === 'string' ? [e.target.value] : e.target.value 
+                      }))}
+                      label="Assigned To"
+                      renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => {
+                            const user = users.find(u => u.id === value);
+                            return (
+                              <Chip 
+                                key={value} 
+                                label={user ? `${user.firstName} ${user.lastName}` : 'Unknown'} 
+                                size="small" 
+                              />
+                            );
+                          })}
+                        </Box>
+                      )}
+                    >
+                      {users.map((user) => (
+                        <MenuItem key={user.id} value={user.id}>
+                          {user.firstName} {user.lastName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Date Range */}
+                <Grid item xs={12} sm={6} md={3}>
+                  <DatePicker
+                    label="From Date"
+                    value={filters.dateFrom}
+                    onChange={(newValue) => setFilters(prev => ({ ...prev, dateFrom: newValue }))}
+                    slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={3}>
+                  <DatePicker
+                    label="To Date"
+                    value={filters.dateTo}
+                    onChange={(newValue) => setFilters(prev => ({ ...prev, dateTo: newValue }))}
+                    slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                  />
+                </Grid>
+              </Grid>
+            </Collapse>
+          </CardContent>
+        </Card>
+
+        {/* Data Grid */}
+        <Box sx={{ height: 600 }}>
+          <DataGrid
+            rows={filteredWorkOrders}
+            columns={columns}
+            loading={loading}
+            slots={{ toolbar: GridToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 25 },
+              },
+              sorting: {
+                sortModel: [{ field: 'createdAt', sort: 'desc' }],
+              },
+            }}
+            pageSizeOptions={[10, 25, 50, 100]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            sx={{
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: 'action.hover',
+              },
+            }}
+          />
+        </Box>
+      </Container>
+
+      {/* Work Order Detail Dialog */}
+      {selectedWorkOrder && (
+        <WorkOrderDetail
+          open={detailDialogOpen}
+          onClose={handleCloseDetailDialog}
+          workOrderId={selectedWorkOrder.id}
         />
-      </Box>
-    </Paper>
+      )}
+    </Box>
   );
 } 

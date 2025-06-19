@@ -44,12 +44,13 @@ interface CreateWorkOrderFormData {
   description: string;
   priority: WorkOrderPriority;
   type: WorkOrderType;
-  estimatedHours: number;
-  estimatedCost: number;
+  estimatedHours?: number;
+  estimatedCost?: number;
   scheduledStartDate?: Date;
   scheduledEndDate?: Date;
   assetId?: string;
   assignedToId?: string;
+  customerId?: string;
 }
 
 interface CreateWorkOrderFormProps {
@@ -89,6 +90,7 @@ export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }
       estimatedCost: 0,
       scheduledStartDate: undefined,
       scheduledEndDate: undefined,
+      customerId: '',
     },
   });
 
@@ -286,6 +288,31 @@ export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }
                       },
                     }}
                   />
+                )}
+              />
+            </Grid>
+
+            {/* Customer Selection */}
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ mt: 2, mb: 2, color: 'primary.main' }}>
+                Customer Information
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                name="customerId"
+                control={control}
+                render={({ field }) => (
+                  <FormControl fullWidth>
+                    <InputLabel>Select Customer</InputLabel>
+                    <Select {...field} label="Select Customer">
+                      <MenuItem value="">
+                        <em>No customer selected</em>
+                      </MenuItem>
+                      {/* Customer options will be populated dynamically */}
+                    </Select>
+                  </FormControl>
                 )}
               />
             </Grid>

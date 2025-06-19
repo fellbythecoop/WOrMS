@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { WorkOrdersService, DashboardStats } from '../work-orders/work-orders.service';
 import { AssetsService } from '../assets/assets.service';
 import { UsersService } from '../users/users.service';
+import { PdfReportService } from './pdf-report.service';
 
 @Injectable()
 export class ReportsService {
@@ -10,6 +10,7 @@ export class ReportsService {
     private readonly workOrdersService: WorkOrdersService,
     private readonly assetsService: AssetsService,
     private readonly usersService: UsersService,
+    private readonly pdfReportService: PdfReportService,
   ) {}
 
   async generateWorkOrderPdf(workOrderId: string): Promise<Buffer> {
@@ -18,127 +19,18 @@ export class ReportsService {
       throw new Error('Work order not found');
     }
 
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+    // Get related data
+    const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
+    const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
 
-    // Add a page
-    const page = pdfDoc.addPage();
-    const { width, height } = page.getSize();
-    const fontSize = 12;
-    const titleFontSize = 18;
-
-    let yPosition = height - 50;
-
-    // Title
-    page.drawText('Work Order Report', {
-      x: 50,
-      y: yPosition,
-      size: titleFontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
-    });
-
-    yPosition -= 40;
-
-    // Work Order Details
-    const details = [
-      `Work Order #: ${workOrder.workOrderNumber}`,
-      `Title: ${workOrder.title}`,
-      `Status: ${workOrder.status}`,
-      `Priority: ${workOrder.priority}`,
-      `Type: ${workOrder.type}`,
-      `Requested By: ${workOrder.requestedBy?.fullName || 'N/A'}`,
-      `Assigned To: ${workOrder.assignedTo?.fullName || 'Unassigned'}`,
-      `Asset: ${workOrder.asset?.name || 'N/A'}`,
-      `Created: ${workOrder.createdAt.toLocaleDateString()}`,
-      `Scheduled Start: ${workOrder.scheduledStartDate?.toLocaleDateString() || 'N/A'}`,
-      `Scheduled End: ${workOrder.scheduledEndDate?.toLocaleDateString() || 'N/A'}`,
-    ];
-
-    for (const detail of details) {
-      page.drawText(detail, {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
-      });
-      yPosition -= 20;
-    }
-
-    yPosition -= 20;
-
-    // Description
-    page.drawText('Description:', {
-      x: 50,
-      y: yPosition,
-      size: fontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
-    });
-    yPosition -= 20;
-
-    // Split description into lines to fit page width
-    const descriptionLines = this.splitTextIntoLines(workOrder.description, 80);
-    for (const line of descriptionLines) {
-      page.drawText(line, {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
-      });
-      yPosition -= 15;
-    }
-
-    // Comments section
-    if (workOrder.comments && workOrder.comments.length > 0) {
-      yPosition -= 20;
-      page.drawText('Comments:', {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanBoldFont,
-        color: rgb(0, 0, 0),
-      });
-      yPosition -= 20;
-
-      for (const comment of workOrder.comments) {
-        if (yPosition < 100) {
-          // Add new page if needed
-          const newPage = pdfDoc.addPage();
-          yPosition = height - 50;
-        }
-
-        page.drawText(`${comment.author?.fullName || 'Unknown'} - ${comment.createdAt.toLocaleDateString()}:`, {
-          x: 50,
-          y: yPosition,
-          size: fontSize - 1,
-          font: timesRomanBoldFont,
-          color: rgb(0, 0, 0),
-        });
-        yPosition -= 15;
-
-        const commentLines = this.splitTextIntoLines(comment.content, 80);
-        for (const line of commentLines) {
-          page.drawText(line, {
-            x: 70,
-            y: yPosition,
-            size: fontSize - 1,
-            font: timesRomanFont,
-            color: rgb(0, 0, 0),
-          });
-          yPosition -= 15;
-        }
-        yPosition -= 10;
-      }
-    }
-
-    // Save the PDF
-    const pdfBytes = await pdfDoc.save();
-    return Buffer.from(pdfBytes);
+    return this.pdfReportService.generateWorkOrderCompletionReport(
+      workOrder,
+      assignedTechnician,
+      null, // No requester since we removed that field
+      asset,
+      workOrder.comments,
+      workOrder.attachments,
+    );
   }
 
   async generateCompletionReport(
@@ -151,290 +43,263 @@ export class ReportsService {
       throw new Error('Work order not found');
     }
 
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+    // Get related data
+    const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
+    const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
 
-    // Add a page
-    const page = pdfDoc.addPage();
-    const { width, height } = page.getSize();
-    const fontSize = 12;
-    const titleFontSize = 18;
-
-    let yPosition = height - 50;
-
-    // Title
-    page.drawText('Work Order Completion Report', {
-      x: 50,
-      y: yPosition,
-      size: titleFontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
-    });
-
-    yPosition -= 40;
-
-    // Basic info
-    const completionDetails = [
-      `Work Order #: ${workOrder.workOrderNumber}`,
-      `Title: ${workOrder.title}`,
-      `Completed By: ${workOrder.assignedTo?.fullName || 'N/A'}`,
-      `Completion Date: ${workOrder.actualEndDate?.toLocaleDateString() || new Date().toLocaleDateString()}`,
-      `Duration: ${workOrder.duration || 'N/A'} days`,
-    ];
-
-    for (const detail of completionDetails) {
-      page.drawText(detail, {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
-      });
-      yPosition -= 20;
-    }
-
-    yPosition -= 20;
-
-    // Completion Notes
+    // Add completion notes to comments if provided
+    let comments = workOrder.comments || [];
     if (completionNotes) {
-      page.drawText('Completion Notes:', {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanBoldFont,
-        color: rgb(0, 0, 0),
-      });
-      yPosition -= 20;
-
-      const notesLines = this.splitTextIntoLines(completionNotes, 80);
-      for (const line of notesLines) {
-        page.drawText(line, {
-          x: 50,
-          y: yPosition,
-          size: fontSize,
-          font: timesRomanFont,
-          color: rgb(0, 0, 0),
-        });
-        yPosition -= 15;
-      }
+      comments = [
+        ...comments,
+        {
+          id: 'completion-note',
+          content: `COMPLETION NOTES: ${completionNotes}`,
+          author: assignedTechnician,
+          createdAt: new Date(),
+          isInternal: false,
+        } as any,
+      ];
     }
 
-    yPosition -= 40;
-
-    // Signature section
-    page.drawText('Technician Signature:', {
-      x: 50,
-      y: yPosition,
-      size: fontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
-    });
-
-    // Draw signature box
-    page.drawRectangle({
-      x: 50,
-      y: yPosition - 60,
-      width: 200,
-      height: 50,
-      borderColor: rgb(0, 0, 0),
-      borderWidth: 1,
-    });
-
-    // Note: In a real implementation, you would decode and embed the signature image
-    page.drawText('[Signature]', {
-      x: 120,
-      y: yPosition - 40,
-      size: fontSize,
-      font: timesRomanFont,
-      color: rgb(0.5, 0.5, 0.5),
-    });
-
-    // Save the PDF
-    const pdfBytes = await pdfDoc.save();
-    return Buffer.from(pdfBytes);
+    return this.pdfReportService.generateWorkOrderCompletionReport(
+      workOrder,
+      assignedTechnician,
+      null, // No requester since we removed that field
+      asset,
+      comments,
+      workOrder.attachments,
+    );
   }
 
   async generateMaintenanceScheduleReport(): Promise<Buffer> {
     const assets = await this.assetsService.findMaintenanceDue();
-
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
-
-    // Add a page
-    const page = pdfDoc.addPage();
+    
+    // Create a simple maintenance schedule report
+    const pdfDoc = await import('pdf-lib').then(lib => lib.PDFDocument.create());
+    const page = pdfDoc.addPage([595.28, 841.89]); // A4 size
     const { width, height } = page.getSize();
-    const fontSize = 12;
-    const titleFontSize = 18;
-
+    
+    const font = await pdfDoc.embedFont(await import('pdf-lib').then(lib => lib.StandardFonts.Helvetica));
+    const boldFont = await pdfDoc.embedFont(await import('pdf-lib').then(lib => lib.StandardFonts.HelveticaBold));
+    
     let yPosition = height - 50;
-
+    
     // Title
-    page.drawText('Asset Maintenance Schedule', {
+    page.drawText('Asset Maintenance Schedule Report', {
       x: 50,
       y: yPosition,
-      size: titleFontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
+      size: 20,
+      font: boldFont,
     });
-
+    
     yPosition -= 40;
-
-    page.drawText(`Generated: ${new Date().toLocaleDateString()}`, {
+    
+    // Date
+    page.drawText(`Generated on: ${new Date().toLocaleDateString()}`, {
       x: 50,
       y: yPosition,
-      size: fontSize,
-      font: timesRomanFont,
-      color: rgb(0, 0, 0),
+      size: 12,
+      font: font,
     });
-
-    yPosition -= 40;
-
-    // Table headers
-    const headers = ['Asset', 'Category', 'Location', 'Next Maintenance'];
-    let xPosition = 50;
-    for (const header of headers) {
-      page.drawText(header, {
-        x: xPosition,
-        y: yPosition,
-        size: fontSize,
-        font: timesRomanBoldFont,
-        color: rgb(0, 0, 0),
-      });
-      xPosition += 120;
-    }
-
-    yPosition -= 20;
-
-    // Draw line under headers
-    page.drawLine({
-      start: { x: 50, y: yPosition },
-      end: { x: width - 50, y: yPosition },
-      thickness: 1,
-      color: rgb(0, 0, 0),
+    
+    yPosition -= 30;
+    
+    // Assets table header
+    page.drawText('Asset', {
+      x: 50,
+      y: yPosition,
+      size: 12,
+      font: boldFont,
     });
-
+    
+    page.drawText('Category', {
+      x: 200,
+      y: yPosition,
+      size: 12,
+      font: boldFont,
+    });
+    
+    page.drawText('Location', {
+      x: 300,
+      y: yPosition,
+      size: 12,
+      font: boldFont,
+    });
+    
+    page.drawText('Next Maintenance', {
+      x: 400,
+      y: yPosition,
+      size: 12,
+      font: boldFont,
+    });
+    
     yPosition -= 20;
-
-    // Asset data
+    
+    // Assets
     for (const asset of assets) {
       if (yPosition < 100) {
         // Add new page if needed
-        const newPage = pdfDoc.addPage();
+        const newPage = pdfDoc.addPage([595.28, 841.89]);
         yPosition = height - 50;
       }
-
-      xPosition = 50;
-      const rowData = [
-        asset.name,
-        asset.category,
-        asset.location || 'N/A',
-        asset.nextMaintenanceDate?.toLocaleDateString() || 'N/A',
-      ];
-
-      for (const data of rowData) {
-        page.drawText(data, {
-          x: xPosition,
-          y: yPosition,
-          size: fontSize,
-          font: timesRomanFont,
-          color: rgb(0, 0, 0),
-        });
-        xPosition += 120;
-      }
-      yPosition -= 20;
+      
+      page.drawText(asset.name, {
+        x: 50,
+        y: yPosition,
+        size: 10,
+        font: font,
+      });
+      
+      page.drawText(asset.category || 'N/A', {
+        x: 200,
+        y: yPosition,
+        size: 10,
+        font: font,
+      });
+      
+      page.drawText(asset.location || 'N/A', {
+        x: 300,
+        y: yPosition,
+        size: 10,
+        font: font,
+      });
+      
+      page.drawText(asset.nextMaintenanceDate ? new Date(asset.nextMaintenanceDate).toLocaleDateString() : 'N/A', {
+        x: 400,
+        y: yPosition,
+        size: 10,
+        font: font,
+      });
+      
+      yPosition -= 15;
     }
-
-    // Save the PDF
+    
     const pdfBytes = await pdfDoc.save();
     return Buffer.from(pdfBytes);
   }
 
   async generateDashboardSummaryReport(): Promise<Buffer> {
-    const stats: DashboardStats = await this.workOrdersService.getDashboardStats();
-
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
-
-    // Add a page
-    const page = pdfDoc.addPage();
+    const dashboardStats = await this.workOrdersService.getDashboardStats();
+    const assets = await this.assetsService.findAll();
+    const users = await this.usersService.findAll();
+    
+    // Create a dashboard summary report
+    const pdfDoc = await import('pdf-lib').then(lib => lib.PDFDocument.create());
+    const page = pdfDoc.addPage([595.28, 841.89]); // A4 size
     const { width, height } = page.getSize();
-    const fontSize = 12;
-    const titleFontSize = 18;
-
+    
+    const font = await pdfDoc.embedFont(await import('pdf-lib').then(lib => lib.StandardFonts.Helvetica));
+    const boldFont = await pdfDoc.embedFont(await import('pdf-lib').then(lib => lib.StandardFonts.HelveticaBold));
+    
     let yPosition = height - 50;
-
+    
     // Title
     page.drawText('Dashboard Summary Report', {
       x: 50,
       y: yPosition,
-      size: titleFontSize,
-      font: timesRomanBoldFont,
-      color: rgb(0, 0, 0),
+      size: 20,
+      font: boldFont,
     });
-
+    
     yPosition -= 40;
-
-    page.drawText(`Generated: ${new Date().toLocaleDateString()}`, {
+    
+    // Date
+    page.drawText(`Generated on: ${new Date().toLocaleDateString()}`, {
       x: 50,
       y: yPosition,
-      size: fontSize,
-      font: timesRomanFont,
-      color: rgb(0, 0, 0),
+      size: 12,
+      font: font,
     });
-
-    yPosition -= 40;
-
-    // Statistics
-    const statsData = [
-      `Open Work Orders: ${stats.open}`,
-      `In Progress Work Orders: ${stats.inProgress}`,
-      `Completed Work Orders: ${stats.completed}`,
-      `Overdue Work Orders: ${stats.overdue}`,
-      `Completed Today: ${stats.completedToday}`,
+    
+    yPosition -= 30;
+    
+    // Work Order Statistics
+    page.drawText('Work Order Statistics:', {
+      x: 50,
+      y: yPosition,
+      size: 14,
+      font: boldFont,
+    });
+    
+    yPosition -= 20;
+    
+    const stats = [
+      `Open Work Orders: ${dashboardStats.open}`,
+      `In Progress: ${dashboardStats.inProgress}`,
+      `Completed Today: ${dashboardStats.completedToday}`,
+      `Overdue: ${dashboardStats.overdue}`,
     ];
-
-    for (const stat of statsData) {
+    
+    for (const stat of stats) {
       page.drawText(stat, {
         x: 50,
         y: yPosition,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
+        size: 12,
+        font: font,
       });
-      yPosition -= 25;
+      yPosition -= 18;
     }
-
-    // Save the PDF
+    
+    yPosition -= 20;
+    
+    // Asset Statistics
+    page.drawText('Asset Statistics:', {
+      x: 50,
+      y: yPosition,
+      size: 14,
+      font: boldFont,
+    });
+    
+    yPosition -= 20;
+    
+    const assetStats = [
+      `Total Assets: ${assets.length}`,
+      `Active Assets: ${assets.filter(a => a.status === 'active').length}`,
+      `In Maintenance: ${assets.filter(a => a.status === 'maintenance').length}`,
+      `Retired Assets: ${assets.filter(a => a.status === 'retired').length}`,
+    ];
+    
+    for (const stat of assetStats) {
+      page.drawText(stat, {
+        x: 50,
+        y: yPosition,
+        size: 12,
+        font: font,
+      });
+      yPosition -= 18;
+    }
+    
+    yPosition -= 20;
+    
+    // User Statistics
+    page.drawText('User Statistics:', {
+      x: 50,
+      y: yPosition,
+      size: 14,
+      font: boldFont,
+    });
+    
+    yPosition -= 20;
+    
+    const userStats = [
+      `Total Users: ${users.length}`,
+      `Active Users: ${users.filter(u => u.status === 'active').length}`,
+      `Technicians: ${users.filter(u => u.role === 'technician').length}`,
+      `Administrators: ${users.filter(u => u.role === 'administrator').length}`,
+    ];
+    
+    for (const stat of userStats) {
+      page.drawText(stat, {
+        x: 50,
+        y: yPosition,
+        size: 12,
+        font: font,
+      });
+      yPosition -= 18;
+    }
+    
     const pdfBytes = await pdfDoc.save();
     return Buffer.from(pdfBytes);
-  }
-
-  private splitTextIntoLines(text: string, maxCharsPerLine: number): string[] {
-    const words = text.split(' ');
-    const lines: string[] = [];
-    let currentLine = '';
-
-    for (const word of words) {
-      if ((currentLine + word).length <= maxCharsPerLine) {
-        currentLine += (currentLine ? ' ' : '') + word;
-      } else {
-        if (currentLine) {
-          lines.push(currentLine);
-        }
-        currentLine = word;
-      }
-    }
-
-    if (currentLine) {
-      lines.push(currentLine);
-    }
-
-    return lines;
   }
 } 

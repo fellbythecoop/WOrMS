@@ -10,8 +10,10 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Asset } from '../../assets/entities/asset.entity';
+import { Customer } from '../../customers/entities/customer.entity';
 import { WorkOrderComment } from './work-order-comment.entity';
 import { WorkOrderAttachment } from './work-order-attachment.entity';
+import { WorkOrderTimeEntry } from './work-order-time-entry.entity';
 
 export enum WorkOrderStatus {
   OPEN = 'open',
@@ -109,13 +111,6 @@ export class WorkOrder {
   updatedAt: Date;
 
   // Relations
-  @ManyToOne(() => User, user => user.requestedWorkOrders)
-  @JoinColumn({ name: 'requested_by_id' })
-  requestedBy: User;
-
-  @Column({ name: 'requested_by_id' })
-  requestedById: string;
-
   @ManyToOne(() => User, user => user.assignedWorkOrders, { nullable: true })
   @JoinColumn({ name: 'assigned_to_id' })
   assignedTo?: User;
@@ -130,11 +125,21 @@ export class WorkOrder {
   @Column({ name: 'asset_id', nullable: true })
   assetId?: string;
 
+  @ManyToOne(() => Customer, customer => customer.workOrders, { nullable: true })
+  @JoinColumn({ name: 'customer_id' })
+  customer?: Customer;
+
+  @Column({ name: 'customer_id', nullable: true })
+  customerId?: string;
+
   @OneToMany(() => WorkOrderComment, comment => comment.workOrder)
   comments: WorkOrderComment[];
 
   @OneToMany(() => WorkOrderAttachment, attachment => attachment.workOrder)
   attachments: WorkOrderAttachment[];
+
+  @OneToMany(() => WorkOrderTimeEntry, timeEntry => timeEntry.workOrder)
+  timeEntries: WorkOrderTimeEntry[];
 
   // Virtual fields
   get isOverdue(): boolean {
@@ -153,5 +158,14 @@ export class WorkOrder {
   get duration(): number | null {
     if (!this.actualStartDate || !this.actualEndDate) return null;
     return Math.floor((this.actualEndDate.getTime() - this.actualStartDate.getTime()) / (1000 * 3600 * 24));
+  }
+
+  // Calculate total time and cost from time entries
+  get totalTimeEntries(): number {
+    return this.timeEntries?.reduce((total, entry) => total + Number(entry.hours), 0) || 0;
+  }
+
+  get totalTimeCost(): number {
+    return this.timeEntries?.reduce((total, entry) => total + Number(entry.totalAmount), 0) || 0;
   }
 } 

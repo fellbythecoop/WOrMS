@@ -14,15 +14,28 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkOrdersController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const swagger_1 = require("@nestjs/swagger");
 const work_orders_service_1 = require("./work-orders.service");
+const time_entry_service_1 = require("./time-entry.service");
 const dev_auth_guard_1 = require("../auth/guards/dev-auth.guard");
+const permissions_guard_1 = require("../auth/guards/permissions.guard");
+const require_permissions_decorator_1 = require("../auth/decorators/require-permissions.decorator");
+const permissions_enum_1 = require("../auth/permissions/permissions.enum");
 const work_order_entity_1 = require("./entities/work-order.entity");
+const path = require("path");
+const fs = require("fs");
 let WorkOrdersController = class WorkOrdersController {
-    constructor(workOrdersService) {
+    constructor(workOrdersService, timeEntryService) {
         this.workOrdersService = workOrdersService;
+        this.timeEntryService = timeEntryService;
     }
-    async findAll(status, assignedTo, priority, type, search, dateFrom, dateTo, overdueOnly, limit, offset) {
+    async findAll(req, status, assignedTo, priority, type, search, dateFrom, dateTo, overdueOnly, limit, offset) {
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        if (!canViewAll) {
+            assignedTo = user.id;
+        }
         return this.workOrdersService.findAll({
             status,
             assignedTo,
@@ -36,33 +49,192 @@ let WorkOrdersController = class WorkOrdersController {
             offset: offset || 0
         });
     }
-    async findOne(id) {
+    async getTimeEntries(workOrderId, req) {
+        const workOrder = await this.workOrdersService.findById(workOrderId);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canViewAll && !isAssigned) {
+            throw new Error('Access denied: You can only view time entries for work orders assigned to you');
+        }
+        return this.timeEntryService.getTimeEntriesByWorkOrder(workOrderId);
+    }
+    async addTimeEntry(workOrderId, timeEntryData, req) {
+        const workOrder = await this.workOrdersService.findById(workOrderId);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canUpdateAll && !isAssigned) {
+            throw new Error('Access denied: You can only add time entries to work orders assigned to you');
+        }
+        const createTimeEntryDto = {
+            ...timeEntryData,
+            workOrderId,
+            technicianId: timeEntryData.technicianId || user.id,
+        };
+        return this.timeEntryService.createTimeEntry(createTimeEntryDto);
+    }
+    async findOne(id, req) {
         const workOrder = await this.workOrdersService.findById(id);
         if (!workOrder) {
             throw new Error('Work order not found');
         }
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canViewAll && !isAssigned) {
+            throw new Error('Access denied: You can only view work orders assigned to you');
+        }
         return workOrder;
     }
-    async create(createWorkOrderData) {
+    async create(createWorkOrderData, req) {
         return this.workOrdersService.create(createWorkOrderData);
     }
-    async update(id, updateData) {
+    async update(id, updateData, req) {
+        const workOrder = await this.workOrdersService.findById(id);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canUpdateAll && !isAssigned) {
+            throw new Error('Access denied: You can only update work orders assigned to you');
+        }
         return this.workOrdersService.update(id, updateData);
     }
-    async updateStatus(id, statusData) {
+    async updateStatus(id, statusData, req) {
+        const workOrder = await this.workOrdersService.findById(id);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canUpdateAll && !isAssigned) {
+            throw new Error('Access denied: You can only update status of work orders assigned to you');
+        }
         return this.workOrdersService.updateStatus(id, statusData.status, statusData.completionNotes);
     }
     async remove(id) {
         return this.workOrdersService.delete(id);
     }
-    async getDashboardStats() {
-        return this.workOrdersService.getDashboardStats();
+    async updateTimeEntry(timeEntryId, updateData, req) {
+        const timeEntry = await this.timeEntryService.getTimeEntryById(timeEntryId);
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isTechnician = timeEntry.technicianId === user.id;
+        if (!canUpdateAll && !isTechnician) {
+            throw new Error('Access denied: You can only update your own time entries');
+        }
+        return this.timeEntryService.updateTimeEntry(timeEntryId, updateData);
     }
-    async getOverdueWorkOrders() {
-        return this.workOrdersService.findOverdue();
+    async deleteTimeEntry(timeEntryId, req) {
+        const timeEntry = await this.timeEntryService.getTimeEntryById(timeEntryId);
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isTechnician = timeEntry.technicianId === user.id;
+        if (!canUpdateAll && !isTechnician) {
+            throw new Error('Access denied: You can only delete your own time entries');
+        }
+        return this.timeEntryService.deleteTimeEntry(timeEntryId);
     }
-    async addComment(id, commentData) {
-        return this.workOrdersService.addComment(id, commentData.content, commentData.authorId, commentData.isInternal || false);
+    async getDashboardStats(req) {
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        if (canViewAll) {
+            return this.workOrdersService.getDashboardStats();
+        }
+        else {
+            return this.workOrdersService.getDashboardStatsForUser(user.id);
+        }
+    }
+    async getOverdueWorkOrders(req) {
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        if (canViewAll) {
+            return this.workOrdersService.findOverdue();
+        }
+        else {
+            return this.workOrdersService.findOverdueByUser(user.id);
+        }
+    }
+    async addComment(id, commentData, req) {
+        const workOrder = await this.workOrdersService.findById(id);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canUpdateAll && !isAssigned) {
+            throw new Error('Access denied: You can only add comments to work orders assigned to you');
+        }
+        return this.workOrdersService.addComment(id, commentData.content, user.id, commentData.isInternal || false);
+    }
+    async uploadAttachment(workOrderId, file, body, req) {
+        const workOrder = await this.workOrdersService.findById(workOrderId);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const user = req.user;
+        const canUpdateAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canUpdateAll && !isAssigned) {
+            throw new Error('Access denied: You can only upload attachments to work orders assigned to you');
+        }
+        if (!file) {
+            throw new Error('No file uploaded');
+        }
+        const uploadsDir = path.join(process.cwd(), 'uploads');
+        if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+        const timestamp = Date.now();
+        const fileName = `${timestamp}-${file.originalname}`;
+        const filePath = path.join(uploadsDir, fileName);
+        fs.writeFileSync(filePath, file.buffer);
+        return this.workOrdersService.addAttachment(workOrderId, fileName, file.originalname, file.mimetype, file.size, filePath, user.id, body.description);
+    }
+    async downloadAttachment(attachmentId, res, req) {
+        const attachment = await this.workOrdersService.getAttachmentById(attachmentId);
+        if (!attachment) {
+            throw new Error('Attachment not found');
+        }
+        const workOrder = await this.workOrdersService.findById(attachment.workOrderId);
+        const user = req.user;
+        const canViewAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canViewAll && !isAssigned) {
+            throw new Error('Access denied: You can only download attachments from work orders assigned to you');
+        }
+        const filePath = path.join(process.cwd(), 'uploads', attachment.fileName);
+        if (!fs.existsSync(filePath)) {
+            throw new Error('File not found on server');
+        }
+        res.setHeader('Content-Type', attachment.mimeType);
+        res.setHeader('Content-Disposition', `attachment; filename="${attachment.originalName}"`);
+        return res.sendFile(filePath);
+    }
+    async deleteAttachment(attachmentId, req) {
+        const attachment = await this.workOrdersService.getAttachmentById(attachmentId);
+        if (!attachment) {
+            throw new Error('Attachment not found');
+        }
+        const workOrder = await this.workOrdersService.findById(attachment.workOrderId);
+        const user = req.user;
+        const canDeleteAll = user.role === 'administrator' || user.role === 'manager';
+        const isAssigned = workOrder.assignedTo?.id === user.id;
+        if (!canDeleteAll && !isAssigned) {
+            throw new Error('Access denied: You can only delete attachments from work orders assigned to you');
+        }
+        return this.workOrdersService.deleteAttachment(attachmentId);
     }
     async seedSampleWorkOrders() {
         return this.workOrdersService.seedSampleWorkOrders();
@@ -71,6 +243,7 @@ let WorkOrdersController = class WorkOrdersController {
 exports.WorkOrdersController = WorkOrdersController;
 __decorate([
     (0, common_1.Get)(),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Get all work orders with advanced filtering' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work orders retrieved successfully' }),
     (0, swagger_1.ApiQuery)({ name: 'status', required: false, enum: work_order_entity_1.WorkOrderStatus, description: 'Filter by status' }),
@@ -83,62 +256,95 @@ __decorate([
     (0, swagger_1.ApiQuery)({ name: 'overdueOnly', required: false, type: Boolean, description: 'Show only overdue work orders' }),
     (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, description: 'Limit number of results (default: 100)' }),
     (0, swagger_1.ApiQuery)({ name: 'offset', required: false, type: Number, description: 'Offset for pagination (default: 0)' }),
-    __param(0, (0, common_1.Query)('status')),
-    __param(1, (0, common_1.Query)('assignedTo')),
-    __param(2, (0, common_1.Query)('priority')),
-    __param(3, (0, common_1.Query)('type')),
-    __param(4, (0, common_1.Query)('search')),
-    __param(5, (0, common_1.Query)('dateFrom')),
-    __param(6, (0, common_1.Query)('dateTo')),
-    __param(7, (0, common_1.Query)('overdueOnly')),
-    __param(8, (0, common_1.Query)('limit')),
-    __param(9, (0, common_1.Query)('offset')),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Query)('status')),
+    __param(2, (0, common_1.Query)('assignedTo')),
+    __param(3, (0, common_1.Query)('priority')),
+    __param(4, (0, common_1.Query)('type')),
+    __param(5, (0, common_1.Query)('search')),
+    __param(6, (0, common_1.Query)('dateFrom')),
+    __param(7, (0, common_1.Query)('dateTo')),
+    __param(8, (0, common_1.Query)('overdueOnly')),
+    __param(9, (0, common_1.Query)('limit')),
+    __param(10, (0, common_1.Query)('offset')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String, String, String, Boolean, Number, Number]),
+    __metadata("design:paramtypes", [Object, String, String, String, String, String, String, String, Boolean, Number, Number]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.Get)(':id/time-entries'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Get time entries for a work order' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Time entries retrieved successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "getTimeEntries", null);
+__decorate([
+    (0, common_1.Post)(':id/time-entries'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS, permissions_enum_1.Permission.UPDATE_OWN_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Add time entry to work order' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Time entry added successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "addTimeEntry", null);
+__decorate([
     (0, common_1.Get)(':id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Get work order by ID' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work order retrieved successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Work order not found' }),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.CREATE_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Create new work order' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'Work order created successfully' }),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(':id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS, permissions_enum_1.Permission.UPDATE_OWN_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Update work order' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work order updated successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Work order not found' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "update", null);
 __decorate([
     (0, common_1.Put)(':id/status'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS, permissions_enum_1.Permission.UPDATE_OWN_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Update work order status' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work order status updated successfully' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "updateStatus", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.DELETE_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Delete work order' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Work order deleted successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Work order not found' }),
@@ -148,35 +354,100 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "remove", null);
 __decorate([
+    (0, common_1.Put)('time-entries/:id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS, permissions_enum_1.Permission.UPDATE_OWN_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Update time entry' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Time entry updated successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "updateTimeEntry", null);
+__decorate([
+    (0, common_1.Delete)('time-entries/:id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS, permissions_enum_1.Permission.UPDATE_OWN_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete time entry' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Time entry deleted successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "deleteTimeEntry", null);
+__decorate([
     (0, common_1.Get)('stats/dashboard'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Get dashboard statistics' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Dashboard stats retrieved successfully' }),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "getDashboardStats", null);
 __decorate([
     (0, common_1.Get)('overdue/list'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
     (0, swagger_1.ApiOperation)({ summary: 'Get overdue work orders' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Overdue work orders retrieved successfully' }),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "getOverdueWorkOrders", null);
 __decorate([
     (0, common_1.Post)(':id/comments'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.CREATE_COMMENTS),
     (0, swagger_1.ApiOperation)({ summary: 'Add comment to work order' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'Comment added successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Work order not found' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "addComment", null);
 __decorate([
-    (0, common_1.Post)('seed/sample-data'),
-    (0, swagger_1.ApiOperation)({ summary: 'Seed sample work orders for development' }),
+    (0, common_1.Post)(':id/attachments'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload attachment to work order' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Attachment uploaded successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.UploadedFile)()),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "uploadAttachment", null);
+__decorate([
+    (0, common_1.Get)('attachments/:id/download'),
+    (0, swagger_1.ApiOperation)({ summary: 'Download attachment' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Attachment downloaded successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "downloadAttachment", null);
+__decorate([
+    (0, common_1.Delete)('attachments/:id'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.DELETE_ANY_COMMENTS),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete attachment' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Attachment deleted successfully' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "deleteAttachment", null);
+__decorate([
+    (0, common_1.Post)('seed'),
+    (0, swagger_1.ApiOperation)({ summary: 'Seed sample work orders (development only)' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'Sample work orders created successfully' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -185,8 +456,9 @@ __decorate([
 exports.WorkOrdersController = WorkOrdersController = __decorate([
     (0, swagger_1.ApiTags)('Work Orders'),
     (0, common_1.Controller)('work-orders'),
-    (0, common_1.UseGuards)(dev_auth_guard_1.DevAuthGuard),
+    (0, common_1.UseGuards)(dev_auth_guard_1.DevAuthGuard, permissions_guard_1.PermissionsGuard),
     (0, swagger_1.ApiBearerAuth)(),
-    __metadata("design:paramtypes", [work_orders_service_1.WorkOrdersService])
+    __metadata("design:paramtypes", [work_orders_service_1.WorkOrdersService,
+        time_entry_service_1.TimeEntryService])
 ], WorkOrdersController);
 //# sourceMappingURL=work-orders.controller.js.map

@@ -1,0 +1,34 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Permission = void 0;
+var Permission;
+(function (Permission) {
+    Permission["VIEW_USERS"] = "view_users";
+    Permission["CREATE_USERS"] = "create_users";
+    Permission["UPDATE_USERS"] = "update_users";
+    Permission["DELETE_USERS"] = "delete_users";
+    Permission["MANAGE_USER_ROLES"] = "manage_user_roles";
+    Permission["VIEW_WORK_ORDERS"] = "view_work_orders";
+    Permission["CREATE_WORK_ORDERS"] = "create_work_orders";
+    Permission["UPDATE_WORK_ORDERS"] = "update_work_orders";
+    Permission["DELETE_WORK_ORDERS"] = "delete_work_orders";
+    Permission["ASSIGN_WORK_ORDERS"] = "assign_work_orders";
+    Permission["UPDATE_OWN_WORK_ORDERS"] = "update_own_work_orders";
+    Permission["VIEW_ALL_WORK_ORDERS"] = "view_all_work_orders";
+    Permission["VIEW_ASSETS"] = "view_assets";
+    Permission["CREATE_ASSETS"] = "create_assets";
+    Permission["UPDATE_ASSETS"] = "update_assets";
+    Permission["DELETE_ASSETS"] = "delete_assets";
+    Permission["VIEW_COMMENTS"] = "view_comments";
+    Permission["CREATE_COMMENTS"] = "create_comments";
+    Permission["UPDATE_OWN_COMMENTS"] = "update_own_comments";
+    Permission["DELETE_OWN_COMMENTS"] = "delete_own_comments";
+    Permission["DELETE_ANY_COMMENTS"] = "delete_any_comments";
+    Permission["VIEW_REPORTS"] = "view_reports";
+    Permission["GENERATE_REPORTS"] = "generate_reports";
+    Permission["EXPORT_DATA"] = "export_data";
+    Permission["VIEW_SYSTEM_HEALTH"] = "view_system_health";
+    Permission["MANAGE_SYSTEM_SETTINGS"] = "manage_system_settings";
+    Permission["VIEW_AUDIT_LOGS"] = "view_audit_logs";
+})(Permission || (exports.Permission = Permission = {}));
+//# sourceMappingURL=permissions.enum.js.map

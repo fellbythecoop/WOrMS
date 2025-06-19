@@ -11,344 +11,223 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsService = void 0;
 const common_1 = require("@nestjs/common");
-const pdf_lib_1 = require("pdf-lib");
 const work_orders_service_1 = require("../work-orders/work-orders.service");
 const assets_service_1 = require("../assets/assets.service");
 const users_service_1 = require("../users/users.service");
+const pdf_report_service_1 = require("./pdf-report.service");
 let ReportsService = class ReportsService {
-    constructor(workOrdersService, assetsService, usersService) {
+    constructor(workOrdersService, assetsService, usersService, pdfReportService) {
         this.workOrdersService = workOrdersService;
         this.assetsService = assetsService;
         this.usersService = usersService;
+        this.pdfReportService = pdfReportService;
     }
     async generateWorkOrderPdf(workOrderId) {
         const workOrder = await this.workOrdersService.findById(workOrderId);
         if (!workOrder) {
             throw new Error('Work order not found');
         }
-        const pdfDoc = await pdf_lib_1.PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRoman);
-        const timesRomanBoldFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRomanBold);
-        const page = pdfDoc.addPage();
-        const { width, height } = page.getSize();
-        const fontSize = 12;
-        const titleFontSize = 18;
-        let yPosition = height - 50;
-        page.drawText('Work Order Report', {
-            x: 50,
-            y: yPosition,
-            size: titleFontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
-        });
-        yPosition -= 40;
-        const details = [
-            `Work Order #: ${workOrder.workOrderNumber}`,
-            `Title: ${workOrder.title}`,
-            `Status: ${workOrder.status}`,
-            `Priority: ${workOrder.priority}`,
-            `Type: ${workOrder.type}`,
-            `Requested By: ${workOrder.requestedBy?.fullName || 'N/A'}`,
-            `Assigned To: ${workOrder.assignedTo?.fullName || 'Unassigned'}`,
-            `Asset: ${workOrder.asset?.name || 'N/A'}`,
-            `Created: ${workOrder.createdAt.toLocaleDateString()}`,
-            `Scheduled Start: ${workOrder.scheduledStartDate?.toLocaleDateString() || 'N/A'}`,
-            `Scheduled End: ${workOrder.scheduledEndDate?.toLocaleDateString() || 'N/A'}`,
-        ];
-        for (const detail of details) {
-            page.drawText(detail, {
-                x: 50,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            yPosition -= 20;
-        }
-        yPosition -= 20;
-        page.drawText('Description:', {
-            x: 50,
-            y: yPosition,
-            size: fontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
-        });
-        yPosition -= 20;
-        const descriptionLines = this.splitTextIntoLines(workOrder.description, 80);
-        for (const line of descriptionLines) {
-            page.drawText(line, {
-                x: 50,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            yPosition -= 15;
-        }
-        if (workOrder.comments && workOrder.comments.length > 0) {
-            yPosition -= 20;
-            page.drawText('Comments:', {
-                x: 50,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanBoldFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            yPosition -= 20;
-            for (const comment of workOrder.comments) {
-                if (yPosition < 100) {
-                    const newPage = pdfDoc.addPage();
-                    yPosition = height - 50;
-                }
-                page.drawText(`${comment.author?.fullName || 'Unknown'} - ${comment.createdAt.toLocaleDateString()}:`, {
-                    x: 50,
-                    y: yPosition,
-                    size: fontSize - 1,
-                    font: timesRomanBoldFont,
-                    color: (0, pdf_lib_1.rgb)(0, 0, 0),
-                });
-                yPosition -= 15;
-                const commentLines = this.splitTextIntoLines(comment.content, 80);
-                for (const line of commentLines) {
-                    page.drawText(line, {
-                        x: 70,
-                        y: yPosition,
-                        size: fontSize - 1,
-                        font: timesRomanFont,
-                        color: (0, pdf_lib_1.rgb)(0, 0, 0),
-                    });
-                    yPosition -= 15;
-                }
-                yPosition -= 10;
-            }
-        }
-        const pdfBytes = await pdfDoc.save();
-        return Buffer.from(pdfBytes);
+        const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
+        const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
+        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, workOrder.comments, workOrder.attachments);
     }
     async generateCompletionReport(workOrderId, signature, completionNotes) {
         const workOrder = await this.workOrdersService.findById(workOrderId);
         if (!workOrder) {
             throw new Error('Work order not found');
         }
-        const pdfDoc = await pdf_lib_1.PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRoman);
-        const timesRomanBoldFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRomanBold);
-        const page = pdfDoc.addPage();
-        const { width, height } = page.getSize();
-        const fontSize = 12;
-        const titleFontSize = 18;
-        let yPosition = height - 50;
-        page.drawText('Work Order Completion Report', {
-            x: 50,
-            y: yPosition,
-            size: titleFontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
-        });
-        yPosition -= 40;
-        const completionDetails = [
-            `Work Order #: ${workOrder.workOrderNumber}`,
-            `Title: ${workOrder.title}`,
-            `Completed By: ${workOrder.assignedTo?.fullName || 'N/A'}`,
-            `Completion Date: ${workOrder.actualEndDate?.toLocaleDateString() || new Date().toLocaleDateString()}`,
-            `Duration: ${workOrder.duration || 'N/A'} days`,
-        ];
-        for (const detail of completionDetails) {
-            page.drawText(detail, {
-                x: 50,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            yPosition -= 20;
-        }
-        yPosition -= 20;
+        const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
+        const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
+        let comments = workOrder.comments || [];
         if (completionNotes) {
-            page.drawText('Completion Notes:', {
-                x: 50,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanBoldFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            yPosition -= 20;
-            const notesLines = this.splitTextIntoLines(completionNotes, 80);
-            for (const line of notesLines) {
-                page.drawText(line, {
-                    x: 50,
-                    y: yPosition,
-                    size: fontSize,
-                    font: timesRomanFont,
-                    color: (0, pdf_lib_1.rgb)(0, 0, 0),
-                });
-                yPosition -= 15;
-            }
+            comments = [
+                ...comments,
+                {
+                    id: 'completion-note',
+                    content: `COMPLETION NOTES: ${completionNotes}`,
+                    author: assignedTechnician,
+                    createdAt: new Date(),
+                    isInternal: false,
+                },
+            ];
         }
-        yPosition -= 40;
-        page.drawText('Technician Signature:', {
-            x: 50,
-            y: yPosition,
-            size: fontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
-        });
-        page.drawRectangle({
-            x: 50,
-            y: yPosition - 60,
-            width: 200,
-            height: 50,
-            borderColor: (0, pdf_lib_1.rgb)(0, 0, 0),
-            borderWidth: 1,
-        });
-        page.drawText('[Signature]', {
-            x: 120,
-            y: yPosition - 40,
-            size: fontSize,
-            font: timesRomanFont,
-            color: (0, pdf_lib_1.rgb)(0.5, 0.5, 0.5),
-        });
-        const pdfBytes = await pdfDoc.save();
-        return Buffer.from(pdfBytes);
+        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, comments, workOrder.attachments);
     }
     async generateMaintenanceScheduleReport() {
         const assets = await this.assetsService.findMaintenanceDue();
-        const pdfDoc = await pdf_lib_1.PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRoman);
-        const timesRomanBoldFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRomanBold);
-        const page = pdfDoc.addPage();
+        const pdfDoc = await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.PDFDocument.create());
+        const page = pdfDoc.addPage([595.28, 841.89]);
         const { width, height } = page.getSize();
-        const fontSize = 12;
-        const titleFontSize = 18;
+        const font = await pdfDoc.embedFont(await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.StandardFonts.Helvetica));
+        const boldFont = await pdfDoc.embedFont(await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.StandardFonts.HelveticaBold));
         let yPosition = height - 50;
-        page.drawText('Asset Maintenance Schedule', {
+        page.drawText('Asset Maintenance Schedule Report', {
             x: 50,
             y: yPosition,
-            size: titleFontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
+            size: 20,
+            font: boldFont,
         });
         yPosition -= 40;
-        page.drawText(`Generated: ${new Date().toLocaleDateString()}`, {
+        page.drawText(`Generated on: ${new Date().toLocaleDateString()}`, {
             x: 50,
             y: yPosition,
-            size: fontSize,
-            font: timesRomanFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
+            size: 12,
+            font: font,
         });
-        yPosition -= 40;
-        const headers = ['Asset', 'Category', 'Location', 'Next Maintenance'];
-        let xPosition = 50;
-        for (const header of headers) {
-            page.drawText(header, {
-                x: xPosition,
-                y: yPosition,
-                size: fontSize,
-                font: timesRomanBoldFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
-            });
-            xPosition += 120;
-        }
-        yPosition -= 20;
-        page.drawLine({
-            start: { x: 50, y: yPosition },
-            end: { x: width - 50, y: yPosition },
-            thickness: 1,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
+        yPosition -= 30;
+        page.drawText('Asset', {
+            x: 50,
+            y: yPosition,
+            size: 12,
+            font: boldFont,
+        });
+        page.drawText('Category', {
+            x: 200,
+            y: yPosition,
+            size: 12,
+            font: boldFont,
+        });
+        page.drawText('Location', {
+            x: 300,
+            y: yPosition,
+            size: 12,
+            font: boldFont,
+        });
+        page.drawText('Next Maintenance', {
+            x: 400,
+            y: yPosition,
+            size: 12,
+            font: boldFont,
         });
         yPosition -= 20;
         for (const asset of assets) {
             if (yPosition < 100) {
-                const newPage = pdfDoc.addPage();
+                const newPage = pdfDoc.addPage([595.28, 841.89]);
                 yPosition = height - 50;
             }
-            xPosition = 50;
-            const rowData = [
-                asset.name,
-                asset.category,
-                asset.location || 'N/A',
-                asset.nextMaintenanceDate?.toLocaleDateString() || 'N/A',
-            ];
-            for (const data of rowData) {
-                page.drawText(data, {
-                    x: xPosition,
-                    y: yPosition,
-                    size: fontSize,
-                    font: timesRomanFont,
-                    color: (0, pdf_lib_1.rgb)(0, 0, 0),
-                });
-                xPosition += 120;
-            }
-            yPosition -= 20;
+            page.drawText(asset.name, {
+                x: 50,
+                y: yPosition,
+                size: 10,
+                font: font,
+            });
+            page.drawText(asset.category || 'N/A', {
+                x: 200,
+                y: yPosition,
+                size: 10,
+                font: font,
+            });
+            page.drawText(asset.location || 'N/A', {
+                x: 300,
+                y: yPosition,
+                size: 10,
+                font: font,
+            });
+            page.drawText(asset.nextMaintenanceDate ? new Date(asset.nextMaintenanceDate).toLocaleDateString() : 'N/A', {
+                x: 400,
+                y: yPosition,
+                size: 10,
+                font: font,
+            });
+            yPosition -= 15;
         }
         const pdfBytes = await pdfDoc.save();
         return Buffer.from(pdfBytes);
     }
     async generateDashboardSummaryReport() {
-        const stats = await this.workOrdersService.getDashboardStats();
-        const pdfDoc = await pdf_lib_1.PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRoman);
-        const timesRomanBoldFont = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.TimesRomanBold);
-        const page = pdfDoc.addPage();
+        const dashboardStats = await this.workOrdersService.getDashboardStats();
+        const assets = await this.assetsService.findAll();
+        const users = await this.usersService.findAll();
+        const pdfDoc = await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.PDFDocument.create());
+        const page = pdfDoc.addPage([595.28, 841.89]);
         const { width, height } = page.getSize();
-        const fontSize = 12;
-        const titleFontSize = 18;
+        const font = await pdfDoc.embedFont(await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.StandardFonts.Helvetica));
+        const boldFont = await pdfDoc.embedFont(await Promise.resolve().then(() => require('pdf-lib')).then(lib => lib.StandardFonts.HelveticaBold));
         let yPosition = height - 50;
         page.drawText('Dashboard Summary Report', {
             x: 50,
             y: yPosition,
-            size: titleFontSize,
-            font: timesRomanBoldFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
+            size: 20,
+            font: boldFont,
         });
         yPosition -= 40;
-        page.drawText(`Generated: ${new Date().toLocaleDateString()}`, {
+        page.drawText(`Generated on: ${new Date().toLocaleDateString()}`, {
             x: 50,
             y: yPosition,
-            size: fontSize,
-            font: timesRomanFont,
-            color: (0, pdf_lib_1.rgb)(0, 0, 0),
+            size: 12,
+            font: font,
         });
-        yPosition -= 40;
-        const statsData = [
-            `Open Work Orders: ${stats.open}`,
-            `In Progress Work Orders: ${stats.inProgress}`,
-            `Completed Work Orders: ${stats.completed}`,
-            `Overdue Work Orders: ${stats.overdue}`,
-            `Completed Today: ${stats.completedToday}`,
+        yPosition -= 30;
+        page.drawText('Work Order Statistics:', {
+            x: 50,
+            y: yPosition,
+            size: 14,
+            font: boldFont,
+        });
+        yPosition -= 20;
+        const stats = [
+            `Open Work Orders: ${dashboardStats.open}`,
+            `In Progress: ${dashboardStats.inProgress}`,
+            `Completed Today: ${dashboardStats.completedToday}`,
+            `Overdue: ${dashboardStats.overdue}`,
         ];
-        for (const stat of statsData) {
+        for (const stat of stats) {
             page.drawText(stat, {
                 x: 50,
                 y: yPosition,
-                size: fontSize,
-                font: timesRomanFont,
-                color: (0, pdf_lib_1.rgb)(0, 0, 0),
+                size: 12,
+                font: font,
             });
-            yPosition -= 25;
+            yPosition -= 18;
+        }
+        yPosition -= 20;
+        page.drawText('Asset Statistics:', {
+            x: 50,
+            y: yPosition,
+            size: 14,
+            font: boldFont,
+        });
+        yPosition -= 20;
+        const assetStats = [
+            `Total Assets: ${assets.length}`,
+            `Active Assets: ${assets.filter(a => a.status === 'active').length}`,
+            `In Maintenance: ${assets.filter(a => a.status === 'maintenance').length}`,
+            `Retired Assets: ${assets.filter(a => a.status === 'retired').length}`,
+        ];
+        for (const stat of assetStats) {
+            page.drawText(stat, {
+                x: 50,
+                y: yPosition,
+                size: 12,
+                font: font,
+            });
+            yPosition -= 18;
+        }
+        yPosition -= 20;
+        page.drawText('User Statistics:', {
+            x: 50,
+            y: yPosition,
+            size: 14,
+            font: boldFont,
+        });
+        yPosition -= 20;
+        const userStats = [
+            `Total Users: ${users.length}`,
+            `Active Users: ${users.filter(u => u.status === 'active').length}`,
+            `Technicians: ${users.filter(u => u.role === 'technician').length}`,
+            `Administrators: ${users.filter(u => u.role === 'administrator').length}`,
+        ];
+        for (const stat of userStats) {
+            page.drawText(stat, {
+                x: 50,
+                y: yPosition,
+                size: 12,
+                font: font,
+            });
+            yPosition -= 18;
         }
         const pdfBytes = await pdfDoc.save();
         return Buffer.from(pdfBytes);
-    }
-    splitTextIntoLines(text, maxCharsPerLine) {
-        const words = text.split(' ');
-        const lines = [];
-        let currentLine = '';
-        for (const word of words) {
-            if ((currentLine + word).length <= maxCharsPerLine) {
-                currentLine += (currentLine ? ' ' : '') + word;
-            }
-            else {
-                if (currentLine) {
-                    lines.push(currentLine);
-                }
-                currentLine = word;
-            }
-        }
-        if (currentLine) {
-            lines.push(currentLine);
-        }
-        return lines;
     }
 };
 exports.ReportsService = ReportsService;
@@ -356,6 +235,7 @@ exports.ReportsService = ReportsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [work_orders_service_1.WorkOrdersService,
         assets_service_1.AssetsService,
-        users_service_1.UsersService])
+        users_service_1.UsersService,
+        pdf_report_service_1.PdfReportService])
 ], ReportsService);
 //# sourceMappingURL=reports.service.js.map
