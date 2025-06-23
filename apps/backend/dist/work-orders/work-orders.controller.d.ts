@@ -7,7 +7,8 @@ export declare class WorkOrdersController {
     private readonly workOrdersService;
     private readonly timeEntryService;
     constructor(workOrdersService: WorkOrdersService, timeEntryService: TimeEntryService);
-    findAll(req: any, status?: WorkOrderStatus, assignedTo?: string, priority?: string, type?: string, search?: string, dateFrom?: string, dateTo?: string, overdueOnly?: boolean, limit?: number, offset?: number): Promise<WorkOrder[]>;
+    findAll(req: any, status?: WorkOrderStatus, assignedTo?: string, priority?: string, type?: string, search?: string, tags?: string, dateFrom?: string, dateTo?: string, overdueOnly?: boolean, limit?: number, offset?: number): Promise<WorkOrder[]>;
+    getAllTags(): Promise<string[]>;
     getTimeEntries(workOrderId: string, req: any): Promise<import("./entities/work-order-time-entry.entity").WorkOrderTimeEntry[]>;
     addTimeEntry(workOrderId: string, timeEntryData: Omit<CreateTimeEntryDto, 'workOrderId'>, req: any): Promise<import("./entities/work-order-time-entry.entity").WorkOrderTimeEntry>;
     findOne(id: string, req: any): Promise<WorkOrder>;
@@ -15,6 +16,7 @@ export declare class WorkOrdersController {
     update(id: string, updateData: Partial<WorkOrder>, req: any): Promise<WorkOrder>;
     updateStatus(id: string, statusData: {
         status: WorkOrderStatus;
+        billingStatus?: 'not_ready' | 'in_progress' | 'ready' | 'completed';
         completionNotes?: string;
     }, req: any): Promise<WorkOrder>;
     remove(id: string): Promise<void>;

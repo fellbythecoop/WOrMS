@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WorkOrderTimeEntry, TimeEntryType } from './entities/work-order-time-entry.entity';
-import { WorkOrder } from './entities/work-order.entity';
+import { WorkOrder, WorkOrderStatus } from './entities/work-order.entity';
 import { Customer } from '../customers/entities/customer.entity';
 import { User } from '../users/entities/user.entity';
 
@@ -12,6 +12,8 @@ export interface CreateTimeEntryDto {
   timeEntryType: TimeEntryType;
   hours: number;
   description?: string;
+  report?: string;
+  workCompleted?: boolean;
   date: Date;
 }
 
@@ -19,6 +21,8 @@ export interface UpdateTimeEntryDto {
   timeEntryType?: TimeEntryType;
   hours?: number;
   description?: string;
+  report?: string;
+  workCompleted?: boolean;
   date?: Date;
 }
 
@@ -118,6 +122,8 @@ export class TimeEntryService {
       rate,
       totalAmount,
       description,
+      report: createTimeEntryDto.report,
+      workCompleted: createTimeEntryDto.workCompleted || false,
       date,
     });
 
@@ -126,7 +132,16 @@ export class TimeEntryService {
     // Update work order totals
     await this.updateWorkOrderTotals(workOrderId);
 
-    return savedTimeEntry;
+    // Check if work is completed and update work order status
+    if (createTimeEntryDto.workCompleted) {
+      await this.updateWorkOrderStatusOnCompletion(workOrderId);
+    }
+
+    // Return the time entry with technician relation loaded
+    return this.timeEntryRepository.findOne({
+      where: { id: savedTimeEntry.id },
+      relations: ['technician'],
+    });
   }
 
   async updateTimeEntry(id: string, updateTimeEntryDto: UpdateTimeEntryDto): Promise<WorkOrderTimeEntry> {
@@ -211,6 +226,11 @@ export class TimeEntryService {
     // Update work order totals
     await this.updateWorkOrderTotals(timeEntry.workOrderId);
 
+    // Check if work is completed and update work order status
+    if (updateTimeEntryDto.workCompleted) {
+      await this.updateWorkOrderStatusOnCompletion(timeEntry.workOrderId);
+    }
+
     return savedTimeEntry;
   }
 
@@ -264,6 +284,13 @@ export class TimeEntryService {
     await this.workOrderRepository.update(workOrderId, {
       actualHours: totalHours,
       actualCost: totalCost,
+    });
+  }
+
+  private async updateWorkOrderStatusOnCompletion(workOrderId: string): Promise<void> {
+    await this.workOrderRepository.update(workOrderId, {
+      status: WorkOrderStatus.COMPLETED,
+      billingStatus: 'ready',
     });
   }
 } 

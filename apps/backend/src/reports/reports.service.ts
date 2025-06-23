@@ -22,6 +22,18 @@ export class ReportsService {
     // Get related data
     const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
     const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
+    
+    // Get additional assigned users
+    let additionalAssignees: any[] = [];
+    if (workOrder.assignedUsers && workOrder.assignedUsers.length > 0) {
+      try {
+        const userPromises = workOrder.assignedUsers.map(userId => this.usersService.findById(userId));
+        additionalAssignees = await Promise.all(userPromises);
+        additionalAssignees = additionalAssignees.filter(user => user !== null);
+      } catch (error) {
+        console.error('Error fetching additional assignees:', error);
+      }
+    }
 
     return this.pdfReportService.generateWorkOrderCompletionReport(
       workOrder,
@@ -30,6 +42,7 @@ export class ReportsService {
       asset,
       workOrder.comments,
       workOrder.attachments,
+      additionalAssignees, // Pass additional assignees
     );
   }
 
@@ -46,6 +59,18 @@ export class ReportsService {
     // Get related data
     const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
     const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
+
+    // Get additional assigned users
+    let additionalAssignees: any[] = [];
+    if (workOrder.assignedUsers && workOrder.assignedUsers.length > 0) {
+      try {
+        const userPromises = workOrder.assignedUsers.map(userId => this.usersService.findById(userId));
+        additionalAssignees = await Promise.all(userPromises);
+        additionalAssignees = additionalAssignees.filter(user => user !== null);
+      } catch (error) {
+        console.error('Error fetching additional assignees:', error);
+      }
+    }
 
     // Add completion notes to comments if provided
     let comments = workOrder.comments || [];
@@ -69,6 +94,7 @@ export class ReportsService {
       asset,
       comments,
       workOrder.attachments,
+      additionalAssignees, // Pass additional assignees
     );
   }
 

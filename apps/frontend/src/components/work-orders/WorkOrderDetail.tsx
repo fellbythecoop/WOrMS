@@ -27,6 +27,10 @@ import {
   Tooltip,
   Collapse,
   FormHelperText,
+  FormControlLabel,
+  Checkbox,
+  Autocomplete,
+  Stack,
 } from '@mui/material';
 import {
   Edit as EditIcon,
@@ -55,6 +59,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import AttachmentManager from './AttachmentManager';
+import { TagManager } from '../common/TagManager';
 
 // Configure axios base URL
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
@@ -112,11 +117,14 @@ interface WorkOrder {
   actualStartDate?: Date;
   actualEndDate?: Date;
   completionNotes?: string;
+  billingStatus: 'not_ready' | 'in_progress' | 'ready' | 'completed';
   signature?: string;
   createdAt: Date;
   updatedAt: Date;
   assignedTo?: User;
   assignedToId?: string;
+  assignedUsers?: string[]; // Multiple assignees
+  workOrderTags?: string[]; // Tags
   asset?: any;
   comments: Comment[];
   attachments: any[];
@@ -143,6 +151,8 @@ interface TimeEntry {
   rate: number;
   totalAmount: number;
   description?: string;
+  report?: string;
+  workCompleted: boolean;
   date: Date;
   technician: User;
 }
@@ -170,6 +180,48 @@ const priorityColors: Record<WorkOrderPriority, 'default' | 'primary' | 'seconda
   [WorkOrderPriority.CRITICAL]: 'error',
 };
 
+// Component for displaying time entry reports with minimize/expand functionality
+function TimeEntryReportSection({ report }: { report: string }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <Box sx={{ mt: 1 }}>
+      <Button
+        variant="text"
+        size="small"
+        onClick={() => setExpanded(!expanded)}
+        endIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        sx={{ 
+          p: 0, 
+          minWidth: 0, 
+          fontSize: '0.75rem',
+          color: 'primary.main',
+          textTransform: 'none',
+          fontWeight: 'medium'
+        }}
+      >
+        {expanded ? 'Hide Report' : 'Show Report'}
+      </Button>
+      <Collapse in={expanded}>
+        <Paper 
+          sx={{ 
+            mt: 1, 
+            p: 2, 
+            bgcolor: 'grey.50', 
+            border: '1px solid', 
+            borderColor: 'grey.200',
+            borderRadius: 1
+          }}
+        >
+          <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontSize: '0.8rem', lineHeight: 1.4 }}>
+            {report}
+          </Typography>
+        </Paper>
+      </Collapse>
+    </Box>
+  );
+}
+
 export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOrderDetailProps) {
   const [workOrder, setWorkOrder] = useState<WorkOrder | null>(null);
   const [loading, setLoading] = useState(false);
@@ -178,15 +230,19 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
   const [editingAssignment, setEditingAssignment] = useState(false);
   const [addingComment, setAddingComment] = useState(false);
   const [editingDetails, setEditingDetails] = useState(false);
+  const [editingInfo, setEditingInfo] = useState(false);
   const [editingSchedule, setEditingSchedule] = useState(false);
   const [editingCosts, setEditingCosts] = useState(false);
   const [newStatus, setNewStatus] = useState<WorkOrderStatus>(WorkOrderStatus.OPEN);
+  const [newBillingStatus, setNewBillingStatus] = useState<'not_ready' | 'in_progress' | 'ready' | 'completed'>('not_ready');
   const [completionNotes, setCompletionNotes] = useState('');
   const [selectedTechnician, setSelectedTechnician] = useState('');
   const [newComment, setNewComment] = useState('');
   const [isInternalComment, setIsInternalComment] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [generatingReport, setGeneratingReport] = useState(false);
+  const [selectedAssignees, setSelectedAssignees] = useState<string[]>([]);
+  const [workOrderTags, setWorkOrderTags] = useState<string[]>([]);
   const [editingTimeEntries, setEditingTimeEntries] = useState(false);
   const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
   const [editingTimeEntryId, setEditingTimeEntryId] = useState<string | null>(null);
@@ -194,6 +250,8 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
     timeEntryType: 'straight_time' as 'travel_time' | 'straight_time' | 'overtime' | 'double_time',
     hours: 0,
     description: '',
+    report: '',
+    workCompleted: false,
     date: new Date(),
     technicianId: '',
   });
@@ -201,6 +259,8 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
     timeEntryType: 'straight_time' as const,
     hours: 0,
     description: '',
+    report: '',
+    workCompleted: false,
     date: new Date(),
     technicianId: '',
   });
@@ -209,6 +269,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
   const [editForm, setEditForm] = useState({
     title: '',
     description: '',
+    workOrderNumber: '',
     priority: WorkOrderPriority.MEDIUM,
     type: WorkOrderType.MAINTENANCE,
     estimatedHours: 0,
@@ -237,6 +298,9 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
       const response = await api.get(`/api/work-orders/${workOrderId}`);
       setWorkOrder(response.data);
       setNewStatus(response.data.status);
+      setNewBillingStatus(response.data.billingStatus || 'not_ready');
+      setSelectedAssignees(response.data.assignedUsers || []);
+      setWorkOrderTags(response.data.workOrderTags || []);
       
       // Don't set selectedTechnician here - wait for users to load first
       // This prevents the MUI SelectInput error
@@ -245,6 +309,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
       setEditForm({
         title: response.data.title,
         description: response.data.description,
+        workOrderNumber: response.data.workOrderNumber,
         priority: response.data.priority,
         type: response.data.type,
         estimatedHours: response.data.estimatedHours || 0,
@@ -302,6 +367,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
       setLoading(true);
       const response = await api.put(`/api/work-orders/${workOrder.id}/status`, {
         status: newStatus,
+        billingStatus: newBillingStatus,
         completionNotes: newStatus === WorkOrderStatus.COMPLETED ? completionNotes : undefined,
       });
       
@@ -373,6 +439,9 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
         description: editForm.description,
         priority: editForm.priority,
         type: editForm.type,
+        assignedToId: selectedTechnician || null,
+        assignedUsers: selectedAssignees,
+        workOrderTags: workOrderTags,
       });
       
       setWorkOrder(response.data);
@@ -381,6 +450,27 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
     } catch (err) {
       setError('Failed to update details');
       console.error('Error updating details:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInfoUpdate = async () => {
+    if (!workOrder) return;
+
+    try {
+      setLoading(true);
+      const response = await api.put(`/api/work-orders/${workOrder.id}`, {
+        workOrderNumber: editForm.workOrderNumber,
+        type: editForm.type,
+      });
+      
+      setWorkOrder(response.data);
+      setEditingInfo(false);
+      if (onUpdate) onUpdate(response.data);
+    } catch (err) {
+      setError('Failed to update work order info');
+      console.error('Error updating info:', err);
     } finally {
       setLoading(false);
     }
@@ -467,15 +557,20 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
         timeEntryType: newTimeEntry.timeEntryType,
         hours: newTimeEntry.hours,
         description: newTimeEntry.description,
+        report: newTimeEntry.report,
+        workCompleted: newTimeEntry.workCompleted,
         date: newTimeEntry.date,
         technicianId: newTimeEntry.technicianId || undefined,
       });
       
-      setTimeEntries(prev => [...prev, response.data]);
+      // Refresh time entries to ensure we have complete data with technician relations
+      await fetchTimeEntries();
       setNewTimeEntry({
         timeEntryType: 'straight_time',
         hours: 0,
         description: '',
+        report: '',
+        workCompleted: false,
         date: new Date(),
         technicianId: '',
       });
@@ -495,7 +590,9 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
     try {
       setLoading(true);
       await api.delete(`/api/work-orders/time-entries/${timeEntryId}`);
-      setTimeEntries(prev => prev.filter(entry => entry.id !== timeEntryId));
+      
+      // Refresh time entries to ensure we have complete data
+      await fetchTimeEntries();
       
       // Refresh work order to get updated totals
       await fetchWorkOrder();
@@ -513,8 +610,10 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
       timeEntryType: timeEntry.timeEntryType,
       hours: timeEntry.hours,
       description: timeEntry.description || '',
+      report: timeEntry.report || '',
+      workCompleted: timeEntry.workCompleted || false,
       date: new Date(timeEntry.date),
-      technicianId: timeEntry.technician.id,
+      technicianId: timeEntry.technician?.id || '',
     });
   };
 
@@ -527,18 +626,21 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
         timeEntryType: editTimeEntry.timeEntryType,
         hours: editTimeEntry.hours,
         description: editTimeEntry.description,
+        report: editTimeEntry.report,
+        workCompleted: editTimeEntry.workCompleted,
         date: editTimeEntry.date,
         technicianId: editTimeEntry.technicianId,
       });
       
-      setTimeEntries(prev => prev.map(entry => 
-        entry.id === editingTimeEntryId ? response.data : entry
-      ));
+      // Refresh time entries to ensure we have complete data with technician relations
+      await fetchTimeEntries();
       setEditingTimeEntryId(null);
       setEditTimeEntry({
         timeEntryType: 'straight_time',
         hours: 0,
         description: '',
+        report: '',
+        workCompleted: false,
         date: new Date(),
         technicianId: '',
       });
@@ -559,6 +661,8 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
       timeEntryType: 'straight_time',
       hours: 0,
       description: '',
+      report: '',
+      workCompleted: false,
       date: new Date(),
       technicianId: '',
     });
@@ -577,6 +681,35 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
   const formatCurrency = (amount: number | undefined) => {
     if (!amount) return 'Not set';
     return `$${amount.toFixed(2)}`;
+  };
+
+  const getTimeEntryTypeColor = (timeEntryType: string) => {
+    switch (timeEntryType) {
+      case 'travel_time':
+      case 'straight_time':
+        return 'success';
+      case 'overtime':
+        return 'warning';
+      case 'double_time':
+        return 'error';
+      default:
+        return 'default';
+    }
+  };
+
+  const getBillingStatusColor = (billingStatus: string) => {
+    switch (billingStatus) {
+      case 'not_ready':
+        return 'error';
+      case 'in_progress':
+        return 'info';
+      case 'ready':
+        return 'warning';
+      case 'completed':
+        return 'success';
+      default:
+        return 'default';
+    }
   };
 
   if (!open) return null;
@@ -645,6 +778,12 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                       label={workOrder.type.toUpperCase()}
                       variant="outlined"
                       size="small"
+                    />
+                    <Chip
+                      label={`BILLING: ${workOrder.billingStatus?.replace('_', ' ').toUpperCase() || 'IN PROGRESS'}`}
+                      color={getBillingStatusColor(workOrder.billingStatus)}
+                      size="small"
+                      variant="outlined"
                     />
                     {workOrder.isOverdue && (
                       <Chip
@@ -715,7 +854,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                         <Grid container spacing={2}>
                           <Grid item xs={6}>
                             <Typography variant="subtitle2" color="text.secondary">
-                              Assigned To
+                              Primary Assignee
                             </Typography>
                             <Box display="flex" alignItems="center" gap={1}>
                               <PersonIcon fontSize="small" />
@@ -727,12 +866,41 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                               </Typography>
                             </Box>
                           </Grid>
-                          <Grid item xs={6}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                              Created
+                          <Grid item xs={12}>
+                            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                              Additional Assignees
                             </Typography>
-                            <Typography>{formatDateTime(workOrder.createdAt)}</Typography>
+                            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                              {selectedAssignees.length > 0 ? (
+                                selectedAssignees.map((userId) => {
+                                  const user = users.find(u => u.id === userId);
+                                  return user ? (
+                                    <Chip
+                                      key={userId}
+                                      label={`${user.firstName} ${user.lastName}`}
+                                      size="small"
+                                      variant="outlined"
+                                      color="primary"
+                                    />
+                                  ) : null;
+                                })
+                              ) : (
+                                <Typography variant="body2" color="text.secondary">
+                                  No additional assignees
+                                </Typography>
+                              )}
+                            </Stack>
                           </Grid>
+                          <Grid item xs={12}>
+                            <TagManager
+                              selectedTags={workOrderTags}
+                              onTagsChange={() => {}} // Read-only
+                              label="Tags"
+                              disabled={true}
+                              size="small"
+                            />
+                          </Grid>
+
                           <Grid item xs={6}>
                             <Typography variant="subtitle2" color="text.secondary">
                               Last Updated
@@ -778,8 +946,9 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                             onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
                             margin="normal"
                           />
+                          
                           <Grid container spacing={2} sx={{ mt: 1 }}>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                               <FormControl fullWidth>
                                 <InputLabel>Priority</InputLabel>
                                 <Select
@@ -795,22 +964,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                                 </Select>
                               </FormControl>
                             </Grid>
-                            <Grid item xs={6}>
-                              <FormControl fullWidth>
-                                <InputLabel>Type</InputLabel>
-                                <Select
-                                  value={editForm.type}
-                                  onChange={(e) => setEditForm(prev => ({ ...prev, type: e.target.value as WorkOrderType }))}
-                                  label="Type"
-                                >
-                                  {Object.values(WorkOrderType).map((type) => (
-                                    <MenuItem key={type} value={type}>
-                                      {type.toUpperCase()}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            </Grid>
+
                             <Grid item xs={12}>
                               <FormControl fullWidth>
                                 <InputLabel>Assign To</InputLabel>
@@ -835,6 +989,45 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                               </FormControl>
                             </Grid>
                           </Grid>
+
+                          {/* Additional Assignees */}
+                          <Autocomplete
+                            multiple
+                            options={users.filter(user => user.role === 'technician' || user.role === 'administrator')}
+                            getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
+                            value={users.filter(user => selectedAssignees.includes(user.id))}
+                            onChange={(event, newValue) => {
+                              setSelectedAssignees(newValue.map(user => user.id));
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Additional Assignees"
+                                placeholder="Select additional assignees"
+                                margin="normal"
+                              />
+                            )}
+                            renderTags={(value, getTagProps) =>
+                              value.map((option, index) => (
+                                <Chip
+                                  variant="outlined"
+                                  label={`${option.firstName} ${option.lastName}`}
+                                  {...getTagProps({ index })}
+                                  key={option.id}
+                                />
+                              ))
+                            }
+                          />
+                          
+                          {/* Tags */}
+                          <TagManager
+                            selectedTags={workOrderTags}
+                            onTagsChange={setWorkOrderTags}
+                            label="Tags"
+                            placeholder="Select or create tags..."
+                            size="small"
+                          />
+
                           <Box display="flex" gap={1} sx={{ mt: 2 }}>
                             <Button
                               variant="contained"
@@ -966,6 +1159,30 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                               />
                             </Grid>
                             <Grid item xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Report (Optional)"
+                                value={newTimeEntry.report}
+                                onChange={(e) => setNewTimeEntry(prev => ({ ...prev, report: e.target.value }))}
+                                multiline
+                                minRows={3}
+                                maxRows={10}
+                                placeholder="Enter detailed work report..."
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={newTimeEntry.workCompleted}
+                                    onChange={(e) => setNewTimeEntry(prev => ({ ...prev, workCompleted: e.target.checked }))}
+                                    color="primary"
+                                  />
+                                }
+                                label="Mark work as completed (this will update work order status to completed)"
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
                               <DateTimePicker
                                 label="Date"
                                 value={dayjs(newTimeEntry.date)}
@@ -1060,7 +1277,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                                           onChange={(e) => setEditTimeEntry(prev => ({ ...prev, technicianId: e.target.value }))}
                                           label="Technician"
                                         >
-                                          {users.filter(user => user.role === 'technician').map(user => (
+                                          {users.filter(user => user.role === 'technician' || user.role === 'administrator').map(user => (
                                             <MenuItem key={user.id} value={user.id}>
                                               {user.firstName} {user.lastName}
                                             </MenuItem>
@@ -1075,6 +1292,32 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                                         label="Description"
                                         value={editTimeEntry.description}
                                         onChange={(e) => setEditTimeEntry(prev => ({ ...prev, description: e.target.value }))}
+                                      />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="Report"
+                                        value={editTimeEntry.report}
+                                        onChange={(e) => setEditTimeEntry(prev => ({ ...prev, report: e.target.value }))}
+                                        multiline
+                                        minRows={3}
+                                        maxRows={10}
+                                        placeholder="Enter detailed work report..."
+                                      />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox
+                                            checked={editTimeEntry.workCompleted}
+                                            onChange={(e) => setEditTimeEntry(prev => ({ ...prev, workCompleted: e.target.checked }))}
+                                            color="primary"
+                                            size="small"
+                                          />
+                                        }
+                                        label="Mark work as completed"
                                       />
                                     </Grid>
                                   </Grid>
@@ -1099,40 +1342,40 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                               ) : (
                                 // Display mode
                                 <>
-                                  <ListItemText
-                                    primary={
-                                      <Box display="flex" alignItems="center" gap={1}>
-                                        <Typography variant="subtitle2">
-                                          {timeEntry.technician.firstName} {timeEntry.technician.lastName}
-                                        </Typography>
-                                        <Chip
+                                  <Box sx={{ flexGrow: 1 }}>
+                                    <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                                      <Typography variant="subtitle2">
+                                        {timeEntry.technician?.firstName || 'Unknown'} {timeEntry.technician?.lastName || 'User'}
+                                      </Typography>
+                                                                              <Chip
                                           label={timeEntry.timeEntryType.replace('_', ' ').toUpperCase()}
                                           size="small"
-                                          color="primary"
+                                          color={getTimeEntryTypeColor(timeEntry.timeEntryType)}
                                         />
-                                        <Typography variant="caption" color="text.secondary">
-                                          {formatDateTime(timeEntry.date)}
-                                        </Typography>
-                                      </Box>
-                                    }
-                                    secondary={
-                                      <Box>
-                                        <Box component="span" sx={{ fontSize: '0.875rem', lineHeight: 1.43, display: 'block' }}>
-                                          {timeEntry.hours} hours @ ${timeEntry.rate}/hr = ${timeEntry.totalAmount.toFixed(2)}
-                                        </Box>
-                                        {timeEntry.description && (
-                                          <Box component="span" sx={{ fontSize: '0.875rem', lineHeight: 1.43, color: 'text.secondary', display: 'block' }}>
-                                            {timeEntry.description}
-                                          </Box>
+                                        {timeEntry.workCompleted && (
+                                          <Chip
+                                            label="WORK COMPLETED"
+                                            size="small"
+                                            color="success"
+                                            variant="outlined"
+                                          />
                                         )}
-                                      </Box>
-                                    }
-                                    componentsProps={{
-                                      secondary: {
-                                        component: 'div'
-                                      }
-                                    }}
-                                  />
+                                      <Typography variant="caption" color="text.secondary">
+                                        {formatDateTime(timeEntry.date)}
+                                      </Typography>
+                                    </Box>
+                                    <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.43 }}>
+                                      {timeEntry.hours} hours @ ${timeEntry.rate}/hr = ${timeEntry.totalAmount.toFixed(2)}
+                                    </Typography>
+                                    {timeEntry.description && (
+                                      <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.43, color: 'text.secondary' }}>
+                                        {timeEntry.description}
+                                      </Typography>
+                                    )}
+                                    {timeEntry.report && (
+                                      <TimeEntryReportSection report={timeEntry.report} />
+                                    )}
+                                  </Box>
                                   <Box>
                                     <IconButton
                                       size="small"
@@ -1157,13 +1400,70 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                       )}
                       
                       {timeEntries.length > 0 && (
-                        <Box sx={{ mt: 2, p: 2, bgcolor: 'primary.light', borderRadius: 1 }}>
-                          <Typography variant="subtitle2" color="white">
-                            Total Time: {timeEntries.reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hours
+                        <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.100', borderRadius: 1, border: '1px solid', borderColor: 'grey.300' }}>
+                          <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                            Time Entry Totals
                           </Typography>
-                          <Typography variant="subtitle2" color="white">
-                            Total Cost: ${timeEntries.reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
-                          </Typography>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6} md={3}>
+                              <Box sx={{ p: 1, bgcolor: 'success.light', borderRadius: 1, textAlign: 'center' }}>
+                                <Typography variant="caption" sx={{ color: 'success.contrastText', fontWeight: 'bold' }}>
+                                  TRAVEL TIME
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'success.contrastText' }}>
+                                  {timeEntries.filter(e => e.timeEntryType === 'travel_time').reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hrs
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'success.contrastText' }}>
+                                  ${timeEntries.filter(e => e.timeEntryType === 'travel_time').reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
+                                </Typography>
+                              </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                              <Box sx={{ p: 1, bgcolor: 'success.main', borderRadius: 1, textAlign: 'center' }}>
+                                <Typography variant="caption" sx={{ color: 'success.contrastText', fontWeight: 'bold' }}>
+                                  STRAIGHT TIME
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'success.contrastText' }}>
+                                  {timeEntries.filter(e => e.timeEntryType === 'straight_time').reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hrs
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'success.contrastText' }}>
+                                  ${timeEntries.filter(e => e.timeEntryType === 'straight_time').reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
+                                </Typography>
+                              </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                              <Box sx={{ p: 1, bgcolor: 'warning.main', borderRadius: 1, textAlign: 'center' }}>
+                                <Typography variant="caption" sx={{ color: 'warning.contrastText', fontWeight: 'bold' }}>
+                                  OVERTIME
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'warning.contrastText' }}>
+                                  {timeEntries.filter(e => e.timeEntryType === 'overtime').reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hrs
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'warning.contrastText' }}>
+                                  ${timeEntries.filter(e => e.timeEntryType === 'overtime').reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
+                                </Typography>
+                              </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                              <Box sx={{ p: 1, bgcolor: 'error.main', borderRadius: 1, textAlign: 'center' }}>
+                                <Typography variant="caption" sx={{ color: 'error.contrastText', fontWeight: 'bold' }}>
+                                  DOUBLE TIME
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'error.contrastText' }}>
+                                  {timeEntries.filter(e => e.timeEntryType === 'double_time').reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hrs
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'error.contrastText' }}>
+                                  ${timeEntries.filter(e => e.timeEntryType === 'double_time').reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
+                                </Typography>
+                              </Box>
+                            </Grid>
+                          </Grid>
+                          <Box sx={{ mt: 2, p: 1, bgcolor: 'primary.main', borderRadius: 1, textAlign: 'center' }}>
+                            <Typography variant="subtitle2" sx={{ color: 'primary.contrastText', fontWeight: 'bold' }}>
+                              GRAND TOTAL: {timeEntries.reduce((sum, entry) => sum + entry.hours, 0).toFixed(2)} hours | 
+                              ${timeEntries.reduce((sum, entry) => sum + entry.totalAmount, 0).toFixed(2)}
+                            </Typography>
+                          </Box>
                         </Box>
                       )}
                     </CardContent>
@@ -1417,38 +1717,91 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                   {/* Work Order Info */}
                   <Card sx={{ mt: 2 }}>
                     <CardContent>
-                      <Typography variant="h6" gutterBottom>
-                        <BuildIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
-                        Work Order Info
-                      </Typography>
-                      <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography variant="caption" color="text.secondary">
-                            Work Order Number
-                          </Typography>
-                          <Typography variant="body2">
-                            {workOrder.workOrderNumber}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="caption" color="text.secondary">
-                            Type
-                          </Typography>
-                          <Typography variant="body2">
-                            {workOrder.type.charAt(0).toUpperCase() + workOrder.type.slice(1)}
-                          </Typography>
-                        </Grid>
-                        {workOrder.asset && (
+                      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                        <Typography variant="h6" gutterBottom>
+                          <BuildIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
+                          Work Order Info
+                        </Typography>
+                        <IconButton 
+                          onClick={() => setEditingInfo(!editingInfo)}
+                          size="small"
+                        >
+                          {editingInfo ? <CancelIcon /> : <EditIcon />}
+                        </IconButton>
+                      </Box>
+                      
+                      <Collapse in={!editingInfo}>
+                        <Grid container spacing={1}>
                           <Grid item xs={12}>
                             <Typography variant="caption" color="text.secondary">
-                              Asset
+                              Work Order Number
                             </Typography>
                             <Typography variant="body2">
-                              {workOrder.asset.name}
+                              {workOrder.workOrderNumber}
                             </Typography>
                           </Grid>
-                        )}
-                      </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="caption" color="text.secondary">
+                              Type
+                            </Typography>
+                            <Typography variant="body2">
+                              {workOrder.type.charAt(0).toUpperCase() + workOrder.type.slice(1)}
+                            </Typography>
+                          </Grid>
+                          {workOrder.asset && (
+                            <Grid item xs={12}>
+                              <Typography variant="caption" color="text.secondary">
+                                Asset
+                              </Typography>
+                              <Typography variant="body2">
+                                {workOrder.asset.name}
+                              </Typography>
+                            </Grid>
+                          )}
+                        </Grid>
+                      </Collapse>
+
+                      <Collapse in={editingInfo}>
+                        <Box>
+                          <TextField
+                            fullWidth
+                            label="Work Order Number"
+                            value={editForm.workOrderNumber}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, workOrderNumber: e.target.value }))}
+                            margin="normal"
+                          />
+                          <FormControl fullWidth margin="normal">
+                            <InputLabel>Type</InputLabel>
+                            <Select
+                              value={editForm.type}
+                              onChange={(e) => setEditForm(prev => ({ ...prev, type: e.target.value as WorkOrderType }))}
+                              label="Type"
+                            >
+                              {Object.values(WorkOrderType).map((type) => (
+                                <MenuItem key={type} value={type}>
+                                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                          <Box display="flex" gap={1} sx={{ mt: 2 }}>
+                            <Button
+                              variant="contained"
+                              onClick={handleInfoUpdate}
+                              disabled={loading}
+                              startIcon={<SaveIcon />}
+                            >
+                              {loading ? 'Saving...' : 'Save Changes'}
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              onClick={() => setEditingInfo(false)}
+                            >
+                              Cancel
+                            </Button>
+                          </Box>
+                        </Box>
+                      </Collapse>
                     </CardContent>
                   </Card>
 
@@ -1548,7 +1901,7 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
 
       {/* Status Update Dialog */}
       <Dialog open={editingStatus} onClose={() => setEditingStatus(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Update Work Order Status</DialogTitle>
+        <DialogTitle>Update Status & Billing</DialogTitle>
         <DialogContent>
           <FormControl fullWidth margin="normal">
             <InputLabel>Status</InputLabel>
@@ -1562,6 +1915,20 @@ export function WorkOrderDetail({ workOrderId, open, onClose, onUpdate }: WorkOr
                   {status.replace('_', ' ').toUpperCase()}
                 </MenuItem>
               ))}
+            </Select>
+          </FormControl>
+          
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Billing Status</InputLabel>
+            <Select
+              value={newBillingStatus}
+              onChange={(e) => setNewBillingStatus(e.target.value as 'not_ready' | 'in_progress' | 'ready' | 'completed')}
+              label="Billing Status"
+            >
+              <MenuItem value="not_ready">NOT READY</MenuItem>
+              <MenuItem value="in_progress">IN PROGRESS</MenuItem>
+              <MenuItem value="ready">READY</MenuItem>
+              <MenuItem value="completed">COMPLETED</MenuItem>
             </Select>
           </FormControl>
           

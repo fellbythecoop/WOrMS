@@ -50,6 +50,14 @@ __decorate([
     __metadata("design:type", String)
 ], WorkOrderTimeEntry.prototype, "description", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], WorkOrderTimeEntry.prototype, "report", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], WorkOrderTimeEntry.prototype, "workCompleted", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'datetime' }),
     __metadata("design:type", Date)
 ], WorkOrderTimeEntry.prototype, "date", void 0);

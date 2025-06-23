@@ -9,12 +9,16 @@ export interface CreateTimeEntryDto {
     timeEntryType: TimeEntryType;
     hours: number;
     description?: string;
+    report?: string;
+    workCompleted?: boolean;
     date: Date;
 }
 export interface UpdateTimeEntryDto {
     timeEntryType?: TimeEntryType;
     hours?: number;
     description?: string;
+    report?: string;
+    workCompleted?: boolean;
     date?: Date;
 }
 export declare class TimeEntryService {
@@ -29,4 +33,5 @@ export declare class TimeEntryService {
     getTimeEntriesByWorkOrder(workOrderId: string): Promise<WorkOrderTimeEntry[]>;
     getTimeEntryById(id: string): Promise<WorkOrderTimeEntry>;
     private updateWorkOrderTotals;
+    private updateWorkOrderStatusOnCompletion;
 }

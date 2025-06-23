@@ -5,6 +5,8 @@ import { WorkOrder, WorkOrderStatus, WorkOrderPriority, WorkOrderType } from './
 import { WorkOrderComment } from './entities/work-order-comment.entity';
 import { WorkOrderAttachment } from './entities/work-order-attachment.entity';
 import { CacheService } from '../cache/cache.service';
+import { Not, IsNull } from 'typeorm';
+import * as fs from 'fs';
 
 export interface DashboardStats {
   open: number;
@@ -32,6 +34,7 @@ export class WorkOrdersService {
     priority?: string;
     type?: string;
     search?: string;
+    tags?: string[];
     dateFrom?: string;
     dateTo?: string;
     overdueOnly?: boolean;
@@ -77,6 +80,19 @@ export class WorkOrdersService {
          OR LOWER(CONCAT(assignedTo.firstName, ' ', assignedTo.lastName)) LIKE :search)`,
         { search: searchTerm }
       );
+    }
+
+    // Tag search
+    if (filters?.tags && filters.tags.length > 0) {
+      const tagConditions = filters.tags.map((tag, index) => 
+        `workOrder.tags LIKE :tag${index}`
+      );
+      const tagParams = filters.tags.reduce((params, tag, index) => {
+        params[`tag${index}`] = `%"${tag}"%`;
+        return params;
+      }, {} as Record<string, string>);
+      
+      query.andWhere(`(${tagConditions.join(' OR ')})`, tagParams);
     }
 
     // Date range filters
@@ -139,13 +155,28 @@ export class WorkOrdersService {
 
   async update(id: string, updateData: Partial<WorkOrder>): Promise<WorkOrder> {
     // Remove relations that can't be updated directly
-    const { comments, attachments, timeEntries, assignedTo, asset, customer, ...updateFields } = updateData;
+    const { comments, attachments, timeEntries, assignedTo, asset, customer, assignedUsers, workOrderTags, ...updateFields } = updateData;
     
-    await this.workOrderRepository.update(id, updateFields);
-    const updatedWorkOrder = await this.findById(id);
-    if (!updatedWorkOrder) {
+    // Get the existing work order to update special fields
+    const existingWorkOrder = await this.findById(id);
+    if (!existingWorkOrder) {
       throw new Error('Work order not found');
     }
+
+    // Handle assignedUsers and workOrderTags specially using setters
+    if (assignedUsers !== undefined) {
+      existingWorkOrder.assignedUsers = assignedUsers;
+    }
+    
+    if (workOrderTags !== undefined) {
+      existingWorkOrder.workOrderTags = workOrderTags;
+    }
+
+    // Update other fields
+    Object.assign(existingWorkOrder, updateFields);
+    
+    // Save the updated work order
+    const updatedWorkOrder = await this.workOrderRepository.save(existingWorkOrder);
     
     // Invalidate related caches
     await this.cacheService.invalidateWorkOrderCaches();
@@ -157,6 +188,7 @@ export class WorkOrdersService {
     id: string,
     status: WorkOrderStatus,
     completionNotes?: string,
+    billingStatus?: 'not_ready' | 'in_progress' | 'ready' | 'completed',
   ): Promise<WorkOrder> {
     const updateData: Partial<WorkOrder> = { status };
 
@@ -171,6 +203,11 @@ export class WorkOrdersService {
     // Set start date when marking as in progress
     if (status === WorkOrderStatus.IN_PROGRESS) {
       updateData.actualStartDate = new Date();
+    }
+
+    // Update billing status if provided
+    if (billingStatus) {
+      updateData.billingStatus = billingStatus;
     }
 
     return this.update(id, updateData);
@@ -366,14 +403,42 @@ export class WorkOrdersService {
       throw new Error('Attachment not found');
     }
 
-    // Delete file from disk
-    const fs = require('fs');
-    if (fs.existsSync(attachment.filePath)) {
-      fs.unlinkSync(attachment.filePath);
+    // Delete file from filesystem
+    try {
+      await fs.promises.unlink(attachment.filePath);
+    } catch (error) {
+      console.warn('Failed to delete attachment file:', error);
     }
 
     // Delete from database
     await this.attachmentRepository.delete(attachmentId);
+  }
+
+  async getAllTags(): Promise<string[]> {
+    const workOrders = await this.workOrderRepository.find({
+      where: { tags: Not(IsNull()) }
+    });
+
+    const tagSet = new Set<string>();
+    
+    workOrders.forEach(workOrder => {
+      if (workOrder.tags) {
+        try {
+          const tags = JSON.parse(workOrder.tags);
+          if (Array.isArray(tags)) {
+            tags.forEach(tag => {
+              if (tag && typeof tag === 'string' && tag.trim()) {
+                tagSet.add(tag.trim());
+              }
+            });
+          }
+        } catch (error) {
+          // Ignore invalid JSON
+        }
+      }
+    });
+
+    return Array.from(tagSet).sort();
   }
 
   async seedSampleWorkOrders(): Promise<WorkOrder[]> {

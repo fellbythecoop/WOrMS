@@ -42,12 +42,15 @@ export declare class WorkOrder {
     actualStartDate?: Date;
     actualEndDate?: Date;
     completionNotes?: string;
+    billingStatus: 'not_ready' | 'in_progress' | 'ready' | 'completed';
     signature?: string;
     metadata?: string;
     createdAt: Date;
     updatedAt: Date;
     assignedTo?: User;
     assignedToId?: string;
+    assignedUserIds?: string;
+    tags?: string;
     asset?: Asset;
     assetId?: string;
     customer?: Customer;
@@ -60,4 +63,8 @@ export declare class WorkOrder {
     get duration(): number | null;
     get totalTimeEntries(): number;
     get totalTimeCost(): number;
+    get assignedUsers(): string[];
+    set assignedUsers(userIds: string[]);
+    get workOrderTags(): string[];
+    set workOrderTags(tagList: string[]);
 }

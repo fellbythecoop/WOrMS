@@ -208,16 +208,7 @@ export function WorkOrderList({
         );
       },
     },
-    {
-      field: 'createdAt',
-      headerName: 'Created',
-      width: 130,
-      renderCell: (params: GridRenderCellParams) => (
-        <Typography variant="body2">
-          {dayjs(params.value).format('MMM DD, YYYY')}
-        </Typography>
-      ),
-    },
+
     {
       field: 'actions',
       headerName: 'Actions',
@@ -256,7 +247,7 @@ export function WorkOrderList({
   ];
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx={{ p: 3, maxWidth: 'none', width: '100%' }}>
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h5" component="h2">
@@ -341,10 +332,14 @@ export function WorkOrderList({
             },
           }}
           disableRowSelectionOnClick
+          onRowDoubleClick={(params) => onView(params.row)}
           sx={{
             '& .MuiDataGrid-row:hover': {
               backgroundColor: 'action.hover',
+              cursor: 'pointer',
             },
+            width: '100%',
+            minWidth: 1200,
           }}
         />
       </Box>

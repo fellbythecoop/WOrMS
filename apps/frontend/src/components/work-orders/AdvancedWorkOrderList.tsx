@@ -36,6 +36,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { WorkOrderDetail } from './WorkOrderDetail';
+import { TagManager } from '../common/TagManager';
 
 // Enhanced interface for work orders
 interface AdvancedWorkOrder {
@@ -51,6 +52,7 @@ interface AdvancedWorkOrder {
   dueDate?: string;
   estimatedHours?: number;
   actualHours?: number;
+  workOrderTags?: string[]; // Tags for the work order
   assignedTo?: {
     id: string;
     firstName: string;
@@ -73,6 +75,7 @@ interface FilterState {
   dateFrom: Dayjs | null;
   dateTo: Dayjs | null;
   overdueBOnly: boolean;
+  tags: string[];
 }
 
 interface AdvancedWorkOrderListProps {
@@ -127,6 +130,7 @@ export function AdvancedWorkOrderList({
     dateFrom: null,
     dateTo: null,
     overdueBOnly: false,
+    tags: [],
   });
   
   const [showFilters, setShowFilters] = useState(false);
@@ -189,6 +193,19 @@ export function AdvancedWorkOrderList({
         }
       }
 
+      // Tag filter - check if work order has any of the selected tags
+      if (filters.tags.length > 0) {
+        if (!workOrder.workOrderTags || workOrder.workOrderTags.length === 0) {
+          return false;
+        }
+        const hasMatchingTag = filters.tags.some(filterTag => 
+          workOrder.workOrderTags!.includes(filterTag)
+        );
+        if (!hasMatchingTag) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [workOrders, filters]);
@@ -203,6 +220,7 @@ export function AdvancedWorkOrderList({
     if (filters.assignedTo.length > 0) count++;
     if (filters.dateFrom || filters.dateTo) count++;
     if (filters.overdueBOnly) count++;
+    if (filters.tags.length > 0) count++;
     return count;
   }, [filters]);
 
@@ -217,6 +235,7 @@ export function AdvancedWorkOrderList({
       dateFrom: null,
       dateTo: null,
       overdueBOnly: false,
+      tags: [],
     });
   };
 
@@ -284,6 +303,56 @@ export function AdvancedWorkOrderList({
       },
     },
     {
+      field: 'workOrderTags',
+      headerName: 'Tags',
+      width: 200,
+      renderCell: (params: GridRenderCellParams) => {
+        const tags = params.value as string[] || [];
+        if (tags.length === 0) {
+          return (
+            <Typography variant="body2" color="text.secondary">
+              No tags
+            </Typography>
+          );
+        }
+        return (
+          <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+            {tags.slice(0, 2).map((tag, index) => {
+              // Generate consistent color for tag
+              let hash = 0;
+              for (let i = 0; i < tag.length; i++) {
+                hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+              }
+              const colors = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c2185b', '#d32f2f'];
+              const color = colors[Math.abs(hash) % colors.length];
+              
+              return (
+                <Chip 
+                  key={index} 
+                  label={tag} 
+                  size="small" 
+                  sx={{ 
+                    backgroundColor: color, 
+                    color: 'white', 
+                    fontWeight: 'bold',
+                    fontSize: '0.7rem',
+                  }}
+                />
+              );
+            })}
+            {tags.length > 2 && (
+              <Chip 
+                label={`+${tags.length - 2}`} 
+                size="small" 
+                variant="outlined"
+                sx={{ fontSize: '0.7rem' }}
+              />
+            )}
+          </Box>
+        );
+      },
+    },
+    {
       field: 'assignedTo',
       headerName: 'Assigned To',
       width: 180,
@@ -300,16 +369,7 @@ export function AdvancedWorkOrderList({
         );
       },
     },
-    {
-      field: 'createdAt',
-      headerName: 'Created',
-      width: 120,
-      renderCell: (params: GridRenderCellParams) => (
-        <Typography variant="body2">
-          {dayjs(params.value).format('MMM DD, YYYY')}
-        </Typography>
-      ),
-    },
+
     {
       field: 'dueDate',
       headerName: 'Due Date',
@@ -368,7 +428,7 @@ export function AdvancedWorkOrderList({
 
   return (
     <Box>
-      <Container>
+      <Container maxWidth="xl">
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography variant="h5" component="h2">
@@ -592,13 +652,24 @@ export function AdvancedWorkOrderList({
                     slotProps={{ textField: { size: 'small', fullWidth: true } }}
                   />
                 </Grid>
+
+                {/* Tags Filter */}
+                <Grid item xs={12} md={6}>
+                  <TagManager
+                    selectedTags={filters.tags}
+                    onTagsChange={(newTags) => setFilters(prev => ({ ...prev, tags: newTags }))}
+                    label="Filter by Tags"
+                    placeholder="Select tags to filter by..."
+                    size="small"
+                  />
+                </Grid>
               </Grid>
             </Collapse>
           </CardContent>
         </Card>
 
         {/* Data Grid */}
-        <Box sx={{ height: 600 }}>
+        <Box sx={{ height: 600, width: '100%' }}>
           <DataGrid
             rows={filteredWorkOrders}
             columns={columns}
@@ -621,10 +692,14 @@ export function AdvancedWorkOrderList({
             pageSizeOptions={[10, 25, 50, 100]}
             checkboxSelection
             disableRowSelectionOnClick
+            onRowDoubleClick={(params) => handleViewWorkOrder(params.row)}
             sx={{
               '& .MuiDataGrid-row:hover': {
                 backgroundColor: 'action.hover',
+                cursor: 'pointer',
               },
+              width: '100%',
+              minWidth: 1200,
             }}
           />
         </Box>

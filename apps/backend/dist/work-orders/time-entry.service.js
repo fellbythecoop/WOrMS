@@ -95,11 +95,19 @@ let TimeEntryService = class TimeEntryService {
             rate,
             totalAmount,
             description,
+            report: createTimeEntryDto.report,
+            workCompleted: createTimeEntryDto.workCompleted || false,
             date,
         });
         const savedTimeEntry = await this.timeEntryRepository.save(timeEntry);
         await this.updateWorkOrderTotals(workOrderId);
-        return savedTimeEntry;
+        if (createTimeEntryDto.workCompleted) {
+            await this.updateWorkOrderStatusOnCompletion(workOrderId);
+        }
+        return this.timeEntryRepository.findOne({
+            where: { id: savedTimeEntry.id },
+            relations: ['technician'],
+        });
     }
     async updateTimeEntry(id, updateTimeEntryDto) {
         const timeEntry = await this.timeEntryRepository.findOne({
@@ -167,6 +175,9 @@ let TimeEntryService = class TimeEntryService {
         }
         const savedTimeEntry = await this.timeEntryRepository.save(timeEntry);
         await this.updateWorkOrderTotals(timeEntry.workOrderId);
+        if (updateTimeEntryDto.workCompleted) {
+            await this.updateWorkOrderStatusOnCompletion(timeEntry.workOrderId);
+        }
         return savedTimeEntry;
     }
     async deleteTimeEntry(id) {
@@ -205,6 +216,12 @@ let TimeEntryService = class TimeEntryService {
         await this.workOrderRepository.update(workOrderId, {
             actualHours: totalHours,
             actualCost: totalCost,
+        });
+    }
+    async updateWorkOrderStatusOnCompletion(workOrderId) {
+        await this.workOrderRepository.update(workOrderId, {
+            status: work_order_entity_1.WorkOrderStatus.COMPLETED,
+            billingStatus: 'ready',
         });
     }
 };

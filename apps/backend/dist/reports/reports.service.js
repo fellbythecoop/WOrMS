@@ -29,7 +29,18 @@ let ReportsService = class ReportsService {
         }
         const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
         const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
-        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, workOrder.comments, workOrder.attachments);
+        let additionalAssignees = [];
+        if (workOrder.assignedUsers && workOrder.assignedUsers.length > 0) {
+            try {
+                const userPromises = workOrder.assignedUsers.map(userId => this.usersService.findById(userId));
+                additionalAssignees = await Promise.all(userPromises);
+                additionalAssignees = additionalAssignees.filter(user => user !== null);
+            }
+            catch (error) {
+                console.error('Error fetching additional assignees:', error);
+            }
+        }
+        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, workOrder.comments, workOrder.attachments, additionalAssignees);
     }
     async generateCompletionReport(workOrderId, signature, completionNotes) {
         const workOrder = await this.workOrdersService.findById(workOrderId);
@@ -38,6 +49,17 @@ let ReportsService = class ReportsService {
         }
         const assignedTechnician = workOrder.assignedTo ? await this.usersService.findById(workOrder.assignedTo.id) : null;
         const asset = workOrder.asset ? await this.assetsService.findById(workOrder.asset.id) : null;
+        let additionalAssignees = [];
+        if (workOrder.assignedUsers && workOrder.assignedUsers.length > 0) {
+            try {
+                const userPromises = workOrder.assignedUsers.map(userId => this.usersService.findById(userId));
+                additionalAssignees = await Promise.all(userPromises);
+                additionalAssignees = additionalAssignees.filter(user => user !== null);
+            }
+            catch (error) {
+                console.error('Error fetching additional assignees:', error);
+            }
+        }
         let comments = workOrder.comments || [];
         if (completionNotes) {
             comments = [
@@ -51,7 +73,7 @@ let ReportsService = class ReportsService {
                 },
             ];
         }
-        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, comments, workOrder.attachments);
+        return this.pdfReportService.generateWorkOrderCompletionReport(workOrder, assignedTechnician, null, asset, comments, workOrder.attachments, additionalAssignees);
     }
     async generateMaintenanceScheduleReport() {
         const assets = await this.assetsService.findMaintenanceDue();

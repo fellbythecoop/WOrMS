@@ -39,6 +39,12 @@ export class WorkOrderTimeEntry {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
+  @Column({ type: 'text', nullable: true })
+  report?: string;
+
+  @Column({ type: 'boolean', default: false })
+  workCompleted: boolean;
+
   @Column({ type: 'datetime' })
   date: Date;
 

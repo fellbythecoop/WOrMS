@@ -66,6 +66,32 @@ let WorkOrder = class WorkOrder {
     get totalTimeCost() {
         return this.timeEntries?.reduce((total, entry) => total + Number(entry.totalAmount), 0) || 0;
     }
+    get assignedUsers() {
+        if (!this.assignedUserIds)
+            return [];
+        try {
+            return JSON.parse(this.assignedUserIds);
+        }
+        catch {
+            return [];
+        }
+    }
+    set assignedUsers(userIds) {
+        this.assignedUserIds = JSON.stringify(userIds);
+    }
+    get workOrderTags() {
+        if (!this.tags)
+            return [];
+        try {
+            return JSON.parse(this.tags);
+        }
+        catch {
+            return [];
+        }
+    }
+    set workOrderTags(tagList) {
+        this.tags = JSON.stringify(tagList);
+    }
 };
 exports.WorkOrder = WorkOrder;
 __decorate([
@@ -142,6 +168,15 @@ __decorate([
     __metadata("design:type", String)
 ], WorkOrder.prototype, "completionNotes", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: 'varchar',
+        length: 50,
+        default: 'not_ready',
+        enum: ['not_ready', 'in_progress', 'ready', 'completed']
+    }),
+    __metadata("design:type", String)
+], WorkOrder.prototype, "billingStatus", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], WorkOrder.prototype, "signature", void 0);
@@ -166,6 +201,14 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'assigned_to_id', nullable: true }),
     __metadata("design:type", String)
 ], WorkOrder.prototype, "assignedToId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], WorkOrder.prototype, "assignedUserIds", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], WorkOrder.prototype, "tags", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => asset_entity_1.Asset, asset => asset.workOrders, { nullable: true }),
     (0, typeorm_1.JoinColumn)({ name: 'asset_id' }),

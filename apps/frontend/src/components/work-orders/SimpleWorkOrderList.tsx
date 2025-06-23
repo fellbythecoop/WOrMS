@@ -98,13 +98,21 @@ export function SimpleWorkOrderList({
               <TableCell>Status</TableCell>
               <TableCell>Priority</TableCell>
               <TableCell>Assigned To</TableCell>
-              <TableCell>Created</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {workOrders.map((workOrder) => (
-              <TableRow key={workOrder.id}>
+              <TableRow 
+                key={workOrder.id}
+                onDoubleClick={() => onView(workOrder)}
+                sx={{ 
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  }
+                }}
+              >
                 <TableCell>
                   <Typography variant="body2" fontWeight="medium">
                     {workOrder.workOrderNumber}
@@ -136,11 +144,7 @@ export function SimpleWorkOrderList({
                     </Typography>
                   )}
                 </TableCell>
-                <TableCell>
-                  <Typography variant="body2">
-                    {dayjs(workOrder.createdAt).format('MMM DD, YYYY')}
-                  </Typography>
-                </TableCell>
+
                 <TableCell>
                   <Stack direction="row" spacing={0.5}>
                     <IconButton

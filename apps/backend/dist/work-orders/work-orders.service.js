@@ -20,6 +20,8 @@ const work_order_entity_1 = require("./entities/work-order.entity");
 const work_order_comment_entity_1 = require("./entities/work-order-comment.entity");
 const work_order_attachment_entity_1 = require("./entities/work-order-attachment.entity");
 const cache_service_1 = require("../cache/cache.service");
+const typeorm_3 = require("typeorm");
+const fs = require("fs");
 let WorkOrdersService = class WorkOrdersService {
     constructor(workOrderRepository, commentRepository, attachmentRepository, cacheService) {
         this.workOrderRepository = workOrderRepository;
@@ -54,6 +56,14 @@ let WorkOrdersService = class WorkOrdersService {
          OR LOWER(workOrder.description) LIKE :search 
          OR LOWER(workOrder.workOrderNumber) LIKE :search
          OR LOWER(CONCAT(assignedTo.firstName, ' ', assignedTo.lastName)) LIKE :search)`, { search: searchTerm });
+        }
+        if (filters?.tags && filters.tags.length > 0) {
+            const tagConditions = filters.tags.map((tag, index) => `workOrder.tags LIKE :tag${index}`);
+            const tagParams = filters.tags.reduce((params, tag, index) => {
+                params[`tag${index}`] = `%"${tag}"%`;
+                return params;
+            }, {});
+            query.andWhere(`(${tagConditions.join(' OR ')})`, tagParams);
         }
         if (filters?.dateFrom) {
             query.andWhere('workOrder.createdAt >= :dateFrom', { dateFrom: new Date(filters.dateFrom) });
@@ -95,16 +105,23 @@ let WorkOrdersService = class WorkOrdersService {
         return savedWorkOrder;
     }
     async update(id, updateData) {
-        const { comments, attachments, timeEntries, assignedTo, asset, customer, ...updateFields } = updateData;
-        await this.workOrderRepository.update(id, updateFields);
-        const updatedWorkOrder = await this.findById(id);
-        if (!updatedWorkOrder) {
+        const { comments, attachments, timeEntries, assignedTo, asset, customer, assignedUsers, workOrderTags, ...updateFields } = updateData;
+        const existingWorkOrder = await this.findById(id);
+        if (!existingWorkOrder) {
             throw new Error('Work order not found');
         }
+        if (assignedUsers !== undefined) {
+            existingWorkOrder.assignedUsers = assignedUsers;
+        }
+        if (workOrderTags !== undefined) {
+            existingWorkOrder.workOrderTags = workOrderTags;
+        }
+        Object.assign(existingWorkOrder, updateFields);
+        const updatedWorkOrder = await this.workOrderRepository.save(existingWorkOrder);
         await this.cacheService.invalidateWorkOrderCaches();
         return updatedWorkOrder;
     }
-    async updateStatus(id, status, completionNotes) {
+    async updateStatus(id, status, completionNotes, billingStatus) {
         const updateData = { status };
         if (status === work_order_entity_1.WorkOrderStatus.COMPLETED) {
             updateData.actualEndDate = new Date();
@@ -114,6 +131,9 @@ let WorkOrdersService = class WorkOrdersService {
         }
         if (status === work_order_entity_1.WorkOrderStatus.IN_PROGRESS) {
             updateData.actualStartDate = new Date();
+        }
+        if (billingStatus) {
+            updateData.billingStatus = billingStatus;
         }
         return this.update(id, updateData);
     }
@@ -267,11 +287,36 @@ let WorkOrdersService = class WorkOrdersService {
         if (!attachment) {
             throw new Error('Attachment not found');
         }
-        const fs = require('fs');
-        if (fs.existsSync(attachment.filePath)) {
-            fs.unlinkSync(attachment.filePath);
+        try {
+            await fs.promises.unlink(attachment.filePath);
+        }
+        catch (error) {
+            console.warn('Failed to delete attachment file:', error);
         }
         await this.attachmentRepository.delete(attachmentId);
+    }
+    async getAllTags() {
+        const workOrders = await this.workOrderRepository.find({
+            where: { tags: (0, typeorm_3.Not)((0, typeorm_3.IsNull)()) }
+        });
+        const tagSet = new Set();
+        workOrders.forEach(workOrder => {
+            if (workOrder.tags) {
+                try {
+                    const tags = JSON.parse(workOrder.tags);
+                    if (Array.isArray(tags)) {
+                        tags.forEach(tag => {
+                            if (tag && typeof tag === 'string' && tag.trim()) {
+                                tagSet.add(tag.trim());
+                            }
+                        });
+                    }
+                }
+                catch (error) {
+                }
+            }
+        });
+        return Array.from(tagSet).sort();
     }
     async seedSampleWorkOrders() {
         const existingWorkOrders = await this.workOrderRepository.count();

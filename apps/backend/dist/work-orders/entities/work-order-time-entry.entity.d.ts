@@ -13,6 +13,8 @@ export declare class WorkOrderTimeEntry {
     rate: number;
     totalAmount: number;
     description?: string;
+    report?: string;
+    workCompleted: boolean;
     date: Date;
     createdAt: Date;
     updatedAt: Date;

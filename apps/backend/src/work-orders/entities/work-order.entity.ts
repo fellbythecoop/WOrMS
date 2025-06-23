@@ -98,6 +98,14 @@ export class WorkOrder {
   @Column({ type: 'text', nullable: true })
   completionNotes?: string;
 
+  @Column({ 
+    type: 'varchar', 
+    length: 50, 
+    default: 'not_ready',
+    enum: ['not_ready', 'in_progress', 'ready', 'completed']
+  })
+  billingStatus: 'not_ready' | 'in_progress' | 'ready' | 'completed';
+
   @Column({ type: 'text', nullable: true })
   signature?: string; // Base64 encoded signature
 
@@ -117,6 +125,14 @@ export class WorkOrder {
 
   @Column({ name: 'assigned_to_id', nullable: true })
   assignedToId?: string;
+
+  // Multiple assignees support
+  @Column({ type: 'text', nullable: true })
+  assignedUserIds?: string; // JSON array of user IDs
+
+  // Tags support
+  @Column({ type: 'text', nullable: true })
+  tags?: string; // JSON array of tags
 
   @ManyToOne(() => Asset, asset => asset.workOrders, { nullable: true })
   @JoinColumn({ name: 'asset_id' })
@@ -167,5 +183,33 @@ export class WorkOrder {
 
   get totalTimeCost(): number {
     return this.timeEntries?.reduce((total, entry) => total + Number(entry.totalAmount), 0) || 0;
+  }
+
+  // Helper methods for multiple assignees
+  get assignedUsers(): string[] {
+    if (!this.assignedUserIds) return [];
+    try {
+      return JSON.parse(this.assignedUserIds);
+    } catch {
+      return [];
+    }
+  }
+
+  set assignedUsers(userIds: string[]) {
+    this.assignedUserIds = JSON.stringify(userIds);
+  }
+
+  // Helper methods for tags
+  get workOrderTags(): string[] {
+    if (!this.tags) return [];
+    try {
+      return JSON.parse(this.tags);
+    } catch {
+      return [];
+    }
+  }
+
+  set workOrderTags(tagList: string[]) {
+    this.tags = JSON.stringify(tagList);
   }
 } 

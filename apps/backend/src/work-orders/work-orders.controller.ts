@@ -45,6 +45,7 @@ export class WorkOrdersController {
     @Query('priority') priority?: string,
     @Query('type') type?: string,
     @Query('search') search?: string,
+    @Query('tags') tags?: string,
     @Query('dateFrom') dateFrom?: string,
     @Query('dateTo') dateTo?: string,
     @Query('overdueOnly') overdueOnly?: boolean,
@@ -60,18 +61,29 @@ export class WorkOrdersController {
       assignedTo = user.id;
     }
 
-    return this.workOrdersService.findAll({ 
-      status, 
-      assignedTo, 
-      priority, 
-      type, 
-      search, 
-      dateFrom, 
-      dateTo, 
+    const tagArray = tags ? tags.split(',').map(tag => tag.trim()) : undefined;
+    
+    return this.workOrdersService.findAll({
+      status,
+      assignedTo,
+      priority,
+      type,
+      search,
+      tags: tagArray,
+      dateFrom,
+      dateTo,
       overdueOnly,
       limit: limit || 100,
-      offset: offset || 0
+      offset: offset || 0,
     });
+  }
+
+  @Get('tags')
+  @RequirePermissions(Permission.VIEW_WORK_ORDERS, Permission.VIEW_ALL_WORK_ORDERS)
+  @ApiOperation({ summary: 'Get all available tags' })
+  @ApiResponse({ status: 200, description: 'Available tags retrieved successfully', type: [String] })
+  async getAllTags(): Promise<string[]> {
+    return this.workOrdersService.getAllTags();
   }
 
   // Time Entry Endpoints - MUST come before :id route to avoid route conflicts
@@ -189,7 +201,7 @@ export class WorkOrdersController {
   @ApiResponse({ status: 200, description: 'Work order status updated successfully' })
   async updateStatus(
     @Param('id') id: string,
-    @Body() statusData: { status: WorkOrderStatus; completionNotes?: string },
+    @Body() statusData: { status: WorkOrderStatus; billingStatus?: 'not_ready' | 'in_progress' | 'ready' | 'completed'; completionNotes?: string },
     @Request() req
   ): Promise<WorkOrder> {
     const workOrder = await this.workOrdersService.findById(id);
@@ -206,7 +218,7 @@ export class WorkOrdersController {
       throw new Error('Access denied: You can only update status of work orders assigned to you');
     }
 
-    return this.workOrdersService.updateStatus(id, statusData.status, statusData.completionNotes);
+    return this.workOrdersService.updateStatus(id, statusData.status, statusData.completionNotes, statusData.billingStatus);
   }
 
   @Delete(':id')

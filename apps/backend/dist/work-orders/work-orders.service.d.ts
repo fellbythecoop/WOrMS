@@ -22,6 +22,7 @@ export declare class WorkOrdersService {
         priority?: string;
         type?: string;
         search?: string;
+        tags?: string[];
         dateFrom?: string;
         dateTo?: string;
         overdueOnly?: boolean;
@@ -31,7 +32,7 @@ export declare class WorkOrdersService {
     findById(id: string): Promise<WorkOrder | null>;
     create(workOrderData: Partial<WorkOrder>): Promise<WorkOrder>;
     update(id: string, updateData: Partial<WorkOrder>): Promise<WorkOrder>;
-    updateStatus(id: string, status: WorkOrderStatus, completionNotes?: string): Promise<WorkOrder>;
+    updateStatus(id: string, status: WorkOrderStatus, completionNotes?: string, billingStatus?: 'not_ready' | 'in_progress' | 'ready' | 'completed'): Promise<WorkOrder>;
     delete(id: string): Promise<void>;
     findOverdue(): Promise<WorkOrder[]>;
     getDashboardStats(): Promise<DashboardStats>;
@@ -41,6 +42,7 @@ export declare class WorkOrdersService {
     addAttachment(workOrderId: string, fileName: string, originalName: string, mimeType: string, fileSize: number, filePath: string, uploadedById: string, description?: string): Promise<WorkOrderAttachment>;
     getAttachmentById(attachmentId: string): Promise<WorkOrderAttachment | null>;
     deleteAttachment(attachmentId: string): Promise<void>;
+    getAllTags(): Promise<string[]>;
     seedSampleWorkOrders(): Promise<WorkOrder[]>;
     private generateWorkOrderNumber;
 }

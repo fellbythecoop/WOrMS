@@ -22,6 +22,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
+import { TagManager } from '../common/TagManager';
 
 // Enums matching backend
 export enum WorkOrderPriority {
@@ -51,6 +52,7 @@ interface CreateWorkOrderFormData {
   assetId?: string;
   assignedToId?: string;
   customerId?: string;
+  workOrderTags?: string[];
 }
 
 interface CreateWorkOrderFormProps {
@@ -73,6 +75,7 @@ const validationSchema = yup.object({
 
 export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }: CreateWorkOrderFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const {
     control,
@@ -102,6 +105,7 @@ export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }
         ...data,
         estimatedHours: data.estimatedHours === 0 ? undefined : data.estimatedHours,
         estimatedCost: data.estimatedCost === 0 ? undefined : data.estimatedCost,
+        workOrderTags: selectedTags,
       };
       await onSubmit(submitData as any);
       reset();
@@ -114,6 +118,7 @@ export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }
   const handleClose = () => {
     reset();
     setSubmitError(null);
+    setSelectedTags([]);
     onClose();
   };
 
@@ -205,6 +210,17 @@ export function CreateWorkOrderForm({ open, onClose, onSubmit, loading = false }
                     </Select>
                   </FormControl>
                 )}
+              />
+            </Grid>
+
+            {/* Tags */}
+            <Grid item xs={12}>
+              <TagManager
+                selectedTags={selectedTags}
+                onTagsChange={setSelectedTags}
+                label="Tags"
+                placeholder="Select or create tags for this work order..."
+                size="small"
               />
             </Grid>
 
