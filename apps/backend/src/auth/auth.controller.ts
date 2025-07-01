@@ -2,6 +2,7 @@ import { Controller, Post, Get, Body, UseGuards, Request } from '@nestjs/common'
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RateLimitGuard, RateLimitStrict, RateLimitModerate } from './guards/rate-limit.guard';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -9,6 +10,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('azure-login')
+  @UseGuards(RateLimitGuard)
+  @RateLimitStrict()
   @ApiOperation({ summary: 'Login with Azure AD token' })
   @ApiResponse({ status: 200, description: 'Successfully authenticated' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -30,6 +33,8 @@ export class AuthController {
   }
 
   @Post('verify')
+  @UseGuards(RateLimitGuard)
+  @RateLimitModerate()
   @ApiOperation({ summary: 'Verify JWT token' })
   @ApiResponse({ status: 200, description: 'Token is valid' })
   @ApiResponse({ status: 401, description: 'Token is invalid' })

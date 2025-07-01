@@ -54,6 +54,44 @@ let WorkOrdersController = class WorkOrdersController {
     async getAllTags() {
         return this.workOrdersService.getAllTags();
     }
+    async findScheduledWorkOrders(req, startDate, endDate, technicianId, status) {
+        try {
+            if (!startDate || !endDate) {
+                throw new Error('startDate and endDate are required parameters');
+            }
+            const startDateObj = new Date(startDate);
+            const endDateObj = new Date(endDate);
+            if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+                throw new Error('Invalid date format. Please use YYYY-MM-DD format');
+            }
+            const user = req.user;
+            if (!user) {
+                throw new Error('User not authenticated');
+            }
+            const canViewAll = user.role === 'administrator' || user.role === 'manager';
+            if (!canViewAll && !technicianId) {
+                technicianId = user.id;
+            }
+            return this.workOrdersService.findScheduledWorkOrders({
+                startDate,
+                endDate,
+                technicianId,
+                status,
+            });
+        }
+        catch (error) {
+            console.error('Error in findScheduledWorkOrders:', error);
+            throw error;
+        }
+    }
+    async findActiveWorkOrders(req, search, status, priority, type) {
+        return this.workOrdersService.findActiveWorkOrders({
+            search,
+            status,
+            priority,
+            type,
+        });
+    }
     async getTimeEntries(workOrderId, req) {
         const workOrder = await this.workOrdersService.findById(workOrderId);
         if (!workOrder) {
@@ -88,7 +126,7 @@ let WorkOrdersController = class WorkOrdersController {
     async findOne(id, req) {
         const workOrder = await this.workOrdersService.findById(id);
         if (!workOrder) {
-            throw new Error('Work order not found');
+            throw new common_1.NotFoundException('Work order not found');
         }
         const user = req.user;
         const canViewAll = user.role === 'administrator' || user.role === 'manager';
@@ -244,6 +282,32 @@ let WorkOrdersController = class WorkOrdersController {
     async seedSampleWorkOrders() {
         return this.workOrdersService.seedSampleWorkOrders();
     }
+    async assignWorkOrder(workOrderId, assignmentData, req) {
+        try {
+            const { assignedToId, scheduledStartDate, estimatedHours } = assignmentData;
+            const scheduledDate = scheduledStartDate ? new Date(scheduledStartDate) : undefined;
+            return await this.workOrdersService.assignWorkOrder(workOrderId, assignedToId, scheduledDate, estimatedHours);
+        }
+        catch (error) {
+            if (error.message?.includes('not found')) {
+                throw new common_1.NotFoundException(error.message);
+            }
+            throw error;
+        }
+    }
+    async checkScheduleConflicts(workOrderId, assignmentData, req) {
+        const workOrder = await this.workOrdersService.findById(workOrderId);
+        if (!workOrder) {
+            throw new Error('Work order not found');
+        }
+        const tempWorkOrder = {
+            ...workOrder,
+            assignedToId: assignmentData.assignedToId,
+            scheduledStartDate: assignmentData.scheduledStartDate ? new Date(assignmentData.scheduledStartDate) : workOrder.scheduledStartDate,
+            estimatedHours: assignmentData.estimatedHours ?? workOrder.estimatedHours,
+        };
+        return this.workOrdersService.checkScheduleConflicts(tempWorkOrder);
+    }
 };
 exports.WorkOrdersController = WorkOrdersController;
 __decorate([
@@ -286,6 +350,42 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "getAllTags", null);
+__decorate([
+    (0, common_1.Get)('scheduled'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Get work orders by scheduled date range for calendar view' }),
+    (0, swagger_1.ApiQuery)({ name: 'startDate', required: true, description: 'Start date (YYYY-MM-DD)' }),
+    (0, swagger_1.ApiQuery)({ name: 'endDate', required: true, description: 'End date (YYYY-MM-DD)' }),
+    (0, swagger_1.ApiQuery)({ name: 'technicianId', required: false, description: 'Filter by technician ID' }),
+    (0, swagger_1.ApiQuery)({ name: 'status', required: false, description: 'Filter by status' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Scheduled work orders retrieved successfully' }),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Query)('startDate')),
+    __param(2, (0, common_1.Query)('endDate')),
+    __param(3, (0, common_1.Query)('technicianId')),
+    __param(4, (0, common_1.Query)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "findScheduledWorkOrders", null);
+__decorate([
+    (0, common_1.Get)('active'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Get active work orders that can be assigned/scheduled' }),
+    (0, swagger_1.ApiQuery)({ name: 'search', required: false, description: 'Search by work order number, title, description, or customer name' }),
+    (0, swagger_1.ApiQuery)({ name: 'status', required: false, enum: work_order_entity_1.WorkOrderStatus, description: 'Filter by status' }),
+    (0, swagger_1.ApiQuery)({ name: 'priority', required: false, type: String, description: 'Filter by priority' }),
+    (0, swagger_1.ApiQuery)({ name: 'type', required: false, type: String, description: 'Filter by work order type' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Active work orders retrieved successfully' }),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Query)('search')),
+    __param(2, (0, common_1.Query)('status')),
+    __param(3, (0, common_1.Query)('priority')),
+    __param(4, (0, common_1.Query)('type')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "findActiveWorkOrders", null);
 __decorate([
     (0, common_1.Get)(':id/time-entries'),
     (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS, permissions_enum_1.Permission.VIEW_ALL_WORK_ORDERS),
@@ -468,6 +568,52 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], WorkOrdersController.prototype, "seedSampleWorkOrders", null);
+__decorate([
+    (0, common_1.Post)(':id/assign'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.UPDATE_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Assign work order to technician with automatic hour calculation' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Work order assigned successfully', schema: {
+            type: 'object',
+            properties: {
+                workOrder: { type: 'object' },
+                warnings: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            message: { type: 'string' },
+                            severity: { type: 'string', enum: ['warning', 'error'] },
+                            technicianName: { type: 'string' },
+                            date: { type: 'string' },
+                            currentUtilization: { type: 'number' },
+                            newUtilization: { type: 'number' },
+                            scheduledHours: { type: 'number' },
+                            availableHours: { type: 'number' },
+                        }
+                    }
+                }
+            }
+        } }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Work order not found' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "assignWorkOrder", null);
+__decorate([
+    (0, common_1.Post)(':id/check-conflicts'),
+    (0, require_permissions_decorator_1.RequirePermissions)(permissions_enum_1.Permission.VIEW_WORK_ORDERS),
+    (0, swagger_1.ApiOperation)({ summary: 'Check for schedule conflicts before assigning work order' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Conflict check completed', type: [Object] }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], WorkOrdersController.prototype, "checkScheduleConflicts", null);
 exports.WorkOrdersController = WorkOrdersController = __decorate([
     (0, swagger_1.ApiTags)('Work Orders'),
     (0, common_1.Controller)('work-orders'),

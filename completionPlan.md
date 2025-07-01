@@ -89,7 +89,39 @@ E2.3: Search, Filtering & Notifications
 US2.3.1: Implement advanced search and filtering capabilities for work orders (by status, priority, technician, asset, date range).
 US2.3.2: Configure Redis for caching frequently accessed search results or dashboard data.
 US2.3.3: Implement real-time notifications (WebSockets) for new work order assignments, status changes, and new comments directed to specific users.
-Phase 3: Reporting & Mobile Enhancement (Weeks 15-20)
+Phase 3: Technician Scheduling & Resource Management (Weeks 15-20)
+Goal: Implement comprehensive scheduling and resource management capabilities to optimize technician utilization and workload distribution.
+
+Key Technical Considerations:
+
+Calendar-based data modeling for daily scheduling.
+Efficient calculation algorithms for utilization metrics.
+Intuitive calendar UI components for schedule visualization.
+Real-time updates for schedule changes and conflicts.
+Epics:
+
+E3.1: Technician Schedule Management
+
+US3.1.1: Develop Schedule entity/schema in PostgreSQL (ID, technician, date, scheduled_hours, available_hours, notes).
+US3.1.2: Create NestJS API endpoints for creating, retrieving, and updating technician schedules.
+US3.1.3: Implement business logic to automatically calculate available hours (default 8 hours per day) and track scheduled hours.
+US3.1.4: Build frontend calendar view (MUI Calendar components) to display daily overview of all technicians' schedules.
+US3.1.5: Create schedule assignment UI for managers to allocate work orders to specific technicians on specific days.
+E3.2: Resource Utilization Reporting
+
+US3.2.1: Develop utilization calculation service that compares scheduled hours vs available hours (8-hour baseline) per technician.
+US3.2.2: Create NestJS API endpoints for retrieving utilization metrics (daily, weekly, monthly views).
+US3.2.3: Build dedicated utilization reporting dashboard showing percentage utilization per technician.
+US3.2.4: Implement visual indicators (charts/graphs using Chart.js or similar) for over-utilized, under-utilized, and optimally-utilized technicians.
+US3.2.5: Add filtering and date range selection for utilization reports (by technician, department, or time period).
+E3.3: Schedule Integration with Work Orders
+
+US3.3.1: Integrate work order assignment with scheduling system to automatically update scheduled hours when work orders are assigned.
+US3.3.2: Implement schedule conflict detection and warnings when over-allocating technicians.
+US3.3.3: Create drag-and-drop functionality in calendar view for easy work order reassignment between technicians and dates.
+US3.3.4: Add estimated duration field to work orders to improve scheduling accuracy.
+US3.3.5: Implement real-time schedule updates via WebSockets when work orders are completed or rescheduled.
+Phase 4: Reporting & Mobile Enhancement (Weeks 21-26)
 Goal: Provide essential reporting capabilities and enable field technician mobility.
 
 Key Technical Considerations:
@@ -99,21 +131,21 @@ Cross-platform mobile development (React Native).
 Offline capabilities for mobile.
 Epics:
 
-E3.1: PDF Report Generation
+E4.1: PDF Report Generation
 
-US3.1.1: Design a template for a "Work Order Completion Report" (e.g., including details, description of work done, parts used, images).
-US3.1.2: Implement NestJS API endpoint to generate a PDF for a completed work order using pdf-lib.
-US3.1.3: Integrate functionality to embed captured signature images onto the PDF report.
-US3.1.4: Create frontend UI to trigger PDF report generation and download.
-US3.1.5: (Optional, if needed) Implement basic digital signature fields within the PDF for later signing by external tools.
-E3.2: Mobile App for Technicians (MVP)
+US4.1.1: Design a template for a "Work Order Completion Report" (e.g., including details, description of work done, parts used, images).
+US4.1.2: Implement NestJS API endpoint to generate a PDF for a completed work order using pdf-lib.
+US4.1.3: Integrate functionality to embed captured signature images onto the PDF report.
+US4.1.4: Create frontend UI to trigger PDF report generation and download.
+US4.1.5: (Optional, if needed) Implement basic digital signature fields within the PDF for later signing by external tools.
+E4.2: Mobile App for Technicians (MVP)
 
-US3.2.1: Set up React Native project.
-US3.2.2: Implement MSAL.js for mobile authentication with Microsoft Entra ID.
-US3.2.3: Develop mobile UI for technicians to view their assigned work orders.
-US3.2.4: Enable mobile UI for technicians to update work order status and add comments/notes.
-US3.2.5: Implement camera access for attaching photos to work orders from the mobile app.
-Phase 4: Optimization & Refinement (Weeks 21-24+)
+US4.2.1: Set up React Native project.
+US4.2.2: Implement MSAL.js for mobile authentication with Microsoft Entra ID.
+US4.2.3: Develop mobile UI for technicians to view their assigned work orders.
+US4.2.4: Enable mobile UI for technicians to update work order status and add comments/notes.
+US4.2.5: Implement camera access for attaching photos to work orders from the mobile app.
+Phase 5: Optimization & Refinement (Weeks 27-30+)
 Goal: Improve performance, scalability, security, and overall user experience.
 
 Key Technical Considerations:
@@ -123,21 +155,21 @@ Security audits and vulnerability patching.
 Kubernetes deployment fine-tuning.
 Epics:
 
-E4.1: Performance & Scalability
+E5.1: Performance & Scalability
 
-US4.1.1: Conduct performance testing (load testing, API response times) and identify bottlenecks.
-US4.1.2: Optimize database queries and indexes.
-US4.1.3: Fine-tune Redis caching strategies.
-US4.1.4: Refine Kubernetes deployment for optimal resource allocation and auto-scaling.
-E4.2: Security Hardening & Audits
+US5.1.1: Conduct performance testing (load testing, API response times) and identify bottlenecks.
+US5.1.2: Optimize database queries and indexes.
+US5.1.3: Fine-tune Redis caching strategies.
+US5.1.4: Refine Kubernetes deployment for optimal resource allocation and auto-scaling.
+E5.2: Security Hardening & Audits
 
-US4.2.1: Conduct security audits (e.g., OWASP Top 10 review) on the application.
-US4.2.2: Implement rate limiting on critical API endpoints using Redis.
-US4.2.3: Enhance input validation and sanitization processes.
-US4.2.4: Implement secure cookie/token handling.
-E4.3: UI/UX Enhancements & Polish
+US5.2.1: Conduct security audits (e.g., OWASP Top 10 review) on the application.
+US5.2.2: Implement rate limiting on critical API endpoints using Redis.
+US5.2.3: Enhance input validation and sanitization processes.
+US5.2.4: Implement secure cookie/token handling.
+E5.3: UI/UX Enhancements & Polish
 
-US4.3.1: Gather user feedback and implement iterative UI/UX improvements.
-US4.3.2: Implement robust error handling and user-friendly error messages across the application.
-US4.3.3: Add user profile management (e.g., update display name, avatar).
-US4.3.4: Develop a comprehensive administration dashboard for system health monitoring.
+US5.3.1: Gather user feedback and implement iterative UI/UX improvements.
+US5.3.2: Implement robust error handling and user-friendly error messages across the application.
+US5.3.3: Add user profile management (e.g., update display name, avatar).
+US5.3.4: Develop a comprehensive administration dashboard for system health monitoring.

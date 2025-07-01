@@ -10,6 +10,7 @@ import { WorkOrderComment } from '../work-orders/entities/work-order-comment.ent
 import { WorkOrderAttachment } from '../work-orders/entities/work-order-attachment.entity';
 import { WorkOrderTimeEntry } from '../work-orders/entities/work-order-time-entry.entity';
 import { Customer } from '../customers/entities/customer.entity';
+import { Schedule } from '../scheduling/entities/schedule.entity';
 
 export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptions => {
   const nodeEnv = configService.get<string>('NODE_ENV') || 'development';
@@ -29,6 +30,7 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
         WorkOrderAttachment,
         WorkOrderTimeEntry,
         Customer,
+        Schedule,
       ],
       synchronize: true, // Auto-create tables in development
       logging: configService.get<boolean>('DB_LOGGING', false),
@@ -51,6 +53,7 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
       WorkOrderAttachment,
       WorkOrderTimeEntry,
       Customer,
+      Schedule,
     ],
     migrations: ['dist/migrations/*.js'],
     synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),

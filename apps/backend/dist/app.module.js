@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const nest_winston_1 = require("nest-winston");
+const core_1 = require("@nestjs/core");
 const winston = require("winston");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
@@ -19,8 +20,11 @@ const assets_module_1 = require("./assets/assets.module");
 const reports_module_1 = require("./reports/reports.module");
 const websocket_module_1 = require("./websocket/websocket.module");
 const customers_module_1 = require("./customers/customers.module");
+const scheduling_module_1 = require("./scheduling/scheduling.module");
 const database_config_1 = require("./config/database.config");
 const health_controller_1 = require("./health/health.controller");
+const dev_auth_guard_1 = require("./auth/guards/dev-auth.guard");
+const permissions_guard_1 = require("./auth/guards/permissions.guard");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -59,9 +63,19 @@ exports.AppModule = AppModule = __decorate([
             reports_module_1.ReportsModule,
             websocket_module_1.WebSocketModule,
             customers_module_1.CustomersModule,
+            scheduling_module_1.SchedulingModule,
         ],
         controllers: [health_controller_1.HealthController],
-        providers: [],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: dev_auth_guard_1.DevAuthGuard,
+            },
+            {
+                provide: core_1.APP_GUARD,
+                useClass: permissions_guard_1.PermissionsGuard,
+            },
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

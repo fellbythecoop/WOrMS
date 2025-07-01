@@ -5,11 +5,14 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { WorkOrder } from './work-order.entity';
 
 @Entity('work_order_comments')
+@Index(['workOrderId']) // Fast loading of comments for work orders
+@Index(['workOrderId', 'createdAt']) // Fast loading with ordering
 export class WorkOrderComment {
   @PrimaryGeneratedColumn('uuid')
   id: string;

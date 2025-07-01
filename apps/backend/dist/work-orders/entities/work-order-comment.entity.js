@@ -53,6 +53,8 @@ __decorate([
     __metadata("design:type", String)
 ], WorkOrderComment.prototype, "authorId", void 0);
 exports.WorkOrderComment = WorkOrderComment = __decorate([
-    (0, typeorm_1.Entity)('work_order_comments')
+    (0, typeorm_1.Entity)('work_order_comments'),
+    (0, typeorm_1.Index)(['workOrderId']),
+    (0, typeorm_1.Index)(['workOrderId', 'createdAt'])
 ], WorkOrderComment);
 //# sourceMappingURL=work-order-comment.entity.js.map

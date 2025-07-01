@@ -13,6 +13,7 @@ exports.User = exports.UserStatus = exports.UserRole = void 0;
 const typeorm_1 = require("typeorm");
 const work_order_entity_1 = require("../../work-orders/entities/work-order.entity");
 const work_order_time_entry_entity_1 = require("../../work-orders/entities/work-order-time-entry.entity");
+const schedule_entity_1 = require("../../scheduling/entities/schedule.entity");
 var UserRole;
 (function (UserRole) {
     UserRole["TECHNICIAN"] = "technician";
@@ -105,6 +106,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => work_order_time_entry_entity_1.WorkOrderTimeEntry, timeEntry => timeEntry.technician),
     __metadata("design:type", Array)
 ], User.prototype, "timeEntries", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => schedule_entity_1.Schedule, schedule => schedule.technician),
+    __metadata("design:type", Array)
+], User.prototype, "schedules", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

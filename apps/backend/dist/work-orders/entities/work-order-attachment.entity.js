@@ -69,6 +69,8 @@ __decorate([
     __metadata("design:type", String)
 ], WorkOrderAttachment.prototype, "uploadedById", void 0);
 exports.WorkOrderAttachment = WorkOrderAttachment = __decorate([
-    (0, typeorm_1.Entity)('work_order_attachments')
+    (0, typeorm_1.Entity)('work_order_attachments'),
+    (0, typeorm_1.Index)(['workOrderId']),
+    (0, typeorm_1.Index)(['workOrderId', 'createdAt'])
 ], WorkOrderAttachment);
 //# sourceMappingURL=work-order-attachment.entity.js.map

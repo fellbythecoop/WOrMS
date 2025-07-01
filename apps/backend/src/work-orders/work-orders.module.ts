@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WorkOrder } from './entities/work-order.entity';
 import { WorkOrderComment } from './entities/work-order-comment.entity';
@@ -10,6 +10,8 @@ import { TimeEntryService } from './time-entry.service';
 import { UsersModule } from '../users/users.module';
 import { AssetsModule } from '../assets/assets.module';
 import { CustomersModule } from '../customers/customers.module';
+import { SchedulingModule } from '../scheduling/scheduling.module';
+import { WebSocketModule } from '../websocket/websocket.module';
 import { CacheService } from '../cache/cache.service';
 import { User } from '../users/entities/user.entity';
 import { Customer } from '../customers/entities/customer.entity';
@@ -27,6 +29,8 @@ import { Customer } from '../customers/entities/customer.entity';
     UsersModule,
     AssetsModule,
     CustomersModule,
+    SchedulingModule,
+    forwardRef(() => WebSocketModule),
   ],
   controllers: [WorkOrdersController],
   providers: [WorkOrdersService, TimeEntryService, CacheService],

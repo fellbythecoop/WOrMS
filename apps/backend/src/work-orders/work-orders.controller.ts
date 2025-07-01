@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards, Request, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards, Request, UseInterceptors, UploadedFile, Res, NotFoundException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiQuery, ApiConsumes } from '@nestjs/swagger';
 import { Response } from 'express';
-import { WorkOrdersService } from './work-orders.service';
+import { WorkOrdersService, ScheduleConflictWarning } from './work-orders.service';
 import { TimeEntryService, CreateTimeEntryDto, UpdateTimeEntryDto } from './time-entry.service';
 import { DevAuthGuard } from '../auth/guards/dev-auth.guard';
 import { PermissionsGuard } from '../auth/guards/permissions.guard';
@@ -87,6 +87,85 @@ export class WorkOrdersController {
   }
 
   // Time Entry Endpoints - MUST come before :id route to avoid route conflicts
+  // Scheduling Integration Endpoints - MUST come before :id route to avoid route conflicts
+
+  @Get('scheduled')
+  @RequirePermissions(Permission.VIEW_WORK_ORDERS, Permission.VIEW_ALL_WORK_ORDERS)
+  @ApiOperation({ summary: 'Get work orders by scheduled date range for calendar view' })
+  @ApiQuery({ name: 'startDate', required: true, description: 'Start date (YYYY-MM-DD)' })
+  @ApiQuery({ name: 'endDate', required: true, description: 'End date (YYYY-MM-DD)' })
+  @ApiQuery({ name: 'technicianId', required: false, description: 'Filter by technician ID' })
+  @ApiQuery({ name: 'status', required: false, description: 'Filter by status' })
+  @ApiResponse({ status: 200, description: 'Scheduled work orders retrieved successfully' })
+  async findScheduledWorkOrders(
+    @Request() req,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+    @Query('technicianId') technicianId?: string,
+    @Query('status') status?: WorkOrderStatus
+  ): Promise<WorkOrder[]> {
+    try {
+      // Validate required parameters
+      if (!startDate || !endDate) {
+        throw new Error('startDate and endDate are required parameters');
+      }
+
+      // Validate date format
+      const startDateObj = new Date(startDate);
+      const endDateObj = new Date(endDate);
+      
+      if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+        throw new Error('Invalid date format. Please use YYYY-MM-DD format');
+      }
+
+      // Role-based filtering
+      const user = req.user;
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const canViewAll = user.role === 'administrator' || user.role === 'manager';
+      
+      if (!canViewAll && !technicianId) {
+        // For technicians, only show their assigned work orders
+        technicianId = user.id;
+      }
+
+      return this.workOrdersService.findScheduledWorkOrders({
+        startDate,
+        endDate,
+        technicianId,
+        status,
+      });
+    } catch (error) {
+      console.error('Error in findScheduledWorkOrders:', error);
+      throw error;
+    }
+  }
+
+  @Get('active')
+  @RequirePermissions(Permission.VIEW_WORK_ORDERS, Permission.VIEW_ALL_WORK_ORDERS)
+  @ApiOperation({ summary: 'Get active work orders that can be assigned/scheduled' })
+  @ApiQuery({ name: 'search', required: false, description: 'Search by work order number, title, description, or customer name' })
+  @ApiQuery({ name: 'status', required: false, enum: WorkOrderStatus, description: 'Filter by status' })
+  @ApiQuery({ name: 'priority', required: false, type: String, description: 'Filter by priority' })
+  @ApiQuery({ name: 'type', required: false, type: String, description: 'Filter by work order type' })
+  @ApiResponse({ status: 200, description: 'Active work orders retrieved successfully' })
+  async findActiveWorkOrders(
+    @Request() req,
+    @Query('search') search?: string,
+    @Query('status') status?: WorkOrderStatus,
+    @Query('priority') priority?: string,
+    @Query('type') type?: string
+  ): Promise<WorkOrder[]> {
+    return this.workOrdersService.findActiveWorkOrders({
+      search,
+      status,
+      priority,
+      type,
+    });
+  }
+
   @Get(':id/time-entries')
   @RequirePermissions(Permission.VIEW_WORK_ORDERS, Permission.VIEW_ALL_WORK_ORDERS)
   @ApiOperation({ summary: 'Get time entries for a work order' })
@@ -149,7 +228,7 @@ export class WorkOrdersController {
   async findOne(@Param('id') id: string, @Request() req): Promise<WorkOrder> {
     const workOrder = await this.workOrdersService.findById(id);
     if (!workOrder) {
-      throw new Error('Work order not found');
+      throw new NotFoundException('Work order not found');
     }
 
     // Check if user has permission to view this specific work order
@@ -458,5 +537,89 @@ export class WorkOrdersController {
   @ApiResponse({ status: 201, description: 'Sample work orders created successfully' })
   async seedSampleWorkOrders() {
     return this.workOrdersService.seedSampleWorkOrders();
+  }
+
+
+  @Post(':id/assign')
+  @RequirePermissions(Permission.UPDATE_WORK_ORDERS)
+  @ApiOperation({ summary: 'Assign work order to technician with automatic hour calculation' })
+  @ApiResponse({ status: 200, description: 'Work order assigned successfully', schema: {
+    type: 'object',
+    properties: {
+      workOrder: { type: 'object' },
+      warnings: { 
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+            severity: { type: 'string', enum: ['warning', 'error'] },
+            technicianName: { type: 'string' },
+            date: { type: 'string' },
+            currentUtilization: { type: 'number' },
+            newUtilization: { type: 'number' },
+            scheduledHours: { type: 'number' },
+            availableHours: { type: 'number' },
+          }
+        }
+      }
+    }
+  }})
+  @ApiResponse({ status: 404, description: 'Work order not found' })
+  async assignWorkOrder(
+    @Param('id') workOrderId: string,
+    @Body() assignmentData: {
+      assignedToId: string;
+      scheduledStartDate?: string;
+      estimatedHours?: number;
+    },
+    @Request() req
+  ): Promise<{ workOrder: WorkOrder; warnings: ScheduleConflictWarning[] }> {
+    try {
+      const { assignedToId, scheduledStartDate, estimatedHours } = assignmentData;
+      
+      const scheduledDate = scheduledStartDate ? new Date(scheduledStartDate) : undefined;
+      
+      return await this.workOrdersService.assignWorkOrder(
+        workOrderId,
+        assignedToId,
+        scheduledDate,
+        estimatedHours
+      );
+    } catch (error) {
+      if (error.message?.includes('not found')) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
+  }
+
+  @Post(':id/check-conflicts')
+  @RequirePermissions(Permission.VIEW_WORK_ORDERS)
+  @ApiOperation({ summary: 'Check for schedule conflicts before assigning work order' })
+  @ApiResponse({ status: 200, description: 'Conflict check completed', type: [Object] })
+  async checkScheduleConflicts(
+    @Param('id') workOrderId: string,
+    @Body() assignmentData: {
+      assignedToId: string;
+      scheduledStartDate?: string;
+      estimatedHours?: number;
+    },
+    @Request() req
+  ): Promise<ScheduleConflictWarning[]> {
+    const workOrder = await this.workOrdersService.findById(workOrderId);
+    if (!workOrder) {
+      throw new Error('Work order not found');
+    }
+
+    // Create a temporary work order object with the proposed assignment
+    const tempWorkOrder = {
+      ...workOrder,
+      assignedToId: assignmentData.assignedToId,
+      scheduledStartDate: assignmentData.scheduledStartDate ? new Date(assignmentData.scheduledStartDate) : workOrder.scheduledStartDate,
+      estimatedHours: assignmentData.estimatedHours ?? workOrder.estimatedHours,
+    } as WorkOrder;
+
+    return this.workOrdersService.checkScheduleConflicts(tempWorkOrder);
   }
 } 

@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Asset } from '../../assets/entities/asset.entity';
@@ -40,6 +41,14 @@ export enum WorkOrderType {
 }
 
 @Entity('work_orders')
+@Index(['status']) // Fast filtering by status
+@Index(['priority']) // Fast filtering by priority  
+@Index(['assignedToId']) // Fast filtering by assigned technician
+@Index(['scheduledStartDate']) // Fast date range queries
+@Index(['createdAt']) // Fast ordering and date filters
+@Index(['status', 'assignedToId']) // Fast dashboard queries
+@Index(['scheduledStartDate', 'assignedToId']) // Fast scheduling queries
+@Index(['workOrderNumber']) // Fast lookup by work order number
 export class WorkOrder {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -1,5 +1,6 @@
 import { WorkOrder } from '../../work-orders/entities/work-order.entity';
 import { WorkOrderTimeEntry } from '../../work-orders/entities/work-order-time-entry.entity';
+import { Schedule } from '../../scheduling/entities/schedule.entity';
 export declare enum UserRole {
     TECHNICIAN = "technician",
     ADMINISTRATOR = "administrator",
@@ -28,6 +29,7 @@ export declare class User {
     lastLoginAt?: Date;
     assignedWorkOrders: WorkOrder[];
     timeEntries: WorkOrderTimeEntry[];
+    schedules: Schedule[];
     get fullName(): string;
     get isActive(): boolean;
 }

@@ -11,6 +11,14 @@ export declare class WorkOrdersGateway implements OnGatewayConnection, OnGateway
     handleLeaveRoom(data: {
         workOrderId: string;
     }, client: Socket): void;
+    handleJoinScheduleRoom(data: {
+        technicianId?: string;
+        date?: string;
+    }, client: Socket): void;
+    handleLeaveScheduleRoom(data: {
+        technicianId?: string;
+        date?: string;
+    }, client: Socket): void;
     emitWorkOrderUpdate(workOrderId: string, data: any): void;
     emitNewComment(workOrderId: string, comment: any): void;
     emitAssignmentChange(workOrderId: string, assignedTo: any, assignedBy: any): void;
@@ -20,4 +28,15 @@ export declare class WorkOrdersGateway implements OnGatewayConnection, OnGateway
         message: string;
         data?: any;
     }): void;
+    emitScheduleUpdate(technicianId: string, date: string, scheduleData: any): void;
+    emitWorkOrderReassignment(data: {
+        workOrderId: string;
+        workOrderNumber: string;
+        fromTechnicianId: string;
+        toTechnicianId: string;
+        fromDate: string;
+        toDate: string;
+        estimatedHours: number;
+    }): void;
+    emitScheduleConflict(technicianId: string, date: string, conflictData: any): void;
 }

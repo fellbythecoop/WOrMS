@@ -9,7 +9,9 @@ import { AssetsPage } from '@/components/pages/AssetsPage';
 import { UsersPage } from '@/components/pages/UsersPage';
 import { ReportsPage } from '@/components/pages/ReportsPage';
 import { CustomersPage } from '@/components/pages/CustomersPage';
+import { SchedulingPage } from '@/components/pages/SchedulingPage';
 import { NotificationProvider } from '@/components/notifications/NotificationProvider';
+import { WebSocketProvider } from '@/components/websocket/WebSocketProvider';
 
 export default function HomePage() {
   const [currentPage, setCurrentPage] = useState<NavigationPage>('dashboard');
@@ -20,6 +22,8 @@ export default function HomePage() {
         return <DashboardPage />;
       case 'work-orders':
         return <WorkOrdersPage />;
+      case 'scheduling':
+        return <SchedulingPage />;
       case 'assets':
         return <AssetsPage />;
       case 'reports':
@@ -35,16 +39,18 @@ export default function HomePage() {
 
   return (
     <NotificationProvider>
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Navigation
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-          isAdmin={true} // For development, always show admin features
-        />
-        <Box sx={{ flexGrow: 1, pt: 8 }}> {/* pt: 8 accounts for the AppBar height */}
-          {renderCurrentPage()}
+      <WebSocketProvider>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Navigation
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            isAdmin={true} // For development, always show admin features
+          />
+          <Box sx={{ flexGrow: 1, pt: 8 }}> {/* pt: 8 accounts for the AppBar height */}
+            {renderCurrentPage()}
+          </Box>
         </Box>
-      </Box>
+      </WebSocketProvider>
     </NotificationProvider>
   );
 } 

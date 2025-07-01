@@ -19,6 +19,8 @@ const time_entry_service_1 = require("./time-entry.service");
 const users_module_1 = require("../users/users.module");
 const assets_module_1 = require("../assets/assets.module");
 const customers_module_1 = require("../customers/customers.module");
+const scheduling_module_1 = require("../scheduling/scheduling.module");
+const websocket_module_1 = require("../websocket/websocket.module");
 const cache_service_1 = require("../cache/cache.service");
 const user_entity_1 = require("../users/entities/user.entity");
 const customer_entity_1 = require("../customers/entities/customer.entity");
@@ -39,6 +41,8 @@ exports.WorkOrdersModule = WorkOrdersModule = __decorate([
             users_module_1.UsersModule,
             assets_module_1.AssetsModule,
             customers_module_1.CustomersModule,
+            scheduling_module_1.SchedulingModule,
+            (0, common_1.forwardRef)(() => websocket_module_1.WebSocketModule),
         ],
         controllers: [work_orders_controller_1.WorkOrdersController],
         providers: [work_orders_service_1.WorkOrdersService, time_entry_service_1.TimeEntryService, cache_service_1.CacheService],

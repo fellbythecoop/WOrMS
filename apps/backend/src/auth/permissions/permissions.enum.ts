@@ -28,6 +28,14 @@ export enum Permission {
   DELETE_OWN_COMMENTS = 'delete_own_comments',
   DELETE_ANY_COMMENTS = 'delete_any_comments',
 
+  // Scheduling & Resource Management
+  VIEW_SCHEDULES = 'view_schedules',
+  CREATE_SCHEDULES = 'create_schedules',
+  UPDATE_SCHEDULES = 'update_schedules',
+  DELETE_SCHEDULES = 'delete_schedules',
+  MANAGE_SCHEDULES = 'manage_schedules',
+  VIEW_UTILIZATION = 'view_utilization',
+
   // Reports
   VIEW_REPORTS = 'view_reports',
   GENERATE_REPORTS = 'generate_reports',

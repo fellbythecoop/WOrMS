@@ -240,6 +240,14 @@ __decorate([
     __metadata("design:type", Array)
 ], WorkOrder.prototype, "timeEntries", void 0);
 exports.WorkOrder = WorkOrder = __decorate([
-    (0, typeorm_1.Entity)('work_orders')
+    (0, typeorm_1.Entity)('work_orders'),
+    (0, typeorm_1.Index)(['status']),
+    (0, typeorm_1.Index)(['priority']),
+    (0, typeorm_1.Index)(['assignedToId']),
+    (0, typeorm_1.Index)(['scheduledStartDate']),
+    (0, typeorm_1.Index)(['createdAt']),
+    (0, typeorm_1.Index)(['status', 'assignedToId']),
+    (0, typeorm_1.Index)(['scheduledStartDate', 'assignedToId']),
+    (0, typeorm_1.Index)(['workOrderNumber'])
 ], WorkOrder);
 //# sourceMappingURL=work-order.entity.js.map

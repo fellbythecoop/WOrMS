@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const auth_service_1 = require("./auth.service");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
+const rate_limit_guard_1 = require("./guards/rate-limit.guard");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -42,6 +43,8 @@ let AuthController = class AuthController {
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('azure-login'),
+    (0, common_1.UseGuards)(rate_limit_guard_1.RateLimitGuard),
+    (0, rate_limit_guard_1.RateLimitStrict)(),
     (0, swagger_1.ApiOperation)({ summary: 'Login with Azure AD token' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Successfully authenticated' }),
     (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
@@ -63,6 +66,8 @@ __decorate([
 ], AuthController.prototype, "getProfile", null);
 __decorate([
     (0, common_1.Post)('verify'),
+    (0, common_1.UseGuards)(rate_limit_guard_1.RateLimitGuard),
+    (0, rate_limit_guard_1.RateLimitModerate)(),
     (0, swagger_1.ApiOperation)({ summary: 'Verify JWT token' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Token is valid' }),
     (0, swagger_1.ApiResponse)({ status: 401, description: 'Token is invalid' }),

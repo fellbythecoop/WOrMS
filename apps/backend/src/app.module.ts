@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule } from 'nest-winston';
+import { APP_GUARD } from '@nestjs/core';
 import * as winston from 'winston';
 
 // Feature modules
@@ -12,10 +13,13 @@ import { AssetsModule } from './assets/assets.module';
 import { ReportsModule } from './reports/reports.module';
 import { WebSocketModule } from './websocket/websocket.module';
 import { CustomersModule } from './customers/customers.module';
+import { SchedulingModule } from './scheduling/scheduling.module';
 
 // Configuration
 import { databaseConfig } from './config/database.config';
 import { HealthController } from './health/health.controller';
+import { DevAuthGuard } from './auth/guards/dev-auth.guard';
+import { PermissionsGuard } from './auth/guards/permissions.guard';
 
 @Module({
   imports: [
@@ -62,8 +66,18 @@ import { HealthController } from './health/health.controller';
     ReportsModule,
     WebSocketModule,
     CustomersModule,
+    SchedulingModule,
   ],
   controllers: [HealthController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: DevAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionsGuard,
+    },
+  ],
 })
 export class AppModule {} 

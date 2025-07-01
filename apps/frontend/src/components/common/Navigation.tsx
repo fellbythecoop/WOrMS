@@ -25,9 +25,10 @@ import {
   Menu as MenuIcon,
   PictureAsPdf as ReportsIcon,
   Business as BusinessIcon,
+  CalendarMonth as SchedulingIcon,
 } from '@mui/icons-material';
 
-export type NavigationPage = 'dashboard' | 'work-orders' | 'users' | 'assets' | 'reports' | 'customers';
+export type NavigationPage = 'dashboard' | 'work-orders' | 'users' | 'assets' | 'reports' | 'customers' | 'scheduling';
 
 interface NavigationProps {
   currentPage: NavigationPage;
@@ -51,6 +52,12 @@ export function Navigation({ currentPage, onPageChange, isAdmin = false }: Navig
       id: 'work-orders' as NavigationPage,
       label: 'Work Orders',
       icon: <WorkIcon />,
+      show: true,
+    },
+    {
+      id: 'scheduling' as NavigationPage,
+      label: 'Scheduling',
+      icon: <SchedulingIcon />,
       show: true,
     },
     {
